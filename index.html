@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>渔匠之光 · 原型导航</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        ocean: { 50:'#ecfeff',100:'#cffafe',500:'#06b6d4',600:'#0891b2',700:'#0e7490',900:'#164e63' },
+        deep: { 50:'#f8fafc',100:'#f1f5f9',500:'#64748b',700:'#334155',900:'#0f172a' },
+        lighthouse: { 500:'#f59e0b',600:'#d97706' }
+      },
+      fontFamily: {
+        sans: ['"PingFang SC"','-apple-system','"Helvetica Neue"','sans-serif']
+      }
+    }
+  }
+}
+</script>
+<style>
+  body{background:linear-gradient(135deg,#0f172a 0%,#164e63 100%);min-height:100vh;}
+  .glow{box-shadow:0 0 40px rgba(6,182,212,.15);}
+  .card{transition:all .3s;}
+  .card:hover{transform:translateY(-4px);box-shadow:0 20px 60px rgba(6,182,212,.3);}
+</style>
+</head>
+<body class="text-white">
+  <div class="max-w-6xl mx-auto px-6 py-16">
+    <!-- Header -->
+    <header class="text-center mb-16">
+      <div class="inline-flex items-center gap-3 mb-6">
+        <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-ocean-500 to-ocean-700 flex items-center justify-center text-2xl glow">⚓</div>
+        <h1 class="text-4xl font-bold tracking-tight">渔匠之光</h1>
+      </div>
+      <p class="text-deep-500 text-lg">渔业行业数字化用工基础设施平台 · HTML 原型 V0.1</p>
+      <div class="mt-4 inline-flex gap-2 text-xs">
+        <span class="px-3 py-1 bg-ocean-900/50 border border-ocean-700 rounded-full text-ocean-100">PRD V3.1 对应</span>
+        <span class="px-3 py-1 bg-deep-900/50 border border-deep-700 rounded-full text-deep-500">高保真 Showcase</span>
+      </div>
+    </header>
+
+    <!-- Cards -->
+    <div class="grid md:grid-cols-2 gap-6 mb-12">
+      <a href="app-sailor.html" class="card block bg-gradient-to-br from-ocean-700/40 to-ocean-900/40 border border-ocean-700/50 rounded-3xl p-8 backdrop-blur">
+        <div class="flex items-start justify-between mb-4">
+          <div class="w-12 h-12 rounded-xl bg-ocean-500/20 flex items-center justify-center text-2xl">🧑‍✈️</div>
+          <span class="text-xs text-ocean-100 bg-ocean-900/60 px-2 py-1 rounded">12 屏</span>
+        </div>
+        <h2 class="text-2xl font-bold mb-2">船员端（嵌入学院 APP）</h2>
+        <p class="text-deep-500 text-sm mb-4">实名认证 · 职位浏览 · 投递沟通 · 简历履历证书 · 个人中心 <span class="text-ocean-300">· 不含独立登录</span></p>
+        <span class="text-ocean-100 text-sm">查看原型 →</span>
+      </a>
+
+      <a href="app-company.html" class="card block bg-gradient-to-br from-lighthouse-600/30 to-deep-900/40 border border-lighthouse-600/40 rounded-3xl p-8 backdrop-blur">
+        <div class="flex items-start justify-between mb-4">
+          <div class="w-12 h-12 rounded-xl bg-lighthouse-500/20 flex items-center justify-center text-2xl">🏢</div>
+          <span class="text-xs text-lighthouse-500 bg-deep-900/60 px-2 py-1 rounded">10 屏</span>
+        </div>
+        <h2 class="text-2xl font-bold mb-2">企业端 APP</h2>
+        <p class="text-deep-500 text-sm mb-4">企业认证 · 发布职位 · 简历筛选 · 沟通面试 · 录用管理 · 企业中心</p>
+        <span class="text-lighthouse-500 text-sm">查看原型 →</span>
+      </a>
+
+      <a href="pc-company.html" class="card block bg-gradient-to-br from-ocean-700/40 to-deep-900/40 border border-deep-700/50 rounded-3xl p-8 backdrop-blur">
+        <div class="flex items-start justify-between mb-4">
+          <div class="w-12 h-12 rounded-xl bg-deep-500/20 flex items-center justify-center text-2xl">💻</div>
+          <span class="text-xs text-deep-500 bg-deep-900/60 px-2 py-1 rounded">12 屏</span>
+        </div>
+        <h2 class="text-2xl font-bold mb-2">企业 PC 端</h2>
+        <p class="text-deep-500 text-sm mb-4">数据看板 · 职位管理 · 简历库 · 人才搜索 · 面试管理 · VIP 商业化</p>
+        <span class="text-deep-500 text-sm">查看原型 →</span>
+      </a>
+
+      <a href="admin.html" class="card block bg-gradient-to-br from-deep-700/40 to-deep-900/40 border border-deep-700/50 rounded-3xl p-8 backdrop-blur">
+        <div class="flex items-start justify-between mb-4">
+          <div class="w-12 h-12 rounded-xl bg-deep-500/20 flex items-center justify-center text-2xl">🛡️</div>
+          <span class="text-xs text-deep-500 bg-deep-900/60 px-2 py-1 rounded">10 屏</span>
+        </div>
+        <h2 class="text-2xl font-bold mb-2">运营后台</h2>
+        <p class="text-deep-500 text-sm mb-4">登录 · 用户/企业/职位/证书审核 · 风控 · RBAC · 数据看板 · 申诉处理</p>
+        <span class="text-deep-500 text-sm">查看原型 →</span>
+      </a>
+    </div>
+
+    <!-- Design tokens -->
+    <section class="bg-deep-900/40 border border-deep-700/50 rounded-3xl p-8 backdrop-blur">
+      <h3 class="text-lg font-semibold mb-4 text-deep-100">视觉系统</h3>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div><div class="h-16 rounded-xl bg-ocean-600 mb-2"></div><p class="text-xs text-deep-500">Ocean / 主品牌</p><p class="text-xs text-deep-500">#0891b2</p></div>
+        <div><div class="h-16 rounded-xl bg-deep-900 border border-deep-700 mb-2"></div><p class="text-xs text-deep-500">Deep / 文字背景</p><p class="text-xs text-deep-500">#0f172a</p></div>
+        <div><div class="h-16 rounded-xl bg-lighthouse-500 mb-2"></div><p class="text-xs text-deep-500">Lighthouse / 强调</p><p class="text-xs text-deep-500">#f59e0b</p></div>
+        <div><div class="h-16 rounded-xl bg-emerald-500 mb-2"></div><p class="text-xs text-deep-500">Success</p><p class="text-xs text-deep-500">#10b981</p></div>
+      </div>
+    </section>
+
+    <footer class="mt-12 text-center text-xs text-deep-500">
+      © 中渔学院 · 渔匠之光 · PRD_V3.1 · 2026
+    </footer>
+  </div>
+</body>
+</html>

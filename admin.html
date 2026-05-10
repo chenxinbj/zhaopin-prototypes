@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>运营后台 · 渔匠之光</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config={theme:{extend:{colors:{
+  ocean:{50:'#ecfeff',100:'#cffafe',500:'#06b6d4',600:'#0891b2',700:'#0e7490',900:'#164e63'},
+  deep:{50:'#f8fafc',100:'#f1f5f9',300:'#cbd5e1',500:'#64748b',700:'#334155',900:'#0f172a'},
+  lighthouse:{500:'#f59e0b',600:'#d97706'}
+}}}}
+</script>
+<style>
+  body{background:#0b1220;color:#cbd5e1;font-family:"PingFang SC",-apple-system,sans-serif;}
+  .pc{width:1280px;height:800px;background:#fff;border-radius:12px;box-shadow:0 30px 80px rgba(0,0,0,.5),0 0 0 1px #334155;overflow:hidden;color:#0f172a;display:flex;flex-direction:column;}
+  .pc-bar{height:32px;background:#0f172a;display:flex;align-items:center;padding:0 12px;gap:6px;flex-shrink:0;color:#94a3b8;}
+  .pc-bar .dot{width:12px;height:12px;border-radius:50%;}
+  .label{font-size:12px;color:#94a3b8;font-weight:500;letter-spacing:.05em;text-transform:uppercase;margin-bottom:8px;display:block;}
+  .nav-item{padding:9px 14px;border-radius:6px;display:flex;align-items:center;gap:10px;font-size:13px;color:#94a3b8;cursor:pointer;}
+  .nav-item.active{background:#0891b2;color:#fff;}
+  .nav-item:hover:not(.active){background:#1e293b;color:#fff;}
+  .nav-section{font-size:10px;color:#475569;letter-spacing:.1em;padding:12px 14px 4px;text-transform:uppercase;}
+</style>
+</head>
+<body>
+<div class="max-w-[1700px] mx-auto px-8 py-12">
+  <header class="mb-12 flex items-center justify-between">
+    <div>
+      <a href="index.html" class="text-deep-500 text-sm hover:text-ocean-500">← 返回导航</a>
+      <h1 class="text-3xl font-bold text-white mt-2">运营后台 <span class="text-deep-500 text-base font-normal">/ Admin Console</span></h1>
+      <p class="text-deep-500 mt-1">10 屏 · 审核 / 风控 / RBAC / 数据 · 1280×800</p>
+    </div>
+    <div class="text-xs text-deep-500">PRD §22 / §23 + 附录 D4 / D11</div>
+  </header>
+
+  <div class="space-y-12">
+
+  <!-- 1. 后台登录 -->
+  <div>
+    <span class="label">01 · 登录（含二次验证）</span>
+    <div class="pc">
+      <div class="pc-bar"><span class="dot bg-rose-400"></span><span class="dot bg-amber-400"></span><span class="dot bg-emerald-400"></span><span class="ml-4 text-xs">https://admin.yujiang.com/login</span></div>
+      <div class="flex-1 bg-gradient-to-br from-deep-900 via-ocean-900 to-deep-900 flex items-center justify-center">
+        <div class="bg-white rounded-3xl p-12 w-[420px] shadow-2xl">
+          <div class="flex items-center gap-3 mb-8"><div class="w-12 h-12 bg-ocean-600 rounded-2xl flex items-center justify-center text-white text-2xl">🛡️</div><div><h1 class="font-bold text-lg">渔匠之光 · 运营后台</h1><p class="text-xs text-deep-500">Admin Console v1.0</p></div></div>
+          <div class="space-y-5">
+            <div><label class="text-xs text-deep-500">账号</label><input value="admin@yujiang" class="w-full mt-1 border-b-2 border-ocean-600 py-2 outline-none font-medium"></div>
+            <div><label class="text-xs text-deep-500">密码</label><input type="password" value="**********" class="w-full mt-1 border-b border-deep-300 py-2 outline-none"></div>
+            <div><label class="text-xs text-deep-500">动态验证码 (TOTP)</label><div class="grid grid-cols-6 gap-2 mt-1">
+              <input value="2" class="border border-deep-200 rounded-lg text-center py-2 font-bold">
+              <input value="8" class="border border-deep-200 rounded-lg text-center py-2 font-bold">
+              <input value="3" class="border border-deep-200 rounded-lg text-center py-2 font-bold">
+              <input value="9" class="border border-deep-200 rounded-lg text-center py-2 font-bold">
+              <input value="0" class="border border-deep-200 rounded-lg text-center py-2 font-bold">
+              <input class="border-2 border-ocean-600 rounded-lg text-center py-2 font-bold">
+            </div></div>
+            <div class="bg-amber-50 rounded-lg p-2.5 text-[11px] text-amber-900">⚠️ 当前 IP：61.130.*.* · 登录后将记录此次访问</div>
+            <button class="w-full bg-ocean-600 text-white font-semibold py-3 rounded-xl">登录</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. 数据看板 -->
+  <div>
+    <span class="label">02 · 全平台数据看板</span>
+    <div class="pc">
+      <div class="pc-bar"><span class="dot bg-rose-400"></span><span class="dot bg-amber-400"></span><span class="dot bg-emerald-400"></span><span class="ml-4 text-xs">/dashboard</span></div>
+      <div class="flex-1 flex">
+        <aside class="w-56 bg-deep-900 p-4 flex flex-col">
+          <div class="flex items-center gap-2 px-2 pb-4 border-b border-deep-700"><div class="w-8 h-8 bg-ocean-600 rounded-lg flex items-center justify-center text-white text-sm">🛡️</div><span class="text-white font-semibold text-sm">运营后台</span></div>
+          <div class="nav-section">概览</div>
+          <nav class="space-y-0.5">
+            <div class="nav-item active">📊 数据看板</div>
+          </nav>
+          <div class="nav-section">审核</div>
+          <nav class="space-y-0.5">
+            <div class="nav-item">🏢 企业认证 <span class="ml-auto text-[10px] bg-rose-500 px-1.5 rounded">12</span></div>
+            <div class="nav-item">📋 职位审核 <span class="ml-auto text-[10px] bg-rose-500 px-1.5 rounded">28</span></div>
+            <div class="nav-item">📜 证书审核 <span class="ml-auto text-[10px] bg-rose-500 px-1.5 rounded">45</span></div>
+          </nav>
+          <div class="nav-section">用户/风控</div>
+          <nav class="space-y-0.5">
+            <div class="nav-item">👥 用户管理</div>
+            <div class="nav-item">🚫 黑名单</div>
+            <div class="nav-item">⚠️ 违规处理</div>
+            <div class="nav-item">📢 投诉举报 <span class="ml-auto text-[10px] bg-rose-500 px-1.5 rounded">7</span></div>
+          </nav>
+          <div class="nav-section">系统</div>
+          <nav class="space-y-0.5">
+            <div class="nav-item">🔧 RBAC</div>
+            <div class="nav-item">⚙️ 配置项</div>
+            <div class="nav-item">📜 审计日志</div>
+          </nav>
+        </aside>
+        <main class="flex-1 bg-deep-50 overflow-hidden">
+          <div class="bg-white px-8 py-3 border-b border-deep-100 flex justify-between"><h2 class="font-semibold">数据看板 · 平台概览</h2><div class="flex items-center gap-3 text-sm"><select class="border border-deep-200 rounded-lg px-3 py-1.5 text-xs"><option>近 7 天</option><option>近 30 天</option></select><span class="w-8 h-8 bg-ocean-100 rounded-full flex items-center justify-center">A</span></div></div>
+          <div class="p-6 space-y-5">
+            <div class="grid grid-cols-6 gap-3">
+              <div class="bg-white rounded-2xl p-4"><p class="text-[11px] text-deep-500">DAU</p><p class="text-2xl font-bold mt-1">4,236</p><p class="text-[10px] text-emerald-600 mt-1">↑ 12.5%</p></div>
+              <div class="bg-white rounded-2xl p-4"><p class="text-[11px] text-deep-500">新增船员</p><p class="text-2xl font-bold mt-1">85</p><p class="text-[10px] text-emerald-600 mt-1">↑ 8</p></div>
+              <div class="bg-white rounded-2xl p-4"><p class="text-[11px] text-deep-500">新增企业</p><p class="text-2xl font-bold mt-1">12</p><p class="text-[10px] text-emerald-600 mt-1">↑ 3</p></div>
+              <div class="bg-white rounded-2xl p-4"><p class="text-[11px] text-deep-500">在线职位</p><p class="text-2xl font-bold mt-1">832</p><p class="text-[10px] text-emerald-600 mt-1">↑ 24</p></div>
+              <div class="bg-white rounded-2xl p-4"><p class="text-[11px] text-deep-500">投递率</p><p class="text-2xl font-bold mt-1">12.3%</p><p class="text-[10px] text-emerald-600 mt-1">投递/浏览</p></div>
+              <div class="bg-white rounded-2xl p-4"><p class="text-[11px] text-deep-500">上船率</p><p class="text-2xl font-bold mt-1">87%</p><p class="text-[10px] text-emerald-600 mt-1">上船/录用</p></div>
+            </div>
+            <div class="grid grid-cols-3 gap-4">
+              <div class="bg-white rounded-2xl p-5 col-span-2">
+                <h3 class="font-semibold text-sm mb-4">核心漏斗 · 近 7 天</h3>
+                <div class="space-y-2.5">
+                  <div><div class="flex justify-between text-xs mb-1"><span>职位浏览</span><span class="font-medium">125,432</span></div><div class="h-3 bg-ocean-500 rounded"></div></div>
+                  <div><div class="flex justify-between text-xs mb-1"><span>简历投递</span><span class="font-medium">15,432</span></div><div class="h-3 bg-ocean-500 rounded" style="width:80%"></div></div>
+                  <div><div class="flex justify-between text-xs mb-1"><span>沟通发起</span><span class="font-medium">9,234</span></div><div class="h-3 bg-ocean-500 rounded" style="width:55%"></div></div>
+                  <div><div class="flex justify-between text-xs mb-1"><span>面试</span><span class="font-medium">3,452</span></div><div class="h-3 bg-ocean-500 rounded" style="width:30%"></div></div>
+                  <div><div class="flex justify-between text-xs mb-1"><span>录用</span><span class="font-medium">876</span></div><div class="h-3 bg-amber-500 rounded" style="width:12%"></div></div>
+                  <div><div class="flex justify-between text-xs mb-1"><span>上船</span><span class="font-medium">762</span></div><div class="h-3 bg-emerald-500 rounded" style="width:10%"></div></div>
+                </div>
+              </div>
+              <div class="bg-white rounded-2xl p-5">
+                <h3 class="font-semibold text-sm mb-4">待处理</h3>
+                <div class="space-y-3">
+                  <div class="flex justify-between border-l-3 border-rose-500 pl-3"><span class="text-sm">企业认证</span><span class="font-bold text-rose-600">12</span></div>
+                  <div class="flex justify-between border-l-3 border-amber-500 pl-3"><span class="text-sm">职位审核</span><span class="font-bold text-amber-600">28</span></div>
+                  <div class="flex justify-between border-l-3 border-amber-500 pl-3"><span class="text-sm">证书审核</span><span class="font-bold text-amber-600">45</span></div>
+                  <div class="flex justify-between border-l-3 border-rose-500 pl-3"><span class="text-sm">投诉举报</span><span class="font-bold text-rose-600">7</span></div>
+                  <div class="flex justify-between border-l-3 border-deep-300 pl-3"><span class="text-sm">退款审批</span><span class="font-bold">3</span></div>
+                </div>
+              </div>
+            </div>
+            <div class="bg-white rounded-2xl p-5">
+              <h3 class="font-semibold text-sm mb-3">内容审核监控</h3>
+              <div class="grid grid-cols-4 gap-4 text-sm">
+                <div><p class="text-xs text-deep-500">阿里云审核命中率</p><p class="font-bold text-lg mt-1">2.3%</p></div>
+                <div><p class="text-xs text-deep-500">本地正则拦截</p><p class="font-bold text-lg mt-1">5,432</p></div>
+                <div><p class="text-xs text-deep-500">API 平均响应</p><p class="font-bold text-lg mt-1">125ms</p></div>
+                <div><p class="text-xs text-deep-500">降级触发次数</p><p class="font-bold text-lg mt-1 text-emerald-600">0</p></div>
+              </div>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. 企业认证审核 -->
+  <div>
+    <span class="label">03 · 企业认证审核</span>
+    <div class="pc">
+      <div class="pc-bar"><span class="dot bg-rose-400"></span><span class="dot bg-amber-400"></span><span class="dot bg-emerald-400"></span><span class="ml-4 text-xs">/audit/companies</span></div>
+      <div class="flex-1 flex">
+        <aside class="w-56 bg-deep-900 p-4">
+          <div class="flex items-center gap-2 px-2 pb-4 border-b border-deep-700"><div class="w-8 h-8 bg-ocean-600 rounded-lg flex items-center justify-center text-white text-sm">🛡️</div><span class="text-white font-semibold text-sm">运营后台</span></div>
+          <div class="nav-section">概览</div>
+          <nav class="space-y-0.5">
+            <div class="nav-item">📊 数据看板</div>
+          </nav>
+          <div class="nav-section">审核</div>
+          <nav class="space-y-0.5">
+            <div class="nav-item active">🏢 企业认证 <span class="ml-auto text-[10px] bg-rose-500 px-1.5 rounded">12</span></div>
+            <div class="nav-item">📋 职位审核 <span class="ml-auto text-[10px] bg-rose-500 px-1.5 rounded">28</span></div>
+            <div class="nav-item">📜 证书审核 <span class="ml-auto text-[10px] bg-rose-500 px-1.5 rounded">45</span></div>
+          </nav>
+          <div class="nav-section">用户/风控</div>
+          <nav class="space-y-0.5">
+            <div class="nav-item">👥 用户管理</div>
+            <div class="nav-item">🚫 黑名单</div>
+            <div class="nav-item">⚠️ 违规处理</div>
+            <div class="nav-item">📢 投诉举报 <span class="ml-auto text-[10px] bg-rose-500 px-1.5 rounded">7</span></div>
+          </nav>
+          <div class="nav-section">系统</div>
+          <nav class="space-y-0.5">
+            <div class="nav-item">🔧 RBAC</div>
+            <div class="nav-item">⚙️ 配置项</div>
+            <div class="nav-item">📜 审计日志</div>
+          </nav>
+        </aside>
+        <main class="flex-1 bg-deep-50 flex">
+          <div class="w-72 bg-white border-r border-deep-100 overflow-auto">
+            <div class="p-3 border-b border-deep-100"><div class="flex gap-1 text-xs"><button class="flex-1 px-3 py-1.5 bg-rose-500 text-white rounded">待审 12</button><button class="flex-1 px-3 py-1.5 bg-deep-100 text-deep-700 rounded">已通过</button><button class="flex-1 px-3 py-1.5 bg-deep-100 text-deep-700 rounded">已驳回</button></div></div>
+            <div class="divide-y divide-deep-100">
+              <div class="p-4 bg-ocean-50 border-l-2 border-ocean-600"><p class="font-medium text-sm">舟山远洋渔业有限公司</p><p class="text-[11px] text-deep-500 mt-1">提交于 2 小时前 · 联系人 李经理</p><span class="text-[10px] px-2 py-0.5 bg-amber-100 text-amber-800 rounded mt-2 inline-block">待审核</span></div>
+              <div class="p-4"><p class="font-medium text-sm">福建闽南海运公司</p><p class="text-[11px] text-deep-500 mt-1">5 小时前</p></div>
+              <div class="p-4"><p class="font-medium text-sm">青岛海洋捕捞</p><p class="text-[11px] text-deep-500 mt-1">昨天</p></div>
+            </div>
+          </div>
+          <div class="flex-1 p-6 overflow-auto">
+            <div class="bg-white rounded-2xl p-6">
+              <div class="flex justify-between items-start mb-4">
+                <div><h3 class="text-lg font-bold">舟山远洋渔业有限公司</h3><p class="text-xs text-deep-500 mt-1">统一社会信用代码 9133********X</p></div>
+                <span class="text-xs px-3 py-1 bg-amber-100 text-amber-800 rounded-full">待审核</span>
+              </div>
+              <div class="grid grid-cols-2 gap-6 mt-4 text-sm">
+                <div>
+                  <p class="text-xs text-deep-500 mb-2">营业执照</p>
+                  <div class="bg-deep-50 rounded-xl h-48 flex items-center justify-center"><div class="text-center"><div class="text-5xl mb-2">📄</div><p class="text-xs text-deep-500">营业执照.jpg · 点击查看大图</p></div></div>
+                </div>
+                <div>
+                  <p class="text-xs text-deep-500 mb-2">渔业资质（捕捞证）</p>
+                  <div class="bg-deep-50 rounded-xl h-48 flex items-center justify-center"><div class="text-center"><div class="text-5xl mb-2">📄</div><p class="text-xs text-deep-500">捕捞许可证.jpg</p></div></div>
+                </div>
+              </div>
+              <div class="grid grid-cols-2 gap-6 mt-6 text-sm">
+                <div class="space-y-2"><div class="flex justify-between"><span class="text-deep-500">企业名称</span><span class="font-medium">舟山远洋渔业有限公司</span></div><div class="flex justify-between"><span class="text-deep-500">统一社会信用代码</span><span class="font-medium">9133********X</span></div><div class="flex justify-between"><span class="text-deep-500">注册资本</span><span class="font-medium">500 万元</span></div><div class="flex justify-between"><span class="text-deep-500">成立日期</span><span class="font-medium">2010.05.20</span></div></div>
+                <div class="space-y-2"><div class="flex justify-between"><span class="text-deep-500">联系人</span><span class="font-medium">李经理</span></div><div class="flex justify-between"><span class="text-deep-500">联系电话</span><span class="font-medium">138****0000</span></div><div class="flex justify-between"><span class="text-deep-500">人脸核身</span><span class="text-emerald-600">✓ 通过</span></div><div class="flex justify-between"><span class="text-deep-500">对公账户</span><span class="text-emerald-600">✓ 已验证</span></div></div>
+              </div>
+              <div class="mt-6 pt-6 border-t border-deep-100">
+                <p class="text-sm font-medium mb-2">审核意见</p>
+                <textarea class="w-full border border-deep-200 rounded-xl p-3 text-sm h-20 outline-none" placeholder="可填写驳回原因（驳回时必填）"></textarea>
+                <div class="flex justify-end gap-2 mt-4">
+                  <button class="px-5 py-2 border border-rose-500 text-rose-500 rounded-xl text-sm">驳回</button>
+                  <button class="px-5 py-2 bg-emerald-500 text-white rounded-xl text-sm font-semibold">审核通过</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. 职位审核 -->
+  <div>
+    <span class="label">04 · 职位审核</span>
+    <div class="pc">
+      <div class="pc-bar"><span class="dot bg-rose-400"></span><span class="dot bg-amber-400"></span><span class="dot bg-emerald-400"></span><span class="ml-4 text-xs">/audit/jobs</span></div>
+      <div class="flex-1 flex">
+        <aside class="w-56 bg-deep-900 p-4">
+          <div class="flex items-center gap-2 px-2 pb-4 border-b border-deep-700"><div class="w-8 h-8 bg-ocean-600 rounded-lg flex items-center justify-center text-white text-sm">🛡️</div><span class="text-white font-semibold text-sm">运营后台</span></div>
+          <div class="nav-section">概览</div>
+          <nav class="space-y-0.5">
+            <div class="nav-item">📊 数据看板</div>
+          </nav>
+          <div class="nav-section">审核</div>
+          <nav class="space-y-0.5">
+            <div class="nav-item">🏢 企业认证 <span class="ml-auto text-[10px] bg-rose-500 px-1.5 rounded">12</span></div>
+            <div class="nav-item active">📋 职位审核 <span class="ml-auto text-[10px] bg-rose-500 px-1.5 rounded">28</span></div>
+            <div class="nav-item">📜 证书审核 <span class="ml-auto text-[10px] bg-rose-500 px-1.5 rounded">45</span></div>
+          </nav>
+          <div class="nav-section">用户/风控</div>
+          <nav class="space-y-0.5">
+            <div class="nav-item">👥 用户管理</div>
+            <div class="nav-item">🚫 黑名单</div>
+            <div class="nav-item">⚠️ 违规处理</div>
+            <div class="nav-item">📢 投诉举报 <span class="ml-auto text-[10px] bg-rose-500 px-1.5 rounded">7</span></div>
+          </nav>
+          <div class="nav-section">系统</div>
+          <nav class="space-y-0.5">
+            <div class="nav-item">🔧 RBAC</div>
+            <div class="nav-item">⚙️ 配置项</div>
+            <div class="nav-item">📜 审计日志</div>
+          </nav>
+        </aside>
+        <main class="flex-1 bg-deep-50">
+          <div class="bg-white px-8 py-3 border-b border-deep-100 flex justify-between"><h2 class="font-semibold">职位审核 · 28 待处理</h2><div class="flex gap-2 text-xs"><button class="px-3 py-1.5 bg-amber-100 text-amber-800 rounded">⚡ AI 辅助</button><button class="px-3 py-1.5 border border-deep-200 rounded">批量操作</button></div></div>
+          <div class="p-6">
+            <div class="bg-white rounded-2xl p-4">
+              <table class="w-full text-sm">
+                <thead class="text-xs text-deep-500 bg-deep-50"><tr class="text-left"><th class="px-3 py-2.5"><input type="checkbox"></th><th>职位</th><th>企业</th><th>船型/海域</th><th>薪资</th><th>风险</th><th>提交时间</th><th>操作</th></tr></thead>
+                <tbody>
+                  <tr class="border-b border-deep-50 hover:bg-deep-50"><td class="px-3 py-3"><input type="checkbox"></td><td><p class="font-medium">一级船长</p></td><td>舟山远洋渔业 <span class="text-[10px] text-emerald-600">A+</span></td><td class="text-xs">围网/南海</td><td class="text-rose-600">1.5-2万</td><td><span class="text-[10px] px-2 py-0.5 bg-emerald-50 text-emerald-700 rounded">低</span></td><td class="text-xs">10 分钟前</td><td><a class="text-emerald-600 text-xs mr-2">通过</a><a class="text-rose-500 text-xs">驳回</a></td></tr>
+                  <tr class="border-b border-deep-50 bg-amber-50/50"><td class="px-3 py-3"><input type="checkbox"></td><td><div class="flex items-center gap-1.5"><p class="font-medium">船员（高薪）</p><span class="text-[10px]">⚠️</span></div></td><td>新注册企业 <span class="text-[10px] text-amber-600">B</span></td><td class="text-xs">远洋</td><td class="text-rose-600">3-5万</td><td><span class="text-[10px] px-2 py-0.5 bg-rose-50 text-rose-700 rounded">高·薪资异常</span></td><td class="text-xs">25 分钟前</td><td><a class="text-deep-400 text-xs">人工核查</a></td></tr>
+                  <tr class="border-b border-deep-50"><td class="px-3 py-3"><input type="checkbox"></td><td><p class="font-medium">轮机长</p></td><td>福建闽南海运 <span class="text-[10px] text-emerald-600">A</span></td><td class="text-xs">拖网/东海</td><td class="text-rose-600">1.3-1.8万</td><td><span class="text-[10px] px-2 py-0.5 bg-emerald-50 text-emerald-700 rounded">低</span></td><td class="text-xs">1 小时前</td><td><a class="text-emerald-600 text-xs mr-2">通过</a><a class="text-rose-500 text-xs">驳回</a></td></tr>
+                  <tr class="border-b border-deep-50"><td class="px-3 py-3"><input type="checkbox"></td><td><p class="font-medium">大副</p></td><td>青岛海洋捕捞 <span class="text-[10px] text-emerald-600">A</span></td><td class="text-xs">围网/南海</td><td class="text-rose-600">1.2-1.5万</td><td><span class="text-[10px] px-2 py-0.5 bg-emerald-50 text-emerald-700 rounded">低</span></td><td class="text-xs">2 小时前</td><td><a class="text-emerald-600 text-xs mr-2">通过</a><a class="text-rose-500 text-xs">驳回</a></td></tr>
+                  <tr class="border-b border-deep-50 bg-amber-50/50"><td class="px-3 py-3"><input type="checkbox"></td><td><p class="font-medium">船员</p></td><td>已被投诉 2 次 <span class="text-[10px] text-amber-600">C 65</span></td><td class="text-xs">钓具/黄海</td><td class="text-rose-600">1万-1.2万</td><td><span class="text-[10px] px-2 py-0.5 bg-amber-50 text-amber-700 rounded">中·企业历史</span></td><td class="text-xs">3 小时前</td><td><a class="text-deep-400 text-xs">人工核查</a></td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5. 用户管理 -->
+  <div>
+    <span class="label">05 · 用户管理</span>
+    <div class="pc">
+      <div class="pc-bar"><span class="dot bg-rose-400"></span><span class="dot bg-amber-400"></span><span class="dot bg-emerald-400"></span><span class="ml-4 text-xs">/users</span></div>
+      <div class="flex-1 flex">
+        <aside class="w-56 bg-deep-900 p-4">
+          <div class="flex items-center gap-2 px-2 pb-4 border-b border-deep-700"><div class="w-8 h-8 bg-ocean-600 rounded-lg flex items-center justify-center text-white text-sm">🛡️</div><span class="text-white font-semibold text-sm">运营后台</span></div>
+          <div class="nav-section">概览</div>
+          <nav class="space-y-0.5">
+            <div class="nav-item">📊 数据看板</div>
+          </nav>
+          <div class="nav-section">审核</div>
+          <nav class="space-y-0.5">
+            <div class="nav-item">🏢 企业认证 <span class="ml-auto text-[10px] bg-rose-500 px-1.5 rounded">12</span></div>
+            <div class="nav-item">📋 职位审核 <span class="ml-auto text-[10px] bg-rose-500 px-1.5 rounded">28</span></div>
+            <div class="nav-item">📜 证书审核 <span class="ml-auto text-[10px] bg-rose-500 px-1.5 rounded">45</span></div>
+          </nav>
+          <div class="nav-section">用户/风控</div>
+          <nav class="space-y-0.5">
+            <div class="nav-item active">👥 用户管理</div>
+            <div class="nav-item">🚫 黑名单</div>
+            <div class="nav-item">⚠️ 违规处理</div>
+            <div class="nav-item">📢 投诉举报 <span class="ml-auto text-[10px] bg-rose-500 px-1.5 rounded">7</span></div>
+          </nav>
+          <div class="nav-section">系统</div>
+          <nav class="space-y-0.5">
+            <div class="nav-item">🔧 RBAC</div>
+            <div class="nav-item">⚙️ 配置项</div>
+            <div class="nav-item">📜 审计日志</div>
+          </nav>
+        </aside>
+        <main class="flex-1 bg-deep-50">
+          <div class="bg-white px-8 py-3 border-b border-deep-100"><h2 class="font-semibold">用户管理</h2></div>
+          <div class="p-6">
+            <div class="bg-white rounded-2xl p-4">
+              <div class="flex gap-3 mb-4">
+                <input placeholder="手机号/姓名/身份证" class="flex-1 border border-deep-200 rounded-lg px-3 py-2 text-sm outline-none">
+                <select class="border border-deep-200 rounded-lg px-3 py-2 text-sm"><option>全部角色</option><option>船员</option><option>企业</option></select>
+                <select class="border border-deep-200 rounded-lg px-3 py-2 text-sm"><option>全部状态</option><option>正常</option><option>已封禁</option></select>
+                <button class="bg-ocean-600 text-white px-4 py-2 rounded-lg text-sm">查询</button>
+              </div>
+              <table class="w-full text-sm">
+                <thead class="text-xs text-deep-500 bg-deep-50"><tr class="text-left"><th class="px-3 py-2.5">姓名</th><th>手机号</th><th>实名</th><th>角色</th><th>信用分</th><th>注册时间</th><th>状态</th><th>操作</th></tr></thead>
+                <tbody>
+                  <tr class="border-b border-deep-50"><td class="px-3 py-3"><div class="flex items-center gap-2"><div class="w-8 h-8 bg-ocean-100 rounded-lg flex items-center justify-center">🧑‍✈️</div><span class="font-medium">张大海</span></div></td><td>138****8888</td><td><span class="text-[11px] text-emerald-600">✓ 已认证</span></td><td><span class="text-[11px] px-2 py-0.5 bg-ocean-50 text-ocean-700 rounded">船员+企业</span></td><td class="font-medium text-amber-600">82 A</td><td class="text-xs">2024.03.15</td><td><span class="text-[11px] text-emerald-600">正常</span></td><td><a class="text-ocean-600 text-xs mr-2">详情</a><a class="text-rose-500 text-xs">封禁</a></td></tr>
+                  <tr class="border-b border-deep-50"><td class="px-3 py-3"><div class="flex items-center gap-2"><div class="w-8 h-8 bg-ocean-100 rounded-lg flex items-center justify-center">🧑‍✈️</div><span class="font-medium">陈船工</span></div></td><td>138****7777</td><td><span class="text-[11px] text-emerald-600">✓ 已认证</span></td><td><span class="text-[11px] px-2 py-0.5 bg-ocean-50 text-ocean-700 rounded">船员</span></td><td class="font-medium text-amber-600">85 A</td><td class="text-xs">2023.11.10</td><td><span class="text-[11px] text-emerald-600">正常</span></td><td><a class="text-ocean-600 text-xs mr-2">详情</a><a class="text-rose-500 text-xs">封禁</a></td></tr>
+                  <tr class="border-b border-deep-50 bg-rose-50/30"><td class="px-3 py-3"><div class="flex items-center gap-2"><div class="w-8 h-8 bg-rose-100 rounded-lg flex items-center justify-center">🧑‍✈️</div><span class="font-medium">虚假账号</span></div></td><td>138****1234</td><td><span class="text-[11px] text-rose-600">✗ 失败</span></td><td>船员</td><td class="font-medium text-rose-600">38 D</td><td class="text-xs">2026.05.01</td><td><span class="text-[11px] text-rose-600">禁言中</span></td><td><a class="text-ocean-600 text-xs mr-2">详情</a><a class="text-rose-500 text-xs">封禁</a></td></tr>
+                  <tr><td class="px-3 py-3"><div class="flex items-center gap-2"><div class="w-8 h-8 bg-deep-100 rounded-lg flex items-center justify-center">👤</div><span class="font-medium">李企业</span></div></td><td>138****5555</td><td><span class="text-[11px] text-emerald-600">✓ 已认证</span></td><td><span class="text-[11px] px-2 py-0.5 bg-amber-50 text-amber-700 rounded">企业管理员</span></td><td class="text-deep-400">—</td><td class="text-xs">2024.06.01</td><td><span class="text-[11px] text-emerald-600">正常</span></td><td><a class="text-ocean-600 text-xs">详情</a></td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+  </div>
+
+  <!-- 6. 投诉举报 -->
+  <div>
+    <span class="label">06 · 投诉举报处理</span>
+    <div class="pc">
+      <div class="pc-bar"><span class="dot bg-rose-400"></span><span class="dot bg-amber-400"></span><span class="dot bg-emerald-400"></span><span class="ml-4 text-xs">/complaints</span></div>
+      <div class="flex-1 flex">
+        <aside class="w-56 bg-deep-900 p-4">
+          <div class="flex items-center gap-2 px-2 pb-4 border-b border-deep-700"><div class="w-8 h-8 bg-ocean-600 rounded-lg flex items-center justify-center text-white text-sm">🛡️</div><span class="text-white font-semibold text-sm">运营后台</span></div>
+          <div class="nav-section">概览</div>
+          <nav class="space-y-0.5">
+            <div class="nav-item">📊 数据看板</div>
+          </nav>
+          <div class="nav-section">审核</div>
+          <nav class="space-y-0.5">
+            <div class="nav-item">🏢 企业认证 <span class="ml-auto text-[10px] bg-rose-500 px-1.5 rounded">12</span></div>
+            <div class="nav-item">📋 职位审核 <span class="ml-auto text-[10px] bg-rose-500 px-1.5 rounded">28</span></div>
+            <div class="nav-item">📜 证书审核 <span class="ml-auto text-[10px] bg-rose-500 px-1.5 rounded">45</span></div>
+          </nav>
+          <div class="nav-section">用户/风控</div>
+          <nav class="space-y-0.5">
+            <div class="nav-item">👥 用户管理</div>
+            <div class="nav-item">🚫 黑名单</div>
+            <div class="nav-item">⚠️ 违规处理</div>
+            <div class="nav-item active">📢 投诉举报 <span class="ml-auto text-[10px] bg-rose-500 px-1.5 rounded">7</span></div>
+          </nav>
+          <div class="nav-section">系统</div>
+          <nav class="space-y-0.5">
+            <div class="nav-item">🔧 RBAC</div>
+            <div class="nav-item">⚙️ 配置项</div>
+            <div class="nav-item">📜 审计日志</div>
+          </nav>
+        </aside>
+        <main class="flex-1 bg-deep-50 flex">
+          <div class="w-80 bg-white border-r border-deep-100">
+            <div class="p-3 border-b border-deep-100 flex gap-1 text-xs"><button class="flex-1 py-1.5 bg-rose-500 text-white rounded">待处理 7</button><button class="flex-1 py-1.5 bg-deep-100 rounded">处理中</button><button class="flex-1 py-1.5 bg-deep-100 rounded">已处理</button></div>
+            <div class="divide-y divide-deep-100 overflow-auto">
+              <div class="p-4 bg-rose-50 border-l-2 border-rose-500"><div class="flex justify-between"><span class="text-[10px] px-1.5 py-0.5 bg-rose-100 text-rose-700 rounded">虚假职位</span><span class="text-[10px] text-rose-600">⏰ 12h 内必须处理</span></div><p class="font-medium text-sm mt-2">举报：某企业承诺 5 万薪资但实际 1 万</p><p class="text-[11px] text-deep-500 mt-1">举报人：张大海 · 30 分钟前</p></div>
+              <div class="p-4"><div class="flex justify-between"><span class="text-[10px] px-1.5 py-0.5 bg-amber-100 text-amber-700 rounded">不实评价</span></div><p class="font-medium text-sm mt-2">船员申诉：评价不实</p><p class="text-[11px] text-deep-500 mt-1">2 小时前</p></div>
+              <div class="p-4"><div class="flex justify-between"><span class="text-[10px] px-1.5 py-0.5 bg-deep-100 rounded">骚扰</span></div><p class="font-medium text-sm mt-2">举报骚扰消息</p><p class="text-[11px] text-deep-500 mt-1">5 小时前</p></div>
+            </div>
+          </div>
+          <div class="flex-1 p-6 overflow-auto">
+            <div class="bg-white rounded-2xl p-6">
+              <div class="flex justify-between items-start"><div><div class="flex items-center gap-2"><span class="text-[10px] px-2 py-0.5 bg-rose-100 text-rose-700 rounded">虚假职位</span><span class="text-xs text-rose-600">⏰ SLA 11h 24m</span></div><h3 class="font-bold mt-2">某企业承诺 5 万薪资但实际 1 万</h3></div></div>
+              <div class="grid grid-cols-2 gap-6 mt-5 text-sm">
+                <div class="space-y-3">
+                  <p class="text-xs font-medium">举报人</p>
+                  <div class="bg-deep-50 rounded-xl p-3"><p class="font-medium">张大海</p><p class="text-xs text-deep-500 mt-1">A 级 82 · 8 年经验</p><p class="text-xs text-deep-500">138****8888</p></div>
+                  <p class="text-xs font-medium mt-3">举报对象</p>
+                  <div class="bg-deep-50 rounded-xl p-3"><p class="font-medium">XX 海洋公司</p><p class="text-xs text-deep-500 mt-1">B 级 75 · 历史投诉 2 次</p></div>
+                </div>
+                <div>
+                  <p class="text-xs font-medium mb-2">举报详情</p>
+                  <div class="bg-deep-50 rounded-xl p-3 text-xs leading-relaxed">该企业在职位描述中标注薪资 5 万，沟通时承诺无误。但上船后实际只发 1 万。期间经历 3 个月航行，多次催讨工资无果。</div>
+                  <p class="text-xs font-medium mt-3 mb-2">证据</p>
+                  <div class="grid grid-cols-3 gap-2"><div class="aspect-square bg-deep-100 rounded flex items-center justify-center text-2xl">📷</div><div class="aspect-square bg-deep-100 rounded flex items-center justify-center text-2xl">📷</div><div class="aspect-square bg-deep-100 rounded flex items-center justify-center text-2xl">📄</div></div>
+                </div>
+              </div>
+              <div class="mt-6 pt-6 border-t border-deep-100">
+                <p class="text-sm font-medium mb-2">处理决定</p>
+                <div class="flex gap-3 mb-3">
+                  <label class="flex items-center gap-2 text-sm"><input type="radio" name="r" checked>举报成立</label>
+                  <label class="flex items-center gap-2 text-sm"><input type="radio" name="r">举报不成立</label>
+                  <label class="flex items-center gap-2 text-sm"><input type="radio" name="r">证据不足</label>
+                </div>
+                <p class="text-sm font-medium mb-2">对企业的处罚</p>
+                <div class="flex gap-3 mb-3">
+                  <label class="flex items-center gap-2 text-sm"><input type="checkbox" checked>信用分 -20</label>
+                  <label class="flex items-center gap-2 text-sm"><input type="checkbox" checked>下线相关职位</label>
+                  <label class="flex items-center gap-2 text-sm"><input type="checkbox">加入风险名单</label>
+                  <label class="flex items-center gap-2 text-sm"><input type="checkbox">封禁账号</label>
+                </div>
+                <textarea class="w-full border border-deep-200 rounded-xl p-3 text-sm h-16 outline-none" placeholder="处理说明"></textarea>
+                <div class="flex justify-end gap-2 mt-4"><button class="px-5 py-2 border border-deep-300 rounded-xl text-sm">驳回</button><button class="px-5 py-2 bg-rose-500 text-white rounded-xl text-sm font-semibold">确认处罚</button></div>
+              </div>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+  </div>
+
+  <!-- 7. 风控/敏感词 -->
+  <div>
+    <span class="label">07 · 内容审核监控</span>
+    <div class="pc">
+      <div class="pc-bar"><span class="dot bg-rose-400"></span><span class="dot bg-amber-400"></span><span class="dot bg-emerald-400"></span><span class="ml-4 text-xs">/risk/content</span></div>
+      <div class="flex-1 flex">
+        <aside class="w-56 bg-deep-900 p-4">
+          <div class="flex items-center gap-2 px-2 pb-4 border-b border-deep-700"><div class="w-8 h-8 bg-ocean-600 rounded-lg flex items-center justify-center text-white text-sm">🛡️</div><span class="text-white font-semibold text-sm">运营后台</span></div>
+          <div class="nav-section">概览</div>
+          <nav class="space-y-0.5">
+            <div class="nav-item">📊 数据看板</div>
+          </nav>
+          <div class="nav-section">审核</div>
+          <nav class="space-y-0.5">
+            <div class="nav-item">🏢 企业认证 <span class="ml-auto text-[10px] bg-rose-500 px-1.5 rounded">12</span></div>
+            <div class="nav-item">📋 职位审核 <span class="ml-auto text-[10px] bg-rose-500 px-1.5 rounded">28</span></div>
+            <div class="nav-item">📜 证书审核 <span class="ml-auto text-[10px] bg-rose-500 px-1.5 rounded">45</span></div>
+          </nav>
+          <div class="nav-section">用户/风控</div>
+          <nav class="space-y-0.5">
+            <div class="nav-item">👥 用户管理</div>
+            <div class="nav-item">🚫 黑名单</div>
+            <div class="nav-item active">⚠️ 违规处理</div>
+            <div class="nav-item">📢 投诉举报 <span class="ml-auto text-[10px] bg-rose-500 px-1.5 rounded">7</span></div>
+          </nav>
+          <div class="nav-section">系统</div>
+          <nav class="space-y-0.5">
+            <div class="nav-item">🔧 RBAC</div>
+            <div class="nav-item">⚙️ 配置项</div>
+            <div class="nav-item">📜 审计日志</div>
+          </nav>
+        </aside>
+        <main class="flex-1 bg-deep-50">
+          <div class="bg-white px-8 py-3 border-b border-deep-100"><h2 class="font-semibold">内容审核 · 命中记录</h2></div>
+          <div class="p-6 space-y-4">
+            <div class="grid grid-cols-4 gap-3">
+              <div class="bg-white rounded-xl p-4"><p class="text-xs text-deep-500">今日命中（block）</p><p class="text-2xl font-bold mt-1 text-rose-600">28</p></div>
+              <div class="bg-white rounded-xl p-4"><p class="text-xs text-deep-500">今日命中（review）</p><p class="text-2xl font-bold mt-1 text-amber-600">156</p></div>
+              <div class="bg-white rounded-xl p-4"><p class="text-xs text-deep-500">本地正则拦截</p><p class="text-2xl font-bold mt-1">432</p></div>
+              <div class="bg-white rounded-xl p-4"><p class="text-xs text-deep-500">阿里云 API 健康</p><p class="text-2xl font-bold mt-1 text-emerald-600">100%</p></div>
+            </div>
+            <div class="bg-white rounded-2xl p-4">
+              <h3 class="font-semibold text-sm mb-3">命中记录</h3>
+              <table class="w-full text-sm">
+                <thead class="text-xs text-deep-500 bg-deep-50"><tr class="text-left"><th class="px-3 py-2.5">时间</th><th>用户</th><th>来源</th><th>风险类型</th><th>处置</th><th>原文（摘要）</th><th>操作</th></tr></thead>
+                <tbody>
+                  <tr class="border-b border-deep-50"><td class="px-3 py-3 text-xs">10:23</td><td>张大海</td><td>聊天</td><td><span class="text-[10px] px-2 py-0.5 bg-amber-50 text-amber-700 rounded">联系方式</span></td><td><span class="text-[10px] text-amber-600">本地脱敏</span></td><td class="text-xs text-deep-700">"我微信号是 ***"</td><td><a class="text-ocean-600 text-xs">查看</a></td></tr>
+                  <tr class="border-b border-deep-50"><td class="px-3 py-3 text-xs">10:18</td><td>陈某</td><td>聊天</td><td><span class="text-[10px] px-2 py-0.5 bg-rose-50 text-rose-700 rounded">违规诱导</span></td><td><span class="text-[10px] text-rose-600">block · 警告</span></td><td class="text-xs text-deep-700">"私下联系绕过平台"</td><td><a class="text-ocean-600 text-xs">查看</a></td></tr>
+                  <tr class="border-b border-deep-50"><td class="px-3 py-3 text-xs">10:05</td><td>李某</td><td>简历</td><td><span class="text-[10px] px-2 py-0.5 bg-amber-50 text-amber-700 rounded">广告</span></td><td><span class="text-[10px] text-amber-600">review</span></td><td class="text-xs text-deep-700">"加我了解更多优质..."</td><td><a class="text-ocean-600 text-xs mr-2">通过</a><a class="text-rose-500 text-xs">驳回</a></td></tr>
+                  <tr class="border-b border-deep-50 bg-rose-50/30"><td class="px-3 py-3 text-xs">09:42</td><td>王某</td><td>聊天</td><td><span class="text-[10px] px-2 py-0.5 bg-rose-50 text-rose-700 rounded">第 4 次违规</span></td><td><span class="text-[10px] text-rose-600">永久封禁</span></td><td class="text-xs text-deep-700">"...涉及暴力描述"</td><td><a class="text-ocean-600 text-xs">查看</a></td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+  </div>
+
+  <!-- 8. RBAC 角色 -->
+  <div>
+    <span class="label">08 · 角色与权限（RBAC）</span>
+    <div class="pc">
+      <div class="pc-bar"><span class="dot bg-rose-400"></span><span class="dot bg-amber-400"></span><span class="dot bg-emerald-400"></span><span class="ml-4 text-xs">/sys/roles</span></div>
+      <div class="flex-1 flex">
+        <aside class="w-56 bg-deep-900 p-4">
+          <div class="flex items-center gap-2 px-2 pb-4 border-b border-deep-700"><div class="w-8 h-8 bg-ocean-600 rounded-lg flex items-center justify-center text-white text-sm">🛡️</div><span class="text-white font-semibold text-sm">运营后台</span></div>
+          <div class="nav-section">概览</div>
+          <nav class="space-y-0.5">
+            <div class="nav-item">📊 数据看板</div>
+          </nav>
+          <div class="nav-section">审核</div>
+          <nav class="space-y-0.5">
+            <div class="nav-item">🏢 企业认证 <span class="ml-auto text-[10px] bg-rose-500 px-1.5 rounded">12</span></div>
+            <div class="nav-item">📋 职位审核 <span class="ml-auto text-[10px] bg-rose-500 px-1.5 rounded">28</span></div>
+            <div class="nav-item">📜 证书审核 <span class="ml-auto text-[10px] bg-rose-500 px-1.5 rounded">45</span></div>
+          </nav>
+          <div class="nav-section">用户/风控</div>
+          <nav class="space-y-0.5">
+            <div class="nav-item">👥 用户管理</div>
+            <div class="nav-item">🚫 黑名单</div>
+            <div class="nav-item">⚠️ 违规处理</div>
+            <div class="nav-item">📢 投诉举报 <span class="ml-auto text-[10px] bg-rose-500 px-1.5 rounded">7</span></div>
+          </nav>
+          <div class="nav-section">系统</div>
+          <nav class="space-y-0.5">
+            <div class="nav-item active">🔧 RBAC</div>
+            <div class="nav-item">⚙️ 配置项</div>
+            <div class="nav-item">📜 审计日志</div>
+          </nav>
+        </aside>
+        <main class="flex-1 bg-deep-50 flex">
+          <div class="w-72 bg-white border-r border-deep-100">
+            <div class="p-3 border-b border-deep-100 flex justify-between items-center"><h3 class="text-sm font-semibold">角色（7）</h3><button class="text-xs text-ocean-600">+ 新增</button></div>
+            <div class="divide-y divide-deep-100">
+              <div class="p-3 bg-ocean-50 border-l-2 border-ocean-600"><p class="font-medium text-sm">超级管理员</p><p class="text-[11px] text-deep-500 mt-1">2 名 · 全部权限</p></div>
+              <div class="p-3"><p class="font-medium text-sm">审核员</p><p class="text-[11px] text-deep-500 mt-1">5 名 · 三类审核</p></div>
+              <div class="p-3"><p class="font-medium text-sm">运营</p><p class="text-[11px] text-deep-500 mt-1">3 名 · 内容/推送</p></div>
+              <div class="p-3"><p class="font-medium text-sm">客服</p><p class="text-[11px] text-deep-500 mt-1">4 名 · 投诉/申诉</p></div>
+              <div class="p-3"><p class="font-medium text-sm">财务</p><p class="text-[11px] text-deep-500 mt-1">1 名 · 订单</p></div>
+              <div class="p-3"><p class="font-medium text-sm">风控</p><p class="text-[11px] text-deep-500 mt-1">2 名 · 黑名单/违规</p></div>
+              <div class="p-3"><p class="font-medium text-sm">只读</p><p class="text-[11px] text-deep-500 mt-1">1 名 · 数据查看</p></div>
+            </div>
+          </div>
+          <div class="flex-1 p-6 overflow-auto">
+            <div class="bg-white rounded-2xl p-6">
+              <div class="flex justify-between items-start mb-5"><div><h3 class="font-bold text-lg">审核员</h3><p class="text-xs text-deep-500 mt-1">code: auditor · 数据范围：全部 · 5 名成员</p></div><div class="flex gap-2"><button class="text-xs px-3 py-1.5 border border-deep-200 rounded">编辑</button><button class="text-xs px-3 py-1.5 bg-rose-50 text-rose-600 rounded">删除</button></div></div>
+              <div>
+                <p class="font-semibold text-sm mb-3">权限点（已勾选 14 / 全部 47）</p>
+                <div class="space-y-3 text-sm">
+                  <div>
+                    <p class="text-xs text-deep-500 mb-2">企业审核</p>
+                    <div class="grid grid-cols-3 gap-2 pl-3">
+                      <label class="flex gap-2 text-xs"><input type="checkbox" checked> 列表查看 (company:list)</label>
+                      <label class="flex gap-2 text-xs"><input type="checkbox" checked> 详情查看 (company:detail)</label>
+                      <label class="flex gap-2 text-xs"><input type="checkbox" checked> 通过/驳回 (company:audit)</label>
+                      <label class="flex gap-2 text-xs"><input type="checkbox"> 强制冻结 (company:freeze)</label>
+                    </div>
+                  </div>
+                  <div>
+                    <p class="text-xs text-deep-500 mb-2">职位审核</p>
+                    <div class="grid grid-cols-3 gap-2 pl-3">
+                      <label class="flex gap-2 text-xs"><input type="checkbox" checked> 列表查看 (job:list)</label>
+                      <label class="flex gap-2 text-xs"><input type="checkbox" checked> 通过/驳回 (job:audit)</label>
+                      <label class="flex gap-2 text-xs"><input type="checkbox"> 强制下线 (job:offline)</label>
+                    </div>
+                  </div>
+                  <div>
+                    <p class="text-xs text-deep-500 mb-2">证书审核</p>
+                    <div class="grid grid-cols-3 gap-2 pl-3">
+                      <label class="flex gap-2 text-xs"><input type="checkbox" checked> 通过/驳回 (cert:audit)</label>
+                    </div>
+                  </div>
+                  <div>
+                    <p class="text-xs text-deep-500 mb-2">用户管理</p>
+                    <div class="grid grid-cols-3 gap-2 pl-3">
+                      <label class="flex gap-2 text-xs"><input type="checkbox"> 封禁账号 (user:ban)</label>
+                      <label class="flex gap-2 text-xs"><input type="checkbox"> 删除 (user:delete)</label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+  </div>
+
+  <!-- 9. 系统配置 -->
+  <div>
+    <span class="label">09 · 系统配置</span>
+    <div class="pc">
+      <div class="pc-bar"><span class="dot bg-rose-400"></span><span class="dot bg-amber-400"></span><span class="dot bg-emerald-400"></span><span class="ml-4 text-xs">/sys/config</span></div>
+      <div class="flex-1 flex">
+        <aside class="w-56 bg-deep-900 p-4">
+          <div class="flex items-center gap-2 px-2 pb-4 border-b border-deep-700"><div class="w-8 h-8 bg-ocean-600 rounded-lg flex items-center justify-center text-white text-sm">🛡️</div><span class="text-white font-semibold text-sm">运营后台</span></div>
+          <div class="nav-section">概览</div>
+          <nav class="space-y-0.5">
+            <div class="nav-item">📊 数据看板</div>
+          </nav>
+          <div class="nav-section">审核</div>
+          <nav class="space-y-0.5">
+            <div class="nav-item">🏢 企业认证 <span class="ml-auto text-[10px] bg-rose-500 px-1.5 rounded">12</span></div>
+            <div class="nav-item">📋 职位审核 <span class="ml-auto text-[10px] bg-rose-500 px-1.5 rounded">28</span></div>
+            <div class="nav-item">📜 证书审核 <span class="ml-auto text-[10px] bg-rose-500 px-1.5 rounded">45</span></div>
+          </nav>
+          <div class="nav-section">用户/风控</div>
+          <nav class="space-y-0.5">
+            <div class="nav-item">👥 用户管理</div>
+            <div class="nav-item">🚫 黑名单</div>
+            <div class="nav-item">⚠️ 违规处理</div>
+            <div class="nav-item">📢 投诉举报 <span class="ml-auto text-[10px] bg-rose-500 px-1.5 rounded">7</span></div>
+          </nav>
+          <div class="nav-section">系统</div>
+          <nav class="space-y-0.5">
+            <div class="nav-item">🔧 RBAC</div>
+            <div class="nav-item active">⚙️ 配置项</div>
+            <div class="nav-item">📜 审计日志</div>
+          </nav>
+        </aside>
+        <main class="flex-1 bg-deep-50">
+          <div class="bg-white px-8 py-3 border-b border-deep-100"><h2 class="font-semibold">系统配置项</h2></div>
+          <div class="p-6 grid grid-cols-2 gap-5">
+            <div class="bg-white rounded-2xl p-5">
+              <h3 class="font-semibold text-sm mb-4">推荐算法</h3>
+              <div class="space-y-3 text-sm">
+                <div class="flex justify-between items-center"><span class="text-deep-700">权重 · 培训记录</span><input value="0.25" class="border border-deep-200 rounded px-3 py-1 w-20 text-right outline-none"></div>
+                <div class="flex justify-between items-center"><span class="text-deep-700">权重 · 证书等级</span><input value="0.25" class="border border-deep-200 rounded px-3 py-1 w-20 text-right outline-none"></div>
+                <div class="flex justify-between items-center"><span class="text-deep-700">权重 · 海域经验</span><input value="0.20" class="border border-deep-200 rounded px-3 py-1 w-20 text-right outline-none"></div>
+                <div class="flex justify-between items-center"><span class="text-deep-700">权重 · 船型经验</span><input value="0.15" class="border border-deep-200 rounded px-3 py-1 w-20 text-right outline-none"></div>
+                <div class="flex justify-between items-center"><span class="text-deep-700">权重 · 历史行为</span><input value="0.15" class="border border-deep-200 rounded px-3 py-1 w-20 text-right outline-none"></div>
+              </div>
+            </div>
+            <div class="bg-white rounded-2xl p-5">
+              <h3 class="font-semibold text-sm mb-4">业务阈值</h3>
+              <div class="space-y-3 text-sm">
+                <div class="flex justify-between items-center"><span class="text-deep-700">同职位投递间隔（小时）</span><input value="24" class="border border-deep-200 rounded px-3 py-1 w-20 text-right outline-none"></div>
+                <div class="flex justify-between items-center"><span class="text-deep-700">面试确认超时（小时）</span><input value="24" class="border border-deep-200 rounded px-3 py-1 w-20 text-right outline-none"></div>
+                <div class="flex justify-between items-center"><span class="text-deep-700">录用确认超时（小时）</span><input value="48" class="border border-deep-200 rounded px-3 py-1 w-20 text-right outline-none"></div>
+                <div class="flex justify-between items-center"><span class="text-deep-700">企业 1h 内最多发布数</span><input value="10" class="border border-deep-200 rounded px-3 py-1 w-20 text-right outline-none"></div>
+                <div class="flex justify-between items-center"><span class="text-deep-700">聊天每分钟最多消息</span><input value="20" class="border border-deep-200 rounded px-3 py-1 w-20 text-right outline-none"></div>
+              </div>
+            </div>
+            <div class="bg-white rounded-2xl p-5">
+              <h3 class="font-semibold text-sm mb-4">VIP 价格</h3>
+              <div class="space-y-3 text-sm">
+                <div class="flex justify-between items-center"><span class="text-deep-700">基础版（月）</span><div class="flex items-center gap-1">¥<input value="299" class="border border-deep-200 rounded px-3 py-1 w-20 text-right outline-none"></div></div>
+                <div class="flex justify-between items-center"><span class="text-deep-700">标准版（季）</span><div class="flex items-center gap-1">¥<input value="899" class="border border-deep-200 rounded px-3 py-1 w-20 text-right outline-none"></div></div>
+                <div class="flex justify-between items-center"><span class="text-deep-700">企业版（年）</span><div class="flex items-center gap-1">¥<input value="2999" class="border border-deep-200 rounded px-3 py-1 w-20 text-right outline-none"></div></div>
+                <div class="flex justify-between items-center"><span class="text-deep-700">旗舰版（年）</span><div class="flex items-center gap-1">¥<input value="9999" class="border border-deep-200 rounded px-3 py-1 w-20 text-right outline-none"></div></div>
+              </div>
+            </div>
+            <div class="bg-white rounded-2xl p-5">
+              <h3 class="font-semibold text-sm mb-4">安全</h3>
+              <div class="space-y-3 text-sm">
+                <div class="flex justify-between items-center"><span class="text-deep-700">密码强度</span><span class="text-emerald-600">已启用 bcrypt cost=12</span></div>
+                <div class="flex justify-between items-center"><span class="text-deep-700">登录失败锁定</span><input value="5" class="border border-deep-200 rounded px-3 py-1 w-20 text-right outline-none"> 次</div>
+                <div class="flex justify-between items-center"><span class="text-deep-700">超管 TOTP</span><span class="text-emerald-600">✓ 强制启用</span></div>
+                <div class="flex justify-between items-center"><span class="text-deep-700">导出审批阈值</span><input value="100" class="border border-deep-200 rounded px-3 py-1 w-20 text-right outline-none"> 条</div>
+              </div>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+  </div>
+
+  <!-- 10. 审计日志 -->
+  <div>
+    <span class="label">10 · 审计日志</span>
+    <div class="pc">
+      <div class="pc-bar"><span class="dot bg-rose-400"></span><span class="dot bg-amber-400"></span><span class="dot bg-emerald-400"></span><span class="ml-4 text-xs">/sys/audit-log</span></div>
+      <div class="flex-1 flex">
+        <aside class="w-56 bg-deep-900 p-4">
+          <div class="flex items-center gap-2 px-2 pb-4 border-b border-deep-700"><div class="w-8 h-8 bg-ocean-600 rounded-lg flex items-center justify-center text-white text-sm">🛡️</div><span class="text-white font-semibold text-sm">运营后台</span></div>
+          <div class="nav-section">概览</div>
+          <nav class="space-y-0.5">
+            <div class="nav-item">📊 数据看板</div>
+          </nav>
+          <div class="nav-section">审核</div>
+          <nav class="space-y-0.5">
+            <div class="nav-item">🏢 企业认证 <span class="ml-auto text-[10px] bg-rose-500 px-1.5 rounded">12</span></div>
+            <div class="nav-item">📋 职位审核 <span class="ml-auto text-[10px] bg-rose-500 px-1.5 rounded">28</span></div>
+            <div class="nav-item">📜 证书审核 <span class="ml-auto text-[10px] bg-rose-500 px-1.5 rounded">45</span></div>
+          </nav>
+          <div class="nav-section">用户/风控</div>
+          <nav class="space-y-0.5">
+            <div class="nav-item">👥 用户管理</div>
+            <div class="nav-item">🚫 黑名单</div>
+            <div class="nav-item">⚠️ 违规处理</div>
+            <div class="nav-item">📢 投诉举报 <span class="ml-auto text-[10px] bg-rose-500 px-1.5 rounded">7</span></div>
+          </nav>
+          <div class="nav-section">系统</div>
+          <nav class="space-y-0.5">
+            <div class="nav-item">🔧 RBAC</div>
+            <div class="nav-item">⚙️ 配置项</div>
+            <div class="nav-item active">📜 审计日志</div>
+          </nav>
+        </aside>
+        <main class="flex-1 bg-deep-50">
+          <div class="bg-white px-8 py-3 border-b border-deep-100 flex justify-between"><h2 class="font-semibold">审计日志</h2><button class="text-xs px-3 py-1.5 border border-deep-200 rounded">导出（需审批）</button></div>
+          <div class="p-6">
+            <div class="bg-white rounded-2xl p-4">
+              <div class="flex gap-3 mb-4">
+                <input placeholder="操作人/IP" class="flex-1 border border-deep-200 rounded-lg px-3 py-2 text-sm outline-none">
+                <select class="border border-deep-200 rounded-lg px-3 py-2 text-sm"><option>全部模块</option></select>
+                <input type="date" value="2026-05-10" class="border border-deep-200 rounded-lg px-3 py-2 text-sm">
+                <button class="bg-ocean-600 text-white px-4 py-2 rounded-lg text-sm">查询</button>
+              </div>
+              <table class="w-full text-sm">
+                <thead class="text-xs text-deep-500 bg-deep-50"><tr class="text-left"><th class="px-3 py-2.5">时间</th><th>操作人</th><th>模块</th><th>操作</th><th>对象</th><th>IP</th><th>结果</th></tr></thead>
+                <tbody>
+                  <tr class="border-b border-deep-50"><td class="px-3 py-3 text-xs">10:34:22</td><td>李审核</td><td>企业审核</td><td>审核通过</td><td>company#1024</td><td class="text-xs">61.130.*.*</td><td><span class="text-[11px] text-emerald-600">成功</span></td></tr>
+                  <tr class="border-b border-deep-50"><td class="px-3 py-3 text-xs">10:32:15</td><td>王运营</td><td>用户管理</td><td>封禁账号</td><td>user#9876</td><td class="text-xs">61.130.*.*</td><td><span class="text-[11px] text-emerald-600">成功</span></td></tr>
+                  <tr class="border-b border-deep-50"><td class="px-3 py-3 text-xs">10:28:51</td><td>张风控</td><td>违规处理</td><td>永久封禁</td><td>user#1234</td><td class="text-xs">61.130.*.*</td><td><span class="text-[11px] text-emerald-600">成功</span></td></tr>
+                  <tr class="border-b border-deep-50 bg-rose-50/30"><td class="px-3 py-3 text-xs">10:15:33</td><td>陈客服</td><td>用户管理</td><td>导出（被拒）</td><td>500 条</td><td class="text-xs">61.130.*.*</td><td><span class="text-[11px] text-rose-600">失败 · 超阈值</span></td></tr>
+                  <tr class="border-b border-deep-50"><td class="px-3 py-3 text-xs">10:08:42</td><td>李审核</td><td>职位审核</td><td>批量通过</td><td>job ×8</td><td class="text-xs">61.130.*.*</td><td><span class="text-[11px] text-emerald-600">成功</span></td></tr>
+                  <tr><td class="px-3 py-3 text-xs">09:55:11</td><td>admin</td><td>系统</td><td>登录</td><td>—</td><td class="text-xs">61.130.*.*</td><td><span class="text-[11px] text-emerald-600">成功 · TOTP</span></td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+  </div>
+
+  </div>
+  <footer class="mt-16 text-center text-xs text-deep-500">运营后台共 10 屏 · <a href="index.html" class="text-ocean-500">返回导航</a></footer>
+</div>
+</body>
+</html>

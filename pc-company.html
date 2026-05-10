@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>企业 PC 端 · 渔匠之光</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config={theme:{extend:{colors:{
+  ocean:{50:'#ecfeff',100:'#cffafe',500:'#06b6d4',600:'#0891b2',700:'#0e7490',900:'#164e63'},
+  deep:{50:'#f8fafc',100:'#f1f5f9',300:'#cbd5e1',500:'#64748b',700:'#334155',900:'#0f172a'},
+  lighthouse:{500:'#f59e0b',600:'#d97706',700:'#b45309'}
+}}}}
+</script>
+<style>
+  body{background:#0b1220;color:#cbd5e1;font-family:"PingFang SC",-apple-system,sans-serif;}
+  .pc{width:1280px;height:800px;background:#fff;border-radius:12px;box-shadow:0 30px 80px rgba(0,0,0,.5),0 0 0 1px #334155;overflow:hidden;color:#0f172a;display:flex;flex-direction:column;}
+  .pc-bar{height:32px;background:#e2e8f0;display:flex;align-items:center;padding:0 12px;gap:6px;flex-shrink:0;}
+  .pc-bar .dot{width:12px;height:12px;border-radius:50%;}
+  .label{font-size:12px;color:#94a3b8;font-weight:500;letter-spacing:.05em;text-transform:uppercase;margin-bottom:8px;display:block;}
+  .nav-section{font-size:10px;color:#94a3b8;letter-spacing:.1em;padding:10px 14px 4px;text-transform:uppercase;}
+  .nav-item{padding:9px 14px;border-radius:8px;display:flex;align-items:center;gap:10px;font-size:13px;color:#64748b;cursor:pointer;}
+  .nav-item.active{background:#0891b2;color:#fff;}
+  .nav-item:hover:not(.active){background:#f1f5f9;}
+</style>
+</head>
+<body>
+<div class="max-w-[1700px] mx-auto px-8 py-12">
+  <header class="mb-12 flex items-center justify-between">
+    <div>
+      <a href="index.html" class="text-deep-500 text-sm hover:text-ocean-500">← 返回导航</a>
+      <h1 class="text-3xl font-bold text-white mt-2">企业 PC 端 <span class="text-deep-500 text-base font-normal">/ Desktop 1280×800</span></h1>
+      <p class="text-deep-500 mt-1">12 屏 · 批量招聘 / 数据 / 商业化 · 桌面浏览器</p>
+    </div>
+    <div class="text-xs text-deep-500">PRD §11 / §24</div>
+  </header>
+
+  <div class="space-y-12">
+
+  <!-- 1. 登录 -->
+  <div>
+    <span class="label">01 · 登录</span>
+    <div class="pc">
+      <div class="pc-bar"><span class="dot bg-rose-400"></span><span class="dot bg-amber-400"></span><span class="dot bg-emerald-400"></span><span class="ml-4 text-xs text-deep-500">https://employer.yujiang.com/login</span></div>
+      <div class="flex-1 flex">
+        <div class="flex-1 bg-gradient-to-br from-ocean-700 to-ocean-900 text-white p-16 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center gap-3 mb-12"><div class="w-12 h-12 bg-white/15 rounded-2xl flex items-center justify-center text-2xl">⚓</div><span class="text-2xl font-bold">渔匠之光 · 企业版</span></div>
+            <h2 class="text-4xl font-bold leading-tight mb-4">高效招聘<br>真实船员，安心用工</h2>
+            <p class="text-ocean-100 text-lg">连接中渔学院 6 万+ 实名认证船员</p>
+          </div>
+          <div class="flex gap-8 text-center text-sm opacity-80">
+            <div><p class="text-3xl font-bold text-amber-300">6.2万</p><p class="mt-1">实名船员</p></div>
+            <div><p class="text-3xl font-bold text-amber-300">3000+</p><p class="mt-1">认证企业</p></div>
+            <div><p class="text-3xl font-bold text-amber-300">87%</p><p class="mt-1">到岗率</p></div>
+          </div>
+        </div>
+        <div class="w-[480px] bg-white p-16 flex flex-col justify-center">
+          <h3 class="text-2xl font-bold mb-2">企业登录</h3>
+          <p class="text-deep-500 text-sm mb-10">使用您的企业管理员账号</p>
+          <div class="space-y-5">
+            <div><label class="text-xs text-deep-500">手机号</label><input value="138 8888 0000" class="w-full mt-1 border-b-2 border-ocean-600 py-2 outline-none font-medium"></div>
+            <div><label class="text-xs text-deep-500">密码</label><input type="password" value="********" class="w-full mt-1 border-b border-deep-300 py-2 outline-none"></div>
+            <div class="flex justify-between text-xs"><label class="flex gap-2 items-center text-deep-500"><input type="checkbox" checked> 记住我</label><a class="text-ocean-600">忘记密码 ›</a></div>
+            <button class="w-full mt-4 bg-ocean-600 text-white font-semibold py-3 rounded-xl">登录</button>
+            <div class="flex items-center gap-3 text-xs text-deep-400"><div class="flex-1 h-px bg-deep-200"></div><span>或</span><div class="flex-1 h-px bg-deep-200"></div></div>
+            <button class="w-full border border-deep-300 py-3 rounded-xl text-sm">短信验证码登录</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. 数据看板 -->
+  <div>
+    <span class="label">02 · 数据看板</span>
+    <div class="pc">
+      <div class="pc-bar"><span class="dot bg-rose-400"></span><span class="dot bg-amber-400"></span><span class="dot bg-emerald-400"></span><span class="ml-4 text-xs text-deep-500">/dashboard</span></div>
+      <div class="flex-1 flex">
+        <!-- Sidebar -->
+        <aside class="w-56 bg-white border-r border-deep-100 p-4 flex flex-col">
+          <div class="flex items-center gap-2 px-2 pb-4 border-b border-deep-100"><div class="w-8 h-8 bg-ocean-600 rounded-lg flex items-center justify-center text-white text-sm">⚓</div><span class="font-semibold text-sm">渔匠之光</span></div>
+          <nav class="mt-3 space-y-1 text-sm">
+            <div class="nav-item active">📊 数据看板</div>
+            <div class="nav-item">📋 职位管理</div>
+            <div class="nav-item">📨 投递管理</div>
+            <div class="nav-item">👥 简历库</div>
+            <div class="nav-item">🔍 人才搜索</div>
+            <div class="nav-item">📅 面试管理</div>
+            <div class="nav-item">💬 消息中心</div>
+            <div class="nav-item">⭐ 评价管理</div>
+            <div class="nav-item">👥 成员管理</div>
+            <div class="nav-item">🏢 企业资料</div>
+            <div class="nav-item">💎 VIP 中心</div>
+            <div class="nav-item">⚙️ 设置</div>
+          </nav>
+          <div class="mt-auto bg-ocean-50 rounded-xl p-3 text-xs">
+            <p class="font-medium">VIP · 标准版</p><p class="text-deep-500 mt-1">剩余 67 天</p>
+            <button class="text-ocean-600 mt-2">续费 ›</button>
+          </div>
+        </aside>
+        <!-- Main -->
+        <main class="flex-1 bg-deep-50 overflow-hidden">
+          <div class="bg-white px-8 py-3 border-b border-deep-100 flex justify-between items-center"><h2 class="font-semibold">数据看板</h2><div class="flex items-center gap-3 text-sm text-deep-500"><span>🔔</span><span class="w-8 h-8 bg-ocean-100 rounded-full flex items-center justify-center">李</span></div></div>
+          <div class="p-6 space-y-5">
+            <div class="grid grid-cols-4 gap-4">
+              <div class="bg-white rounded-2xl p-5"><p class="text-xs text-deep-500">在线职位</p><p class="text-3xl font-bold mt-2">8</p><p class="text-[11px] text-emerald-600 mt-1">↑ 比昨日 +2</p></div>
+              <div class="bg-white rounded-2xl p-5"><p class="text-xs text-deep-500">今日新增投递</p><p class="text-3xl font-bold mt-2">23</p><p class="text-[11px] text-emerald-600 mt-1">↑ 比昨日 +5</p></div>
+              <div class="bg-white rounded-2xl p-5"><p class="text-xs text-deep-500">面试中</p><p class="text-3xl font-bold mt-2">5</p><p class="text-[11px] text-deep-500 mt-1">— 持平</p></div>
+              <div class="bg-white rounded-2xl p-5"><p class="text-xs text-deep-500">本月到岗</p><p class="text-3xl font-bold mt-2">8</p><p class="text-[11px] text-emerald-600 mt-1">到岗率 87%</p></div>
+            </div>
+            <div class="grid grid-cols-3 gap-4">
+              <div class="col-span-2 bg-white rounded-2xl p-5">
+                <div class="flex justify-between items-center mb-4"><h3 class="font-semibold text-sm">招聘漏斗 · 近 30 天</h3><span class="text-xs text-deep-500">投递 / 沟通 / 面试 / 录用 / 上船</span></div>
+                <div class="space-y-2">
+                  <div><div class="flex justify-between text-xs mb-1"><span>投递</span><span>156</span></div><div class="h-3 bg-ocean-500 rounded"></div></div>
+                  <div><div class="flex justify-between text-xs mb-1"><span>沟通</span><span>98</span></div><div class="h-3 bg-ocean-500 rounded" style="width:62%"></div></div>
+                  <div><div class="flex justify-between text-xs mb-1"><span>面试</span><span>52</span></div><div class="h-3 bg-ocean-500 rounded" style="width:33%"></div></div>
+                  <div><div class="flex justify-between text-xs mb-1"><span>录用</span><span>14</span></div><div class="h-3 bg-lighthouse-500 rounded" style="width:9%"></div></div>
+                  <div><div class="flex justify-between text-xs mb-1"><span>上船</span><span>11</span></div><div class="h-3 bg-emerald-500 rounded" style="width:7%"></div></div>
+                </div>
+              </div>
+              <div class="bg-white rounded-2xl p-5">
+                <h3 class="font-semibold text-sm mb-4">企业信用</h3>
+                <div class="text-center"><p class="text-5xl font-bold text-amber-500">92</p><p class="text-xs text-deep-500 mt-1">A+ 优质企业</p></div>
+                <div class="mt-4 space-y-1.5 text-xs">
+                  <div class="flex justify-between"><span class="text-deep-500">实名认证</span><span class="text-emerald-600">+10</span></div>
+                  <div class="flex justify-between"><span class="text-deep-500">职位真实性</span><span class="text-emerald-600">+15</span></div>
+                  <div class="flex justify-between"><span class="text-deep-500">到岗率</span><span class="text-emerald-600">+12</span></div>
+                  <div class="flex justify-between"><span class="text-deep-500">投诉</span><span class="text-rose-500">-5</span></div>
+                </div>
+              </div>
+            </div>
+            <div class="bg-white rounded-2xl p-5">
+              <h3 class="font-semibold text-sm mb-3">职位表现 TOP 5</h3>
+              <table class="w-full text-sm">
+                <thead class="text-xs text-deep-500 border-b border-deep-100"><tr class="text-left"><th class="py-2">职位</th><th>浏览</th><th>投递</th><th>沟通</th><th>录用</th><th>状态</th></tr></thead>
+                <tbody class="text-sm">
+                  <tr class="border-b border-deep-50"><td class="py-2">一级船长</td><td>1,245</td><td>23</td><td>8</td><td>2</td><td><span class="text-[11px] px-2 py-0.5 bg-emerald-50 text-emerald-700 rounded">在线</span></td></tr>
+                  <tr class="border-b border-deep-50"><td class="py-2">轮机长</td><td>892</td><td>15</td><td>6</td><td>1</td><td><span class="text-[11px] px-2 py-0.5 bg-emerald-50 text-emerald-700 rounded">在线</span></td></tr>
+                  <tr class="border-b border-deep-50"><td class="py-2">大副</td><td>654</td><td>12</td><td>4</td><td>2</td><td><span class="text-[11px] px-2 py-0.5 bg-emerald-50 text-emerald-700 rounded">在线</span></td></tr>
+                  <tr><td class="py-2">普通船员</td><td>423</td><td>18</td><td>5</td><td>3</td><td><span class="text-[11px] px-2 py-0.5 bg-emerald-50 text-emerald-700 rounded">在线</span></td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. 职位管理 -->
+  <div>
+    <span class="label">03 · 职位管理</span>
+    <div class="pc">
+      <div class="pc-bar"><span class="dot bg-rose-400"></span><span class="dot bg-amber-400"></span><span class="dot bg-emerald-400"></span><span class="ml-4 text-xs text-deep-500">/jobs</span></div>
+      <div class="flex-1 flex">
+        <aside class="w-56 bg-white border-r border-deep-100 p-4">
+          <div class="flex items-center gap-2 px-2 pb-4 border-b border-deep-100"><div class="w-8 h-8 bg-ocean-600 rounded-lg flex items-center justify-center text-white text-sm">⚓</div><span class="font-semibold text-sm">渔匠之光</span></div>
+          <nav class="mt-3 space-y-1 text-sm">
+            <div class="nav-item">📊 数据看板</div>
+            <div class="nav-item active">📋 职位管理</div>
+            <div class="nav-item">📨 投递管理</div>
+            <div class="nav-item">👥 简历库</div>
+            <div class="nav-item">🔍 人才搜索</div>
+            <div class="nav-item">📅 面试管理</div>
+            <div class="nav-item">💬 消息中心</div>
+            <div class="nav-item">⭐ 评价管理</div>
+            <div class="nav-item">👥 成员管理</div>
+            <div class="nav-item">🏢 企业资料</div>
+            <div class="nav-item">💎 VIP 中心</div>
+            <div class="nav-item">⚙️ 设置</div>
+          </nav>
+        </aside>
+        <main class="flex-1 bg-deep-50 overflow-hidden">
+          <div class="bg-white px-8 py-3 border-b border-deep-100 flex justify-between items-center"><h2 class="font-semibold">职位管理</h2><button class="bg-ocean-600 text-white px-4 py-2 rounded-lg text-sm">+ 发布职位</button></div>
+          <div class="p-6">
+            <div class="bg-white rounded-2xl p-4">
+              <div class="flex gap-3 mb-4">
+                <input placeholder="搜索职位名称" class="flex-1 border border-deep-200 rounded-lg px-3 py-2 text-sm outline-none">
+                <select class="border border-deep-200 rounded-lg px-3 py-2 text-sm"><option>全部状态</option><option>在线中</option><option>审核中</option><option>已下线</option></select>
+                <select class="border border-deep-200 rounded-lg px-3 py-2 text-sm"><option>全部船型</option></select>
+                <button class="bg-ocean-50 text-ocean-700 px-4 py-2 rounded-lg text-sm">查询</button>
+              </div>
+              <table class="w-full text-sm">
+                <thead class="text-xs text-deep-500 bg-deep-50">
+                  <tr class="text-left"><th class="px-3 py-2.5"><input type="checkbox"></th><th>职位</th><th>船型/海域</th><th>薪资</th><th>浏览</th><th>投递</th><th>状态</th><th>发布时间</th><th>操作</th></tr>
+                </thead>
+                <tbody class="text-sm">
+                  <tr class="border-b border-deep-50 hover:bg-deep-50"><td class="px-3 py-3"><input type="checkbox"></td><td><div class="flex gap-1.5 items-center"><span class="font-medium">一级船长</span><span class="text-[10px] px-1.5 py-0.5 bg-rose-50 text-rose-600 rounded">急招</span></div></td><td class="text-xs text-deep-500">围网 · 南海</td><td class="text-rose-600 font-medium">1.5-2万</td><td>1,245</td><td>23</td><td><span class="text-[11px] px-2 py-0.5 bg-emerald-50 text-emerald-700 rounded">在线中</span></td><td class="text-xs text-deep-500">3天前</td><td><a class="text-ocean-600 text-xs mr-2">编辑</a><a class="text-deep-400 text-xs">下线</a></td></tr>
+                  <tr class="border-b border-deep-50 hover:bg-deep-50"><td class="px-3 py-3"><input type="checkbox"></td><td><span class="font-medium">轮机长</span></td><td class="text-xs text-deep-500">拖网 · 东海</td><td class="text-rose-600 font-medium">1.3-1.8万</td><td>892</td><td>15</td><td><span class="text-[11px] px-2 py-0.5 bg-emerald-50 text-emerald-700 rounded">在线中</span></td><td class="text-xs text-deep-500">5天前</td><td><a class="text-ocean-600 text-xs mr-2">编辑</a><a class="text-deep-400 text-xs">下线</a></td></tr>
+                  <tr class="border-b border-deep-50 hover:bg-deep-50"><td class="px-3 py-3"><input type="checkbox"></td><td><span class="font-medium">大副</span></td><td class="text-xs text-deep-500">围网 · 南海</td><td class="text-rose-600 font-medium">1.2-1.5万</td><td>654</td><td>12</td><td><span class="text-[11px] px-2 py-0.5 bg-amber-50 text-amber-700 rounded">审核中</span></td><td class="text-xs text-deep-500">1小时前</td><td><a class="text-deep-400 text-xs">查看</a></td></tr>
+                  <tr class="border-b border-deep-50 hover:bg-deep-50"><td class="px-3 py-3"><input type="checkbox"></td><td><span class="font-medium">普通船员</span></td><td class="text-xs text-deep-500">钓具 · 黄海</td><td class="text-rose-600 font-medium">7-9千</td><td>423</td><td>18</td><td><span class="text-[11px] px-2 py-0.5 bg-emerald-50 text-emerald-700 rounded">在线中</span></td><td class="text-xs text-deep-500">12天前</td><td><a class="text-ocean-600 text-xs mr-2">编辑</a><a class="text-deep-400 text-xs">下线</a></td></tr>
+                  <tr class="border-b border-deep-50 hover:bg-deep-50 opacity-60"><td class="px-3 py-3"><input type="checkbox"></td><td><span class="font-medium">大管轮</span></td><td class="text-xs text-deep-500">围网 · 南海</td><td class="text-rose-600 font-medium">1万-1.3万</td><td>234</td><td>5</td><td><span class="text-[11px] px-2 py-0.5 bg-deep-100 text-deep-500 rounded">已下线</span></td><td class="text-xs text-deep-500">25天前</td><td><a class="text-ocean-600 text-xs">重新发布</a></td></tr>
+                </tbody>
+              </table>
+              <div class="flex justify-between items-center mt-4 text-xs text-deep-500"><span>共 8 条</span><div class="flex gap-2"><button class="px-3 py-1 border border-deep-200 rounded">‹</button><button class="px-3 py-1 bg-ocean-600 text-white rounded">1</button><button class="px-3 py-1 border border-deep-200 rounded">›</button></div></div>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. 简历库 -->
+  <div>
+    <span class="label">04 · 简历库（多维筛选）</span>
+    <div class="pc">
+      <div class="pc-bar"><span class="dot bg-rose-400"></span><span class="dot bg-amber-400"></span><span class="dot bg-emerald-400"></span><span class="ml-4 text-xs text-deep-500">/resumes</span></div>
+      <div class="flex-1 flex">
+        <aside class="w-56 bg-white border-r border-deep-100 p-4">
+          <div class="flex items-center gap-2 px-2 pb-4 border-b border-deep-100"><div class="w-8 h-8 bg-ocean-600 rounded-lg flex items-center justify-center text-white text-sm">⚓</div><span class="font-semibold text-sm">渔匠之光</span></div>
+          <nav class="mt-3 space-y-1 text-sm">
+            <div class="nav-item">📊 数据看板</div>
+            <div class="nav-item">📋 职位管理</div>
+            <div class="nav-item">📨 投递管理</div>
+            <div class="nav-item active">👥 简历库</div>
+            <div class="nav-item">🔍 人才搜索</div>
+            <div class="nav-item">📅 面试管理</div>
+            <div class="nav-item">💬 消息中心</div>
+            <div class="nav-item">⭐ 评价管理</div>
+            <div class="nav-item">👥 成员管理</div>
+            <div class="nav-item">🏢 企业资料</div>
+            <div class="nav-item">💎 VIP 中心</div>
+            <div class="nav-item">⚙️ 设置</div>
+          </nav>
+        </aside>
+        <main class="flex-1 bg-deep-50 flex">
+          <!-- 筛选 -->
+          <div class="w-60 bg-white border-r border-deep-100 p-4 text-xs">
+            <h3 class="font-semibold text-sm mb-4">筛选</h3>
+            <div class="space-y-4">
+              <div><p class="text-deep-500 mb-2">证书等级</p><div class="space-y-1"><label class="flex gap-2"><input type="checkbox" checked>一级船长 (24)</label><label class="flex gap-2"><input type="checkbox">二级船长 (38)</label><label class="flex gap-2"><input type="checkbox">三级船长 (52)</label></div></div>
+              <div><p class="text-deep-500 mb-2">船型经验</p><div class="space-y-1"><label class="flex gap-2"><input type="checkbox" checked>围网 (45)</label><label class="flex gap-2"><input type="checkbox">拖网 (62)</label><label class="flex gap-2"><input type="checkbox">流网 (28)</label></div></div>
+              <div><p class="text-deep-500 mb-2">海域经验</p><div class="space-y-1"><label class="flex gap-2"><input type="checkbox" checked>南海 (32)</label><label class="flex gap-2"><input type="checkbox">东海 (45)</label><label class="flex gap-2"><input type="checkbox">远洋 (18)</label></div></div>
+              <div><p class="text-deep-500 mb-2">工作年限</p><select class="w-full border border-deep-200 rounded-lg px-2 py-1.5 text-xs"><option>不限</option><option>5 年以上</option></select></div>
+              <div><p class="text-deep-500 mb-2">信用分</p><select class="w-full border border-deep-200 rounded-lg px-2 py-1.5 text-xs"><option>不限</option><option>A+/A 级 (80+)</option></select></div>
+            </div>
+          </div>
+          <div class="flex-1 overflow-hidden">
+            <div class="bg-white px-6 py-3 border-b border-deep-100 flex justify-between items-center"><h2 class="font-semibold">简历库 · 24 名候选人</h2><div class="flex gap-2 text-xs"><select class="border border-deep-200 rounded-lg px-3 py-1.5"><option>按信用分排序</option><option>按经验排序</option></select></div></div>
+            <div class="p-6 grid grid-cols-2 gap-4">
+              <div class="bg-white rounded-2xl p-4 border border-deep-100">
+                <div class="flex items-center gap-3"><div class="w-12 h-12 rounded-2xl bg-ocean-100 flex items-center justify-center text-2xl">🧑‍✈️</div>
+                  <div class="flex-1"><div class="flex items-center gap-2"><p class="font-semibold">张大海</p><span class="text-[10px] px-1.5 py-0.5 bg-amber-50 text-amber-700 rounded">A 级 82</span></div><p class="text-xs text-deep-500 mt-0.5">38 岁 · 8 年 · 浙江舟山</p></div>
+                  <button class="text-deep-300">☆</button>
+                </div>
+                <div class="flex gap-1 mt-3 flex-wrap text-[11px]"><span class="px-2 py-0.5 bg-ocean-50 text-ocean-700 rounded">一级船长</span><span class="px-2 py-0.5 bg-ocean-50 text-ocean-700 rounded">围网 6 年</span><span class="px-2 py-0.5 bg-amber-50 text-amber-700 rounded">远洋经验</span></div>
+                <div class="flex justify-between items-center mt-3 pt-3 border-t border-deep-100"><p class="text-[11px] text-deep-500">最近活跃 2 小时前</p><button class="text-ocean-600 text-xs">查看简历 ›</button></div>
+              </div>
+              <div class="bg-white rounded-2xl p-4 border border-deep-100">
+                <div class="flex items-center gap-3"><div class="w-12 h-12 rounded-2xl bg-ocean-100 flex items-center justify-center text-2xl">🧑‍✈️</div><div class="flex-1"><div class="flex items-center gap-2"><p class="font-semibold">陈船工</p><span class="text-[10px] px-1.5 py-0.5 bg-amber-50 text-amber-700 rounded">A 级 85</span></div><p class="text-xs text-deep-500 mt-0.5">42 岁 · 12 年 · 福建厦门</p></div></div>
+                <div class="flex gap-1 mt-3 flex-wrap text-[11px]"><span class="px-2 py-0.5 bg-ocean-50 text-ocean-700 rounded">一级船长</span><span class="px-2 py-0.5 bg-ocean-50 text-ocean-700 rounded">围网 8 年</span></div>
+              </div>
+              <div class="bg-white rounded-2xl p-4 border border-deep-100"><div class="flex items-center gap-3"><div class="w-12 h-12 rounded-2xl bg-deep-100 flex items-center justify-center text-2xl">🧑‍✈️</div><div class="flex-1"><div class="flex items-center gap-2"><p class="font-semibold">李大副</p><span class="text-[10px] px-1.5 py-0.5 bg-deep-100 text-deep-700 rounded">B 级 75</span></div><p class="text-xs text-deep-500 mt-0.5">35 岁 · 6 年</p></div></div></div>
+              <div class="bg-white rounded-2xl p-4 border border-deep-100"><div class="flex items-center gap-3"><div class="w-12 h-12 rounded-2xl bg-deep-100 flex items-center justify-center text-2xl">🧑‍✈️</div><div class="flex-1"><div class="flex items-center gap-2"><p class="font-semibold">王轮机</p><span class="text-[10px] px-1.5 py-0.5 bg-amber-50 text-amber-700 rounded">A 级 88</span></div><p class="text-xs text-deep-500 mt-0.5">45 岁 · 15 年 · 山东青岛</p></div></div></div>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5. 面试管理 -->
+  <div>
+    <span class="label">05 · 面试管理</span>
+    <div class="pc">
+      <div class="pc-bar"><span class="dot bg-rose-400"></span><span class="dot bg-amber-400"></span><span class="dot bg-emerald-400"></span><span class="ml-4 text-xs text-deep-500">/interviews</span></div>
+      <div class="flex-1 flex">
+        <aside class="w-56 bg-white border-r border-deep-100 p-4">
+          <div class="flex items-center gap-2 px-2 pb-4 border-b border-deep-100"><div class="w-8 h-8 bg-ocean-600 rounded-lg flex items-center justify-center text-white text-sm">⚓</div><span class="font-semibold text-sm">渔匠之光</span></div>
+          <nav class="mt-3 space-y-1 text-sm">
+            <div class="nav-item">📊 数据看板</div>
+            <div class="nav-item">📋 职位管理</div>
+            <div class="nav-item">📨 投递管理</div>
+            <div class="nav-item">👥 简历库</div>
+            <div class="nav-item">🔍 人才搜索</div>
+            <div class="nav-item active">📅 面试管理</div>
+            <div class="nav-item">💬 消息中心</div>
+            <div class="nav-item">⭐ 评价管理</div>
+            <div class="nav-item">👥 成员管理</div>
+            <div class="nav-item">🏢 企业资料</div>
+            <div class="nav-item">💎 VIP 中心</div>
+            <div class="nav-item">⚙️ 设置</div>
+          </nav>
+        </aside>
+        <main class="flex-1 bg-deep-50">
+          <div class="bg-white px-8 py-3 border-b border-deep-100 flex justify-between"><h2 class="font-semibold">面试管理</h2><div class="flex gap-2 text-xs"><button class="px-3 py-1.5 bg-ocean-600 text-white rounded-lg">本周</button><button class="px-3 py-1.5 border border-deep-200 rounded-lg">本月</button></div></div>
+          <div class="p-6 grid grid-cols-7 gap-3">
+            <div class="text-xs text-center text-deep-500 font-medium">周一 5/5</div>
+            <div class="text-xs text-center text-deep-500 font-medium">周二 5/6</div>
+            <div class="text-xs text-center text-deep-500 font-medium">周三 5/7</div>
+            <div class="text-xs text-center text-deep-500 font-medium">周四 5/8</div>
+            <div class="text-xs text-center text-deep-500 font-medium">周五 5/9</div>
+            <div class="text-xs text-center text-deep-500 font-medium">周六 5/10</div>
+            <div class="text-xs text-center text-deep-500 font-medium">周日 5/11</div>
+            <div class="bg-white rounded-xl p-2 h-40 border border-deep-100"></div>
+            <div class="bg-white rounded-xl p-2 h-40 border border-deep-100"><div class="bg-amber-100 text-amber-800 text-[10px] rounded p-1.5">10:00 张大海<br>📞 一级船长</div></div>
+            <div class="bg-white rounded-xl p-2 h-40 border border-deep-100"><div class="bg-emerald-100 text-emerald-800 text-[10px] rounded p-1.5">14:00 陈船工<br>📹 大副</div></div>
+            <div class="bg-white rounded-xl p-2 h-40 border border-deep-100"></div>
+            <div class="bg-white rounded-xl p-2 h-40 border-2 border-ocean-600 bg-ocean-50"><div class="text-[10px] text-ocean-700 font-medium">今日</div><div class="bg-rose-100 text-rose-800 text-[10px] rounded p-1.5 mt-1">09:30 李大副<br>🚶 大副 (线下)</div><div class="bg-amber-100 text-amber-800 text-[10px] rounded p-1.5 mt-1">15:00 王轮机<br>📹 轮机长</div></div>
+            <div class="bg-white rounded-xl p-2 h-40 border border-deep-100"></div>
+            <div class="bg-white rounded-xl p-2 h-40 border border-deep-100"></div>
+          </div>
+          <div class="px-6">
+            <div class="bg-white rounded-2xl p-4">
+              <h3 class="font-semibold text-sm mb-3">即将开始</h3>
+              <div class="flex items-center gap-3 p-3 border border-amber-200 bg-amber-50 rounded-xl">
+                <div class="w-10 h-10 bg-amber-200 rounded-xl flex items-center justify-center">⏰</div>
+                <div class="flex-1"><p class="font-medium text-sm">15:00 视频面试 · 王轮机 · 轮机长</p><p class="text-xs text-deep-500 mt-0.5">还有 32 分钟开始</p></div>
+                <button class="bg-ocean-600 text-white px-4 py-2 rounded-lg text-sm">进入会议</button>
+              </div>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+  </div>
+
+  <!-- 6. 录用管理 -->
+  <div>
+    <span class="label">06 · 录用管理</span>
+    <div class="pc">
+      <div class="pc-bar"><span class="dot bg-rose-400"></span><span class="dot bg-amber-400"></span><span class="dot bg-emerald-400"></span><span class="ml-4 text-xs text-deep-500">/offers</span></div>
+      <div class="flex-1 flex">
+        <aside class="w-56 bg-white border-r border-deep-100 p-4">
+          <div class="flex items-center gap-2 px-2 pb-4 border-b border-deep-100"><div class="w-8 h-8 bg-ocean-600 rounded-lg flex items-center justify-center text-white text-sm">⚓</div><span class="font-semibold text-sm">渔匠之光</span></div>
+          <nav class="mt-3 space-y-1 text-sm">
+            <div class="nav-item">📊 数据看板</div>
+            <div class="nav-item">📋 职位管理</div>
+            <div class="nav-item active">📨 投递管理</div>
+            <div class="nav-item">👥 简历库</div>
+            <div class="nav-item">🔍 人才搜索</div>
+            <div class="nav-item">📅 面试管理</div>
+            <div class="nav-item">💬 消息中心</div>
+            <div class="nav-item">⭐ 评价管理</div>
+            <div class="nav-item">👥 成员管理</div>
+            <div class="nav-item">🏢 企业资料</div>
+            <div class="nav-item">💎 VIP 中心</div>
+            <div class="nav-item">⚙️ 设置</div>
+          </nav>
+        </aside>
+        <main class="flex-1 bg-deep-50">
+          <div class="bg-white px-8 py-3 border-b border-deep-100 flex justify-between"><h2 class="font-semibold">录用管理</h2></div>
+          <div class="p-6">
+            <div class="bg-white rounded-2xl p-4">
+              <table class="w-full text-sm">
+                <thead class="text-xs text-deep-500 bg-deep-50"><tr class="text-left"><th class="px-3 py-2.5">船员</th><th>职位</th><th>月薪</th><th>上船日期</th><th>合同期</th><th>状态</th><th>操作</th></tr></thead>
+                <tbody>
+                  <tr class="border-b border-deep-50"><td class="px-3 py-3"><div class="flex items-center gap-2"><div class="w-8 h-8 bg-ocean-100 rounded-lg flex items-center justify-center">🧑‍✈️</div><div><p class="font-medium">张大海</p><p class="text-[10px] text-deep-500">A 级 82</p></div></div></td><td>一级船长</td><td class="text-rose-600 font-medium">1.8 万</td><td>2026.06.01</td><td>3 个月</td><td><span class="text-[11px] px-2 py-0.5 bg-amber-50 text-amber-700 rounded">待船员确认</span></td><td><a class="text-ocean-600 text-xs">查看</a></td></tr>
+                  <tr class="border-b border-deep-50"><td class="px-3 py-3"><div class="flex items-center gap-2"><div class="w-8 h-8 bg-ocean-100 rounded-lg flex items-center justify-center">🧑‍✈️</div><div><p class="font-medium">陈船工</p><p class="text-[10px] text-deep-500">A 级 85</p></div></div></td><td>大副</td><td class="text-rose-600 font-medium">1.4 万</td><td>2026.05.20</td><td>6 个月</td><td><span class="text-[11px] px-2 py-0.5 bg-ocean-50 text-ocean-700 rounded">待上船</span></td><td><a class="text-ocean-600 text-xs">查看</a></td></tr>
+                  <tr class="border-b border-deep-50"><td class="px-3 py-3"><div class="flex items-center gap-2"><div class="w-8 h-8 bg-ocean-100 rounded-lg flex items-center justify-center">🧑‍✈️</div><div><p class="font-medium">王轮机</p></div></div></td><td>轮机长</td><td class="text-rose-600 font-medium">1.5 万</td><td>2026.04.15</td><td>3 个月</td><td><span class="text-[11px] px-2 py-0.5 bg-emerald-50 text-emerald-700 rounded">已上船</span></td><td><a class="text-ocean-600 text-xs mr-2">查看</a><a class="text-ocean-600 text-xs">确认到岗</a></td></tr>
+                  <tr><td class="px-3 py-3"><div class="flex items-center gap-2"><div class="w-8 h-8 bg-ocean-100 rounded-lg flex items-center justify-center">🧑‍✈️</div><div><p class="font-medium">赵船员</p></div></div></td><td>普通船员</td><td class="text-rose-600 font-medium">8 千</td><td>2026.03.01</td><td>2 个月</td><td><span class="text-[11px] px-2 py-0.5 bg-deep-100 text-deep-700 rounded">已完成</span></td><td><a class="text-ocean-600 text-xs">评价</a></td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+  </div>
+
+  <!-- 7. 人才搜索 -->
+  <div>
+    <span class="label">07 · 人才搜索（标签）</span>
+    <div class="pc">
+      <div class="pc-bar"><span class="dot bg-rose-400"></span><span class="dot bg-amber-400"></span><span class="dot bg-emerald-400"></span><span class="ml-4 text-xs text-deep-500">/search/sailors</span></div>
+      <div class="flex-1 flex">
+        <aside class="w-56 bg-white border-r border-deep-100 p-4">
+          <div class="flex items-center gap-2 px-2 pb-4 border-b border-deep-100"><div class="w-8 h-8 bg-ocean-600 rounded-lg flex items-center justify-center text-white text-sm">⚓</div><span class="font-semibold text-sm">渔匠之光</span></div>
+          <nav class="mt-3 space-y-1 text-sm">
+            <div class="nav-item">📊 数据看板</div>
+            <div class="nav-item">📋 职位管理</div>
+            <div class="nav-item">📨 投递管理</div>
+            <div class="nav-item">👥 简历库</div>
+            <div class="nav-item active">🔍 人才搜索</div>
+            <div class="nav-item">📅 面试管理</div>
+            <div class="nav-item">💬 消息中心</div>
+            <div class="nav-item">⭐ 评价管理</div>
+            <div class="nav-item">👥 成员管理</div>
+            <div class="nav-item">🏢 企业资料</div>
+            <div class="nav-item">💎 VIP 中心</div>
+            <div class="nav-item">⚙️ 设置</div>
+          </nav>
+        </aside>
+        <main class="flex-1 bg-deep-50">
+          <div class="bg-white px-8 py-4 border-b border-deep-100">
+            <div class="flex gap-3 items-center">
+              <div class="flex-1 flex items-center gap-2 border border-deep-200 rounded-xl px-4 py-2.5">
+                <span class="text-deep-400">🔍</span>
+                <input placeholder="搜索：一级船长 + 围网 + 南海 + 5年以上" class="flex-1 outline-none text-sm">
+                <button class="bg-ocean-600 text-white px-4 py-1.5 rounded-lg text-sm">搜索</button>
+              </div>
+            </div>
+            <div class="flex gap-2 mt-3 text-xs">
+              <span class="text-deep-500 self-center">热门标签：</span>
+              <span class="px-2 py-1 bg-ocean-50 text-ocean-700 rounded">一级船长</span>
+              <span class="px-2 py-1 bg-ocean-50 text-ocean-700 rounded">围网经验</span>
+              <span class="px-2 py-1 bg-ocean-50 text-ocean-700 rounded">南海作业</span>
+              <span class="px-2 py-1 bg-deep-100 rounded">5 年以上经验</span>
+              <span class="px-2 py-1 bg-amber-50 text-amber-700 rounded">远洋经验</span>
+              <span class="px-2 py-1 bg-emerald-50 text-emerald-700 rounded">A 级船员</span>
+            </div>
+          </div>
+          <div class="p-6">
+            <p class="text-sm text-deep-500 mb-4">为您找到 24 位匹配候选人 · 按匹配度排序</p>
+            <div class="grid grid-cols-3 gap-4">
+              <div class="bg-white rounded-2xl p-5 border-2 border-ocean-500 relative">
+                <span class="absolute -top-2 right-3 bg-ocean-600 text-white text-[10px] px-2 py-0.5 rounded-full">匹配度 95%</span>
+                <div class="flex items-center gap-3"><div class="w-12 h-12 rounded-2xl bg-ocean-100 flex items-center justify-center text-2xl">🧑‍✈️</div><div class="flex-1"><p class="font-semibold">张大海</p><p class="text-xs text-deep-500">38 岁 · 8 年 · A 级 82</p></div></div>
+                <div class="mt-3 space-y-1 text-xs">
+                  <div class="flex justify-between"><span class="text-deep-500">证书</span><span class="text-emerald-600">✓ 一级船长</span></div>
+                  <div class="flex justify-between"><span class="text-deep-500">船型</span><span class="text-emerald-600">✓ 围网 6 年</span></div>
+                  <div class="flex justify-between"><span class="text-deep-500">海域</span><span class="text-emerald-600">✓ 南海</span></div>
+                  <div class="flex justify-between"><span class="text-deep-500">经验</span><span class="text-emerald-600">✓ 8 年</span></div>
+                </div>
+                <button class="w-full mt-3 bg-ocean-600 text-white py-2 rounded-lg text-xs">查看简历</button>
+              </div>
+              <div class="bg-white rounded-2xl p-5">
+                <div class="flex items-center gap-3"><div class="w-12 h-12 rounded-2xl bg-ocean-100 flex items-center justify-center text-2xl">🧑‍✈️</div><div class="flex-1"><p class="font-semibold">陈船工 <span class="text-[10px] text-ocean-600">88%</span></p><p class="text-xs text-deep-500">42 岁 · 12 年</p></div></div>
+              </div>
+              <div class="bg-white rounded-2xl p-5">
+                <div class="flex items-center gap-3"><div class="w-12 h-12 rounded-2xl bg-ocean-100 flex items-center justify-center text-2xl">🧑‍✈️</div><div class="flex-1"><p class="font-semibold">李海风 <span class="text-[10px] text-ocean-600">82%</span></p><p class="text-xs text-deep-500">36 岁 · 6 年</p></div></div>
+              </div>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+  </div>
+
+  <!-- 8. VIP 中心 -->
+  <div>
+    <span class="label">08 · VIP 中心 / 商业化</span>
+    <div class="pc">
+      <div class="pc-bar"><span class="dot bg-rose-400"></span><span class="dot bg-amber-400"></span><span class="dot bg-emerald-400"></span><span class="ml-4 text-xs text-deep-500">/vip</span></div>
+      <div class="flex-1 flex">
+        <aside class="w-56 bg-white border-r border-deep-100 p-4">
+          <div class="flex items-center gap-2 px-2 pb-4 border-b border-deep-100"><div class="w-8 h-8 bg-ocean-600 rounded-lg flex items-center justify-center text-white text-sm">⚓</div><span class="font-semibold text-sm">渔匠之光</span></div>
+          <nav class="mt-3 space-y-1 text-sm">
+            <div class="nav-item">📊 数据看板</div>
+            <div class="nav-item">📋 职位管理</div>
+            <div class="nav-item">📨 投递管理</div>
+            <div class="nav-item">👥 简历库</div>
+            <div class="nav-item">🔍 人才搜索</div>
+            <div class="nav-item">📅 面试管理</div>
+            <div class="nav-item">💬 消息中心</div>
+            <div class="nav-item">⭐ 评价管理</div>
+            <div class="nav-item">👥 成员管理</div>
+            <div class="nav-item">🏢 企业资料</div>
+            <div class="nav-item active">💎 VIP 中心</div>
+            <div class="nav-item">⚙️ 设置</div>
+          </nav>
+        </aside>
+        <main class="flex-1 bg-gradient-to-br from-deep-900 to-deep-700 text-white p-8 overflow-auto">
+          <div class="text-center mb-8">
+            <h2 class="text-3xl font-bold">解锁更强大的招聘能力</h2>
+            <p class="text-deep-300 mt-2">您当前 · VIP 标准版 · 剩余 67 天</p>
+          </div>
+          <div class="grid grid-cols-5 gap-4">
+            <div class="bg-white text-deep-900 rounded-2xl p-5 border border-deep-100"><p class="font-semibold">免费版</p><p class="text-3xl font-bold mt-3">¥0</p><p class="text-xs text-deep-500 mt-1">永久免费</p>
+              <ul class="text-xs space-y-1.5 mt-4 text-deep-700"><li>· 1 个在线职位</li><li>· 10 份/天简历查看</li><li>· 基础数据</li></ul>
+              <button class="w-full mt-4 border border-deep-300 py-2 rounded-lg text-xs">当前免费</button>
+            </div>
+            <div class="bg-white text-deep-900 rounded-2xl p-5 border border-deep-100"><p class="font-semibold">基础版</p><p class="text-3xl font-bold mt-3">¥299</p><p class="text-xs text-deep-500 mt-1">/月</p>
+              <ul class="text-xs space-y-1.5 mt-4 text-deep-700"><li>· 5 个在线职位</li><li>· 50 份/天简历查看</li><li>· 简历下载</li></ul>
+              <button class="w-full mt-4 border border-deep-300 py-2 rounded-lg text-xs">立即购买</button>
+            </div>
+            <div class="bg-gradient-to-b from-amber-400 to-amber-500 text-amber-900 rounded-2xl p-5 relative">
+              <span class="absolute -top-2 right-3 bg-rose-500 text-white text-[10px] px-2 py-0.5 rounded-full">当前</span>
+              <p class="font-semibold">标准版</p><p class="text-3xl font-bold mt-3">¥899</p><p class="text-xs mt-1">/季 (送 30 天)</p>
+              <ul class="text-xs space-y-1.5 mt-4"><li>· 20 个在线职位</li><li>· 200 份/天简历查看</li><li>· 推荐位 1 个</li><li>· 数据分析</li></ul>
+              <button class="w-full mt-4 bg-amber-900 text-white py-2 rounded-lg text-xs">续费 ›</button>
+            </div>
+            <div class="bg-white text-deep-900 rounded-2xl p-5 border border-deep-100"><p class="font-semibold">企业版</p><p class="text-3xl font-bold mt-3">¥2,999</p><p class="text-xs text-deep-500 mt-1">/年</p>
+              <ul class="text-xs space-y-1.5 mt-4 text-deep-700"><li>· 不限职位</li><li>· 不限简历</li><li>· 推荐位 5 个</li><li>· 简历置顶</li><li>· 专属客服</li></ul>
+              <button class="w-full mt-4 bg-ocean-600 text-white py-2 rounded-lg text-xs">立即升级</button>
+            </div>
+            <div class="bg-gradient-to-b from-deep-700 to-deep-900 text-white rounded-2xl p-5"><p class="font-semibold">旗舰版</p><p class="text-3xl font-bold mt-3">¥9,999</p><p class="text-xs opacity-80 mt-1">/年</p>
+              <ul class="text-xs space-y-1.5 mt-4 opacity-90"><li>· 企业版全部</li><li>· 多门店子账号</li><li>· 定制服务</li><li>· API 对接</li></ul>
+              <button class="w-full mt-4 border border-white/40 py-2 rounded-lg text-xs">联系销售</button>
+            </div>
+          </div>
+          <div class="mt-8 bg-white/10 rounded-2xl p-5">
+            <h3 class="font-semibold mb-3">增值服务</h3>
+            <div class="grid grid-cols-4 gap-3 text-deep-900">
+              <div class="bg-white rounded-xl p-3"><p class="text-xs text-deep-500">职位置顶</p><p class="font-bold text-lg mt-1">¥99</p><p class="text-[10px] text-deep-500">7 天</p></div>
+              <div class="bg-white rounded-xl p-3"><p class="text-xs text-deep-500">简历置顶</p><p class="font-bold text-lg mt-1">¥99</p><p class="text-[10px] text-deep-500">7 天</p></div>
+              <div class="bg-white rounded-xl p-3"><p class="text-xs text-deep-500">加急审核</p><p class="font-bold text-lg mt-1">¥29</p><p class="text-[10px] text-deep-500">1 小时内</p></div>
+              <div class="bg-white rounded-xl p-3"><p class="text-xs text-deep-500">推荐位</p><p class="font-bold text-lg mt-1">¥199</p><p class="text-[10px] text-deep-500">/月</p></div>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+  </div>
+
+  <!-- 9. 订单结算 -->
+  <div>
+    <span class="label">09 · 订单结算</span>
+    <div class="pc">
+      <div class="pc-bar"><span class="dot bg-rose-400"></span><span class="dot bg-amber-400"></span><span class="dot bg-emerald-400"></span><span class="ml-4 text-xs text-deep-500">/checkout</span></div>
+      <div class="flex-1 flex">
+        <main class="flex-1 bg-deep-50 p-12">
+          <div class="max-w-3xl mx-auto bg-white rounded-2xl p-8 border border-deep-100">
+            <h2 class="text-xl font-bold mb-6">确认订单</h2>
+            <div class="bg-amber-50 rounded-2xl p-5 flex items-center gap-4">
+              <div class="w-14 h-14 bg-amber-400 text-amber-900 rounded-2xl flex items-center justify-center text-2xl">💎</div>
+              <div class="flex-1"><p class="font-semibold">VIP 标准版（季）</p><p class="text-xs text-deep-500 mt-1">90 天 + 30 天赠送 = 共 120 天</p></div>
+              <p class="text-2xl font-bold text-rose-600">¥899</p>
+            </div>
+            <div class="mt-6 space-y-3 text-sm">
+              <div class="flex justify-between text-deep-500"><span>原价</span><span>¥899.00</span></div>
+              <div class="flex justify-between text-emerald-600"><span>新人优惠</span><span>-¥0.00</span></div>
+              <div class="flex justify-between font-semibold pt-3 border-t border-deep-100"><span>实付金额</span><span class="text-rose-600 text-2xl">¥899.00</span></div>
+            </div>
+            <div class="mt-6">
+              <p class="text-sm font-medium mb-3">选择支付方式</p>
+              <div class="grid grid-cols-3 gap-3">
+                <button class="border-2 border-emerald-500 bg-emerald-50 rounded-xl p-4 text-center"><div class="text-2xl">💚</div><p class="text-xs mt-2 font-medium">微信支付</p></button>
+                <button class="border border-deep-200 rounded-xl p-4 text-center"><div class="text-2xl">💙</div><p class="text-xs mt-2">支付宝</p></button>
+                <button class="border border-deep-200 rounded-xl p-4 text-center"><div class="text-2xl">🏦</div><p class="text-xs mt-2">对公转账</p></button>
+              </div>
+            </div>
+            <div class="mt-6 flex items-start gap-2 text-xs text-deep-500"><input type="checkbox" checked class="mt-0.5"><p>已阅读并同意《增值服务协议》《自动续费规则》</p></div>
+            <button class="w-full mt-6 bg-emerald-500 text-white font-semibold py-3.5 rounded-xl">¥899 立即支付</button>
+          </div>
+        </main>
+      </div>
+    </div>
+  </div>
+
+  <!-- 10. 成员管理 -->
+  <div>
+    <span class="label">10 · 成员管理</span>
+    <div class="pc">
+      <div class="pc-bar"><span class="dot bg-rose-400"></span><span class="dot bg-amber-400"></span><span class="dot bg-emerald-400"></span><span class="ml-4 text-xs text-deep-500">/members</span></div>
+      <div class="flex-1 flex">
+        <aside class="w-56 bg-white border-r border-deep-100 p-4">
+          <div class="flex items-center gap-2 px-2 pb-4 border-b border-deep-100"><div class="w-8 h-8 bg-ocean-600 rounded-lg flex items-center justify-center text-white text-sm">⚓</div><span class="font-semibold text-sm">渔匠之光</span></div>
+          <nav class="mt-3 space-y-1 text-sm">
+            <div class="nav-item">📊 数据看板</div>
+            <div class="nav-item">📋 职位管理</div>
+            <div class="nav-item">📨 投递管理</div>
+            <div class="nav-item">👥 简历库</div>
+            <div class="nav-item">🔍 人才搜索</div>
+            <div class="nav-item">📅 面试管理</div>
+            <div class="nav-item">💬 消息中心</div>
+            <div class="nav-item">⭐ 评价管理</div>
+            <div class="nav-item active">👥 成员管理</div>
+            <div class="nav-item">🏢 企业资料</div>
+            <div class="nav-item">💎 VIP 中心</div>
+            <div class="nav-item">⚙️ 设置</div>
+          </nav>
+        </aside>
+        <main class="flex-1 bg-deep-50">
+          <div class="bg-white px-8 py-3 border-b border-deep-100 flex justify-between"><h2 class="font-semibold">成员管理</h2><button class="bg-ocean-600 text-white px-4 py-2 rounded-lg text-sm">+ 邀请成员</button></div>
+          <div class="p-6">
+            <div class="bg-white rounded-2xl p-4">
+              <table class="w-full text-sm">
+                <thead class="text-xs text-deep-500 bg-deep-50"><tr class="text-left"><th class="px-3 py-2.5">姓名</th><th>手机号</th><th>角色</th><th>加入时间</th><th>状态</th><th>操作</th></tr></thead>
+                <tbody>
+                  <tr class="border-b border-deep-50"><td class="px-3 py-3"><div class="flex items-center gap-2"><div class="w-8 h-8 bg-ocean-100 rounded-full flex items-center justify-center">李</div><span class="font-medium">李经理（我）</span></div></td><td>138****0000</td><td><span class="text-[11px] px-2 py-0.5 bg-amber-100 text-amber-800 rounded">超管</span></td><td>2024.03.01</td><td><span class="text-[11px] text-emerald-600">在职</span></td><td>—</td></tr>
+                  <tr class="border-b border-deep-50"><td class="px-3 py-3"><div class="flex items-center gap-2"><div class="w-8 h-8 bg-ocean-100 rounded-full flex items-center justify-center">王</div><span class="font-medium">王招聘</span></div></td><td>138****1111</td><td><span class="text-[11px] px-2 py-0.5 bg-ocean-100 text-ocean-800 rounded">招聘官</span></td><td>2024.06.15</td><td><span class="text-[11px] text-emerald-600">在职</span></td><td><a class="text-deep-400 text-xs mr-2">编辑</a><a class="text-rose-500 text-xs">移除</a></td></tr>
+                  <tr class="border-b border-deep-50"><td class="px-3 py-3"><div class="flex items-center gap-2"><div class="w-8 h-8 bg-ocean-100 rounded-full flex items-center justify-center">张</div><span class="font-medium">张助理</span></div></td><td>138****2222</td><td><span class="text-[11px] px-2 py-0.5 bg-ocean-100 text-ocean-800 rounded">招聘官</span></td><td>2025.01.10</td><td><span class="text-[11px] text-emerald-600">在职</span></td><td><a class="text-deep-400 text-xs mr-2">编辑</a><a class="text-rose-500 text-xs">移除</a></td></tr>
+                  <tr><td class="px-3 py-3"><div class="flex items-center gap-2"><div class="w-8 h-8 bg-deep-100 rounded-full flex items-center justify-center">陈</div><span class="font-medium">陈财务</span></div></td><td>138****3333</td><td><span class="text-[11px] px-2 py-0.5 bg-deep-100 text-deep-700 rounded">查看者</span></td><td>2025.03.05</td><td><span class="text-[11px] text-emerald-600">在职</span></td><td><a class="text-deep-400 text-xs mr-2">编辑</a><a class="text-rose-500 text-xs">移除</a></td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+  </div>
+
+  <!-- 11. 评价管理 -->
+  <div>
+    <span class="label">11 · 评价管理</span>
+    <div class="pc">
+      <div class="pc-bar"><span class="dot bg-rose-400"></span><span class="dot bg-amber-400"></span><span class="dot bg-emerald-400"></span><span class="ml-4 text-xs text-deep-500">/evaluations</span></div>
+      <div class="flex-1 flex">
+        <aside class="w-56 bg-white border-r border-deep-100 p-4">
+          <div class="flex items-center gap-2 px-2 pb-4 border-b border-deep-100"><div class="w-8 h-8 bg-ocean-600 rounded-lg flex items-center justify-center text-white text-sm">⚓</div><span class="font-semibold text-sm">渔匠之光</span></div>
+          <nav class="mt-3 space-y-1 text-sm">
+            <div class="nav-item">📊 数据看板</div>
+            <div class="nav-item">📋 职位管理</div>
+            <div class="nav-item">📨 投递管理</div>
+            <div class="nav-item">👥 简历库</div>
+            <div class="nav-item">🔍 人才搜索</div>
+            <div class="nav-item">📅 面试管理</div>
+            <div class="nav-item">💬 消息中心</div>
+            <div class="nav-item active">⭐ 评价管理</div>
+            <div class="nav-item">👥 成员管理</div>
+            <div class="nav-item">🏢 企业资料</div>
+            <div class="nav-item">💎 VIP 中心</div>
+            <div class="nav-item">⚙️ 设置</div>
+          </nav>
+        </aside>
+        <main class="flex-1 bg-deep-50 p-6 grid grid-cols-3 gap-5">
+          <div class="bg-white rounded-2xl p-5 col-span-2">
+            <h3 class="font-semibold mb-4">收到的评价 · 来自船员</h3>
+            <div class="space-y-3">
+              <div class="border border-deep-100 rounded-xl p-4">
+                <div class="flex justify-between items-start"><div><p class="font-medium text-sm">来自 张大海 · 2026.04.20</p><div class="flex gap-2 mt-1 text-[11px]"><span class="text-amber-500">★★★★★</span><span class="text-deep-500">综合 5.0</span></div></div><span class="text-[10px] px-2 py-0.5 bg-emerald-50 text-emerald-700 rounded">好评</span></div>
+                <div class="grid grid-cols-3 gap-2 mt-3 text-xs"><div class="text-deep-500">工资真实：<span class="text-emerald-600">是 ✓</span></div><div class="text-deep-500">工作环境：<span class="text-amber-500">★★★★★</span></div><div class="text-deep-500">是否拖欠：<span class="text-emerald-600">从不 ✓</span></div></div>
+                <p class="text-xs text-deep-700 mt-3">"团队氛围好，按时发工资，船上设施完善"</p>
+              </div>
+              <div class="border border-deep-100 rounded-xl p-4">
+                <div class="flex justify-between items-start"><div><p class="font-medium text-sm">来自 陈船工 · 2026.03.15</p><div class="flex gap-2 mt-1 text-[11px]"><span class="text-amber-500">★★★★☆</span><span class="text-deep-500">综合 4.5</span></div></div></div>
+                <p class="text-xs text-deep-700 mt-3">"工作内容符合描述，建议改善通讯设备"</p>
+              </div>
+            </div>
+          </div>
+          <div class="bg-white rounded-2xl p-5">
+            <h3 class="font-semibold mb-4">综合评分</h3>
+            <div class="text-center"><p class="text-5xl font-bold text-amber-500">4.8</p><div class="text-amber-500 text-lg mt-1">★★★★★</div><p class="text-xs text-deep-500 mt-1">基于 12 条评价</p></div>
+            <div class="mt-5 space-y-2 text-xs">
+              <div class="flex items-center gap-2"><span class="w-12 text-deep-500">5 星</span><div class="flex-1 h-1.5 bg-deep-100 rounded"><div class="h-full bg-amber-400 rounded" style="width:83%"></div></div><span>10</span></div>
+              <div class="flex items-center gap-2"><span class="w-12 text-deep-500">4 星</span><div class="flex-1 h-1.5 bg-deep-100 rounded"><div class="h-full bg-amber-400 rounded" style="width:17%"></div></div><span>2</span></div>
+              <div class="flex items-center gap-2"><span class="w-12 text-deep-500">3 星</span><div class="flex-1 h-1.5 bg-deep-100 rounded"></div><span>0</span></div>
+              <div class="flex items-center gap-2"><span class="w-12 text-deep-500">差评</span><div class="flex-1 h-1.5 bg-deep-100 rounded"></div><span>0</span></div>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+  </div>
+
+  <!-- 12. 消息中心 -->
+  <div>
+    <span class="label">12 · 消息中心</span>
+    <div class="pc">
+      <div class="pc-bar"><span class="dot bg-rose-400"></span><span class="dot bg-amber-400"></span><span class="dot bg-emerald-400"></span><span class="ml-4 text-xs text-deep-500">/messages</span></div>
+      <div class="flex-1 flex">
+        <aside class="w-56 bg-white border-r border-deep-100 p-4">
+          <div class="flex items-center gap-2 px-2 pb-4 border-b border-deep-100"><div class="w-8 h-8 bg-ocean-600 rounded-lg flex items-center justify-center text-white text-sm">⚓</div><span class="font-semibold text-sm">渔匠之光</span></div>
+          <nav class="mt-3 space-y-1 text-sm">
+            <div class="nav-item">📊 数据看板</div>
+            <div class="nav-item">📋 职位管理</div>
+            <div class="nav-item">📨 投递管理</div>
+            <div class="nav-item">👥 简历库</div>
+            <div class="nav-item">🔍 人才搜索</div>
+            <div class="nav-item">📅 面试管理</div>
+            <div class="nav-item active">💬 消息中心</div>
+            <div class="nav-item">⭐ 评价管理</div>
+            <div class="nav-item">👥 成员管理</div>
+            <div class="nav-item">🏢 企业资料</div>
+            <div class="nav-item">💎 VIP 中心</div>
+            <div class="nav-item">⚙️ 设置</div>
+          </nav>
+        </aside>
+        <main class="flex-1 bg-white flex">
+          <div class="w-72 border-r border-deep-100">
+            <div class="p-4 border-b border-deep-100"><input placeholder="搜索船员" class="w-full border border-deep-200 rounded-lg px-3 py-2 text-sm outline-none"></div>
+            <div class="divide-y divide-deep-100">
+              <div class="p-4 bg-ocean-50 border-l-2 border-ocean-600"><div class="flex justify-between"><p class="font-medium text-sm">张大海</p><span class="text-[10px] text-deep-500">10:23</span></div><p class="text-xs text-deep-500 truncate mt-1">您好，明天 14 点视频面试方便吗？</p><span class="text-[10px] bg-rose-500 text-white rounded-full px-1.5 mt-1 inline-block">2</span></div>
+              <div class="p-4"><div class="flex justify-between"><p class="font-medium text-sm">陈船工</p><span class="text-[10px] text-deep-500">昨天</span></div><p class="text-xs text-deep-500 truncate mt-1">好的，已收到录用通知</p></div>
+              <div class="p-4"><div class="flex justify-between"><p class="font-medium text-sm">王轮机</p><span class="text-[10px] text-deep-500">2 天前</span></div><p class="text-xs text-deep-500 truncate mt-1">谢谢关注，已经入职其他公司</p></div>
+            </div>
+          </div>
+          <div class="flex-1 flex flex-col">
+            <div class="px-6 py-3 border-b border-deep-100 flex items-center justify-between"><div><p class="font-semibold">张大海</p><p class="text-[11px] text-deep-500">A 级 82 · 一级船长 · 8 年经验</p></div><div class="flex gap-2"><button class="text-xs px-3 py-1.5 border border-deep-200 rounded">查看简历</button><button class="text-xs px-3 py-1.5 bg-ocean-600 text-white rounded">邀请面试</button></div></div>
+            <div class="flex-1 overflow-auto p-6 space-y-4 bg-deep-50">
+              <div class="text-center text-[10px] text-deep-400">10:18</div>
+              <div class="flex justify-start"><div class="bg-white rounded-2xl rounded-tl-sm p-3 max-w-[60%] shadow-sm text-sm">您好，我们看了您的简历对您很感兴趣</div></div>
+              <div class="flex justify-end"><div class="bg-ocean-600 text-white rounded-2xl rounded-tr-sm p-3 max-w-[60%] text-sm">好的，请问什么时候方便？</div></div>
+              <div class="flex justify-start"><div class="bg-white rounded-2xl rounded-tl-sm p-3 max-w-[60%] shadow-sm text-sm">明天上午 10 点电话方便吗？</div></div>
+              <div class="flex justify-end"><div class="bg-ocean-600 text-white rounded-2xl rounded-tr-sm p-3 max-w-[60%] text-sm">您好，明天 14 点视频面试方便吗？</div></div>
+            </div>
+            <div class="border-t border-deep-100 p-3 flex items-center gap-2"><span class="text-deep-400 text-xl">📎</span><input class="flex-1 border border-deep-200 rounded-xl px-4 py-2 text-sm outline-none" placeholder="输入消息（敏感词将自动隐藏）"><button class="bg-ocean-600 text-white px-5 py-2 rounded-xl text-sm">发送</button></div>
+          </div>
+        </main>
+      </div>
+    </div>
+  </div>
+
+  </div>
+  <footer class="mt-16 text-center text-xs text-deep-500">企业 PC 端共 12 屏 · <a href="index.html" class="text-ocean-500">返回导航</a></footer>
+</div>
+</body>
+</html>
