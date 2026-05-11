@@ -18,7 +18,7 @@ tailwind.config = {
 </script>
 <style>
   body{background:#0b1220;color:#cbd5e1;font-family:"PingFang SC",-apple-system,sans-serif;}
-  .phone{width:375px;height:812px;background:#fff;border-radius:44px;box-shadow:0 30px 80px rgba(0,0,0,.5),0 0 0 14px #1e293b,0 0 0 16px #334155;overflow:hidden;position:relative;color:#0f172a;}
+  .phone{width:375px;height:812px;background:#fff;border-radius:44px;box-shadow:0 30px 80px rgba(0,0,0,.5),0 0 0 14px #1e293b,0 0 0 16px #334155;overflow:hidden;position:relative;color:#0f172a;flex-shrink:0;}
   .phone::before{content:'';position:absolute;top:14px;left:50%;transform:translateX(-50%);width:120px;height:30px;background:#000;border-radius:18px;z-index:50;}
   .status{height:44px;display:flex;justify-content:space-between;align-items:flex-end;padding:0 28px 6px;font-size:14px;font-weight:600;color:#0f172a;}
   .tabbar{position:absolute;bottom:0;left:0;right:0;height:84px;background:#fff;border-top:1px solid #e2e8f0;display:flex;justify-content:space-around;padding-top:8px;padding-bottom:24px;}
@@ -27,6 +27,18 @@ tailwind.config = {
   .tab-icon{width:24px;height:24px;display:flex;align-items:center;justify-content:center;font-size:20px;}
   .label{font-size:10px;color:#94a3b8;font-weight:500;letter-spacing:.05em;text-transform:uppercase;margin-bottom:8px;display:block;}
   .scrim{position:absolute;inset:0;background:rgba(15,23,42,.5);}
+  /* 模块分组样式 */
+  .module-section{margin-bottom:60px;}
+  .module-title{font-size:20px;font-weight:700;color:#fff;margin-bottom:6px;display:flex;align-items:center;gap:12px;}
+  .module-badge{font-size:11px;background:#0891b2;color:#fff;padding:2px 10px;border-radius:10px;font-weight:500;}
+  .module-desc{font-size:13px;color:#64748b;margin-bottom:24px;}
+  .module-row{display:flex;gap:32px;overflow-x:auto;padding:30px 4px 30px;scrollbar-color:#334155 #1e293b;}
+  .module-row::-webkit-scrollbar{height:12px;}
+  .module-row::-webkit-scrollbar-track{background:#1e293b;border-radius:6px;}
+  .module-row::-webkit-scrollbar-thumb{background:#475569;border-radius:6px;}
+  .module-row::-webkit-scrollbar-thumb:hover{background:#64748b;}
+  .module-row > div{flex-shrink:0;padding-top:20px;}
+  .module-row > div .label{display:block;font-size:11px;color:#cbd5e1;background:#1e293b;padding:6px 12px;border-radius:6px;margin-bottom:24px;max-width:375px;}
 </style>
 </head>
 <body>
@@ -35,7 +47,7 @@ tailwind.config = {
     <div>
       <a href="index.html" class="text-deep-500 text-sm hover:text-ocean-500">← 返回导航</a>
       <h1 class="text-3xl font-bold text-white mt-2">船员端 APP <span class="text-deep-500 text-base font-normal">/ Mobile</span></h1>
-      <p class="text-deep-500 mt-1">12 屏 · 嵌入中渔学院 APP · 主线投递闭环 · iPhone 375×812</p>
+      <p class="text-deep-500 mt-1">33 屏 · 嵌入中渔学院 APP · 完整求职流程 + 设置与评价 · iPhone 375×812</p>
     </div>
     <div class="text-xs text-deep-500">PRD §6.2 / §9 / §12 / §14 / §15 · 不含登录页（中渔学院侧负责）</div>
   </header>
@@ -157,9 +169,78 @@ tailwind.config = {
     </div>
   </div>
 
-  <!-- 3. 职位列表 -->
+  <!-- 3. 职位列表（游客模式 - 未登录） -->
   <div>
-    <span class="label">03 · 职位列表（带筛选）</span>
+    <span class="label">03 · 职位列表（游客模式 · 未登录 · 部分信息脱敏）</span>
+    <div class="phone">
+      <div class="status"><span>9:41</span><span>● ● ● 100%</span></div>
+      <div class="bg-deep-50 h-full pb-24 overflow-hidden">
+        <div class="bg-white px-5 pt-3 pb-3 sticky top-0 border-b border-deep-100">
+          <div class="flex items-center justify-between mb-2">
+            <div class="text-xs text-deep-400">← 中渔学院 · 职介</div>
+            <button class="text-xs text-ocean-600 font-medium px-3 py-1 bg-ocean-50 rounded-full">登录/注册</button>
+          </div>
+          <div class="flex items-center gap-2 bg-deep-50 rounded-xl px-3 py-2">
+            <span class="text-deep-300 text-sm">🔍</span><input placeholder="搜索职位、企业" class="flex-1 outline-none bg-transparent text-sm">
+          </div>
+          <div class="flex gap-3 mt-3 text-xs overflow-x-auto">
+            <span class="px-3 py-1.5 bg-ocean-600 text-white rounded-full whitespace-nowrap">海域 ▾</span>
+            <span class="px-3 py-1.5 bg-deep-100 rounded-full whitespace-nowrap">船型 ▾</span>
+            <span class="px-3 py-1.5 bg-deep-100 rounded-full whitespace-nowrap">薪资 ▾</span>
+          </div>
+        </div>
+        <div class="px-5 py-3 space-y-3">
+          <!-- 游客可见职位卡片 -->
+          <div class="bg-white rounded-2xl p-4 relative">
+            <div class="flex justify-between items-start">
+              <div>
+                <div class="flex items-center gap-1.5"><h4 class="font-semibold">一级船长</h4><span class="text-[10px] px-1.5 py-0.5 bg-rose-50 text-rose-600 rounded">急招</span></div>
+                <p class="text-xs text-deep-500 mt-1">舟山远洋渔业</p>
+              </div>
+              <p class="text-rose-600 font-bold text-sm">1.5-2万</p>
+            </div>
+            <div class="flex gap-1.5 mt-2 text-[11px] text-deep-700">
+              <span class="px-2 py-0.5 bg-ocean-50 rounded">南海</span>
+              <span class="px-2 py-0.5 bg-ocean-50 rounded">围网</span>
+              <span class="px-2 py-0.5 bg-ocean-50 rounded">3个月</span>
+            </div>
+            <div class="mt-3 pt-3 border-t border-deep-100 flex items-center justify-between">
+              <span class="text-[10px] text-deep-400">登录查看完整信息</span>
+              <button class="text-xs text-ocean-600 font-medium">查看详情 →</button>
+            </div>
+          </div>
+          <div class="bg-white rounded-2xl p-4">
+            <div class="flex justify-between items-start">
+              <h4 class="font-semibold">轮机长</h4>
+              <p class="text-rose-600 font-bold text-sm">1.3-1.8万</p>
+            </div>
+            <p class="text-xs text-deep-500 mt-1">福建闽南海运</p>
+            <div class="flex gap-1.5 mt-2 text-[11px]"><span class="px-2 py-0.5 bg-ocean-50 rounded">东海</span><span class="px-2 py-0.5 bg-ocean-50 rounded">拖网</span></div>
+            <div class="mt-3 pt-3 border-t border-deep-100 flex items-center justify-between">
+              <span class="text-[10px] text-deep-400">登录查看企业联系方式</span>
+              <button class="text-xs text-ocean-600 font-medium">查看详情 →</button>
+            </div>
+          </div>
+          <div class="bg-white rounded-2xl p-4">
+            <div class="flex justify-between items-start">
+              <h4 class="font-semibold">普通船员</h4>
+              <p class="text-rose-600 font-bold text-sm">7-9千</p>
+            </div>
+            <p class="text-xs text-deep-500 mt-1">山东青岛远洋</p>
+            <div class="flex gap-1.5 mt-2 text-[11px]"><span class="px-2 py-0.5 bg-ocean-50 rounded">黄海</span><span class="px-2 py-0.5 bg-ocean-50 rounded">钓具</span></div>
+          </div>
+        </div>
+        <!-- 底部登录引导 -->
+        <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-white via-white to-transparent p-5 pt-8">
+          <button class="w-full bg-ocean-600 text-white font-semibold py-3.5 rounded-2xl shadow-lg">登录查看完整职位信息</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. 职位列表（已登录） -->
+  <div>
+    <span class="label">04 · 职位列表（已登录 · 完整信息）</span>
     <div class="phone">
       <div class="status"><span>9:41</span><span>● ● ● 100%</span></div>
       <div class="bg-deep-50 h-full pb-24 overflow-hidden">
@@ -185,7 +266,7 @@ tailwind.config = {
               <p class="text-rose-600 font-bold text-sm">1.5-2万</p>
             </div>
             <div class="flex gap-1.5 mt-2 text-[11px] text-deep-700"><span class="px-2 py-0.5 bg-ocean-50 rounded">南海</span><span class="px-2 py-0.5 bg-ocean-50 rounded">围网</span><span class="px-2 py-0.5 bg-ocean-50 rounded">3个月</span></div>
-            <p class="text-[10px] text-deep-300 mt-2">2 小时前 · 浏览 245</p>
+            <p class="text-[10px] text-deep-300 mt-2">2 小时前 · 浏览 245 · 已投递 12 人</p>
           </div>
           <div class="bg-white rounded-2xl p-4">
             <div class="flex justify-between items-start">
@@ -194,7 +275,7 @@ tailwind.config = {
             </div>
             <p class="text-xs text-deep-500 mt-1">福建闽南海运 · 信用 88</p>
             <div class="flex gap-1.5 mt-2 text-[11px]"><span class="px-2 py-0.5 bg-ocean-50 rounded">东海</span><span class="px-2 py-0.5 bg-ocean-50 rounded">拖网</span><span class="px-2 py-0.5 bg-ocean-50 rounded">2个月</span></div>
-            <p class="text-[10px] text-deep-300 mt-2">5 小时前</p>
+            <p class="text-[10px] text-deep-300 mt-2">5 小时前 · 已投递 8 人</p>
           </div>
           <div class="bg-white rounded-2xl p-4">
             <div class="flex justify-between items-start">
@@ -218,9 +299,275 @@ tailwind.config = {
     </div>
   </div>
 
-  <!-- 4. 职位详情 -->
+  <!-- 26. 职位搜索结果 -->
   <div>
-    <span class="label">04 · 职位详情</span>
+    <span class="label">26 · 职位搜索结果</span>
+    <div class="phone">
+      <div class="status"><span>9:41</span><span>● ● ● 100%</span></div>
+      <div class="bg-white h-full pb-6 overflow-hidden">
+        <div class="px-5 py-3 border-b border-deep-100">
+          <div class="flex items-center gap-2">
+            <button class="text-xl">←</button>
+            <div class="flex-1 flex items-center gap-2 bg-deep-50 rounded-xl px-3 py-2">
+              <span class="text-deep-300 text-sm">🔍</span>
+              <input value="船长" class="flex-1 outline-none bg-transparent text-sm">
+            </div>
+            <button class="text-sm text-ocean-600">搜索</button>
+          </div>
+        </div>
+        <div class="px-5 py-3">
+          <p class="text-xs text-deep-500 mb-3">找到 <span class="text-ocean-600 font-medium">23</span> 个相关职位</p>
+          <div class="space-y-3">
+            <div class="bg-white rounded-2xl p-4 border border-deep-100">
+              <div class="flex justify-between items-start">
+                <div>
+                  <div class="flex items-center gap-1.5">
+                    <h4 class="font-semibold">一级<mark class="bg-amber-200">船长</mark></h4>
+                    <span class="text-[10px] px-1.5 py-0.5 bg-rose-50 text-rose-600 rounded">急招</span>
+                  </div>
+                  <p class="text-xs text-deep-500 mt-1">舟山远洋渔业 · 信用 92</p>
+                </div>
+                <p class="text-rose-600 font-bold text-sm">1.5-2万</p>
+              </div>
+              <div class="flex gap-1.5 mt-2 text-[11px]">
+                <span class="px-2 py-0.5 bg-ocean-50 rounded">南海</span>
+                <span class="px-2 py-0.5 bg-ocean-50 rounded">围网</span>
+                <span class="px-2 py-0.5 bg-ocean-50 rounded">3个月</span>
+              </div>
+              <p class="text-[10px] text-deep-300 mt-2">2 小时前 · 已投递 12 人</p>
+            </div>
+            <div class="bg-white rounded-2xl p-4 border border-deep-100">
+              <div class="flex justify-between items-start">
+                <div>
+                  <h4 class="font-semibold">二级<mark class="bg-amber-200">船长</mark></h4>
+                  <p class="text-xs text-deep-500 mt-1">福建闽南海运 · 信用 88</p>
+                </div>
+                <p class="text-rose-600 font-bold text-sm">1.2-1.5万</p>
+              </div>
+              <div class="flex gap-1.5 mt-2 text-[11px]">
+                <span class="px-2 py-0.5 bg-ocean-50 rounded">东海</span>
+                <span class="px-2 py-0.5 bg-ocean-50 rounded">拖网</span>
+              </div>
+            </div>
+            <div class="bg-white rounded-2xl p-4 border border-deep-100">
+              <div class="flex justify-between items-start">
+                <div>
+                  <h4 class="font-semibold">三级<mark class="bg-amber-200">船长</mark></h4>
+                  <p class="text-xs text-deep-500 mt-1">青岛海洋捕捞 · 信用 85</p>
+                </div>
+                <p class="text-rose-600 font-bold text-sm">8千-1.2万</p>
+              </div>
+              <div class="flex gap-1.5 mt-2 text-[11px]">
+                <span class="px-2 py-0.5 bg-ocean-50 rounded">黄海</span>
+                <span class="px-2 py-0.5 bg-ocean-50 rounded">钓具</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 27. 收藏列表 -->
+  <div>
+    <span class="label">27 · 收藏列表</span>
+    <div class="phone">
+      <div class="status"><span>9:41</span><span>● ● ● 100%</span></div>
+      <div class="bg-deep-50 h-full pb-6">
+        <div class="bg-white px-5 py-3 border-b border-deep-100 flex items-center gap-3">
+          <button class="text-xl">←</button>
+          <h2 class="text-base font-semibold flex-1">我的收藏</h2>
+        </div>
+        <div class="bg-white border-b border-deep-100 px-2 py-2 flex text-xs">
+          <span class="flex-1 text-center py-1.5 rounded-lg bg-ocean-600 text-white">全部 5</span>
+          <span class="flex-1 text-center py-1.5 text-deep-500">在招 4</span>
+          <span class="flex-1 text-center py-1.5 text-deep-500">已下线 1</span>
+        </div>
+        <div class="p-4 space-y-3">
+          <div class="bg-white rounded-2xl p-4">
+            <div class="flex justify-between items-start">
+              <div class="flex-1">
+                <div class="flex items-center gap-1.5">
+                  <h4 class="font-semibold">一级船长</h4>
+                  <span class="text-[10px] px-1.5 py-0.5 bg-rose-50 text-rose-600 rounded">急招</span>
+                </div>
+                <p class="text-xs text-deep-500 mt-1">舟山远洋渔业 · 信用 92</p>
+              </div>
+              <div class="flex flex-col items-end gap-2">
+                <p class="text-rose-600 font-bold text-sm">1.5-2万</p>
+                <button class="text-amber-500 text-lg">★</button>
+              </div>
+            </div>
+            <div class="flex gap-1.5 mt-2 text-[11px]">
+              <span class="px-2 py-0.5 bg-ocean-50 rounded">南海</span>
+              <span class="px-2 py-0.5 bg-ocean-50 rounded">围网</span>
+              <span class="px-2 py-0.5 bg-ocean-50 rounded">3个月</span>
+            </div>
+            <div class="flex justify-between items-center mt-3 pt-3 border-t border-deep-100">
+              <p class="text-[11px] text-deep-500">收藏于 2 天前</p>
+              <button class="text-xs text-ocean-600">立即投递 ›</button>
+            </div>
+          </div>
+          <div class="bg-white rounded-2xl p-4">
+            <div class="flex justify-between items-start">
+              <div class="flex-1">
+                <h4 class="font-semibold">轮机长</h4>
+                <p class="text-xs text-deep-500 mt-1">福建闽南海运 · 信用 88</p>
+              </div>
+              <div class="flex flex-col items-end gap-2">
+                <p class="text-rose-600 font-bold text-sm">1.3-1.8万</p>
+                <button class="text-amber-500 text-lg">★</button>
+              </div>
+            </div>
+            <div class="flex gap-1.5 mt-2 text-[11px]">
+              <span class="px-2 py-0.5 bg-ocean-50 rounded">东海</span>
+              <span class="px-2 py-0.5 bg-ocean-50 rounded">拖网</span>
+            </div>
+            <div class="flex justify-between items-center mt-3 pt-3 border-t border-deep-100">
+              <p class="text-[11px] text-deep-500">收藏于 5 天前</p>
+              <button class="text-xs text-ocean-600">立即投递 ›</button>
+            </div>
+          </div>
+          <div class="bg-white rounded-2xl p-4 opacity-60">
+            <div class="flex justify-between items-start">
+              <div class="flex-1">
+                <h4 class="font-semibold">大副</h4>
+                <p class="text-xs text-deep-500 mt-1">青岛海洋捕捞 · 信用 85</p>
+              </div>
+              <div class="flex flex-col items-end gap-2">
+                <p class="text-deep-400 font-bold text-sm">1.2-1.5万</p>
+                <button class="text-amber-500 text-lg">★</button>
+              </div>
+            </div>
+            <div class="flex gap-1.5 mt-2 text-[11px]">
+              <span class="px-2 py-0.5 bg-deep-100 rounded">东海</span>
+              <span class="px-2 py-0.5 bg-deep-100 rounded">拖网</span>
+            </div>
+            <div class="flex justify-between items-center mt-3 pt-3 border-t border-deep-100">
+              <p class="text-[11px] text-deep-500">职位已下线</p>
+              <span class="text-xs text-deep-400">已下线</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5. 职位详情（游客模式 - 脱敏） -->
+  <div>
+    <span class="label">05 · 职位详情（游客模式 · 部分内容脱敏）</span>
+    <div class="phone">
+      <div class="status"><span>9:41</span><span>● ● ● 100%</span></div>
+      <div class="h-full pb-24 overflow-hidden bg-white">
+        <div class="bg-gradient-to-br from-ocean-700 to-ocean-900 text-white p-5 pt-2">
+          <div class="flex items-center justify-between">
+            <button class="text-2xl">←</button>
+            <button class="text-xs px-3 py-1 bg-white/20 rounded-full">登录查看完整</button>
+          </div>
+          <div class="mt-4">
+            <div class="flex items-center gap-2"><h2 class="text-xl font-bold">一级船长</h2><span class="text-[10px] px-1.5 py-0.5 bg-amber-400 text-amber-900 rounded font-medium">急招</span></div>
+            <p class="text-2xl font-bold mt-2 text-amber-300">1.5-2万 <span class="text-xs font-normal opacity-80">/月</span></p>
+            <div class="flex gap-1.5 mt-3 text-[11px]"><span class="px-2 py-0.5 bg-white/20 rounded">南海</span><span class="px-2 py-0.5 bg-white/20 rounded">围网</span><span class="px-2 py-0.5 bg-white/20 rounded">出海3月</span></div>
+          </div>
+        </div>
+        <div class="p-5 space-y-4 text-sm">
+          <div>
+            <h3 class="font-semibold mb-2">职位描述</h3>
+            <p class="text-deep-700 leading-relaxed">负责整艘围网渔船的航行指挥与渔获生产管理，要求持有一级船长适任证书，5 年以上同船型经验...</p>
+            <div class="mt-2 p-3 bg-amber-50 border border-amber-200 rounded-xl text-xs text-amber-900 flex items-center gap-2">
+              <span>🔒</span>
+              <span>登录后查看完整职位描述及详细要求</span>
+            </div>
+          </div>
+          <div>
+            <h3 class="font-semibold mb-2">企业信息</h3>
+            <div class="flex items-center gap-3">
+              <div class="w-12 h-12 bg-ocean-100 rounded-xl flex items-center justify-center text-xl">🏢</div>
+              <div>
+                <p class="font-medium">舟山远洋渔业有限公司</p>
+                <p class="text-xs text-deep-500 mt-0.5">浙江 · 舟山</p>
+              </div>
+            </div>
+            <div class="mt-3 p-3 bg-deep-50 rounded-xl text-xs text-deep-600">
+              <p class="text-deep-400 mb-1">企业联系方式需登录后查看</p>
+            </div>
+          </div>
+          <div>
+            <h3 class="font-semibold mb-2">证书要求</h3>
+            <div class="flex gap-1.5 flex-wrap text-[11px]"><span class="px-2 py-1 bg-emerald-50 text-emerald-700 rounded">一级船长 ✓</span><span class="px-2 py-1 bg-emerald-50 text-emerald-700 rounded">健康证 ✓</span><span class="px-2 py-1 bg-emerald-50 text-emerald-700 rounded">海员证 ✓</span></div>
+          </div>
+        </div>
+        <!-- 底部操作栏 -->
+        <div class="absolute bottom-0 left-0 right-0 bg-white border-t border-deep-100 p-4 flex gap-3">
+          <button class="flex-1 bg-deep-100 text-deep-700 font-semibold py-3 rounded-xl">登录后收藏</button>
+          <button class="flex-1 bg-ocean-600 text-white font-semibold py-3 rounded-xl">登录后投递</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 6. 职位详情（已登录未实名） -->
+  <div>
+    <span class="label">06 · 职位详情（已登录未实名 · 引导实名）</span>
+    <div class="phone">
+      <div class="status"><span>9:41</span><span>● ● ● 100%</span></div>
+      <div class="h-full pb-24 overflow-hidden bg-white">
+        <div class="bg-gradient-to-br from-ocean-700 to-ocean-900 text-white p-5 pt-2">
+          <div class="flex items-center justify-between"><button class="text-2xl">←</button><div class="flex gap-3 text-lg"><span>☆</span><span>⋯</span></div></div>
+          <div class="mt-4">
+            <div class="flex items-center gap-2"><h2 class="text-xl font-bold">一级船长</h2><span class="text-[10px] px-1.5 py-0.5 bg-amber-400 text-amber-900 rounded font-medium">急招</span></div>
+            <p class="text-2xl font-bold mt-2 text-amber-300">1.5-2万 <span class="text-xs font-normal opacity-80">/月</span></p>
+            <div class="flex gap-1.5 mt-3 text-[11px]"><span class="px-2 py-0.5 bg-white/20 rounded">南海</span><span class="px-2 py-0.5 bg-white/20 rounded">围网</span><span class="px-2 py-0.5 bg-white/20 rounded">出海3月</span><span class="px-2 py-0.5 bg-white/20 rounded">舟山港</span></div>
+          </div>
+        </div>
+        <div class="p-5 space-y-4 text-sm">
+          <!-- 实名引导提示 -->
+          <div class="bg-gradient-to-r from-amber-50 to-orange-50 border border-amber-200 rounded-2xl p-4">
+            <div class="flex items-start gap-3">
+              <span class="text-2xl">🔐</span>
+              <div class="flex-1">
+                <p class="font-semibold text-amber-900 mb-1">完成实名认证后可投递</p>
+                <p class="text-xs text-amber-800 leading-relaxed">投递职位、与企业沟通需要先完成实名认证（身份证 + 人脸识别）</p>
+                <button class="mt-3 w-full bg-amber-500 text-white font-medium py-2 rounded-xl text-sm">立即实名认证</button>
+              </div>
+            </div>
+          </div>
+          <div>
+            <h3 class="font-semibold mb-2">职位描述</h3>
+            <p class="text-deep-700 leading-relaxed">负责整艘围网渔船的航行指挥与渔获生产管理，要求持有一级船长适任证书，5 年以上同船型经验，南海作业经验优先...</p>
+          </div>
+          <div>
+            <h3 class="font-semibold mb-2">证书要求</h3>
+            <div class="flex gap-1.5 flex-wrap text-[11px]"><span class="px-2 py-1 bg-emerald-50 text-emerald-700 rounded">一级船长 ✓</span><span class="px-2 py-1 bg-emerald-50 text-emerald-700 rounded">健康证 ✓</span><span class="px-2 py-1 bg-emerald-50 text-emerald-700 rounded">海员证 ✓</span></div>
+          </div>
+          <div>
+            <h3 class="font-semibold mb-2">福利</h3>
+            <div class="flex gap-1.5 flex-wrap text-[11px]"><span class="px-2 py-1 bg-deep-100 rounded">包吃住</span><span class="px-2 py-1 bg-deep-100 rounded">缴纳保险</span><span class="px-2 py-1 bg-deep-100 rounded">高温津贴</span></div>
+          </div>
+          <div class="border-t border-deep-100 pt-4">
+            <h3 class="font-semibold mb-2">企业信息</h3>
+            <div class="flex items-center gap-3">
+              <div class="w-12 h-12 bg-ocean-100 rounded-xl flex items-center justify-center text-xl">🏢</div>
+              <div class="flex-1">
+                <p class="font-medium">舟山远洋渔业有限公司</p>
+                <p class="text-xs text-deep-500 mt-0.5">浙江 · 舟山 · 信用分 92</p>
+              </div>
+              <button class="text-xs text-ocean-600">详情 ›</button>
+            </div>
+          </div>
+        </div>
+        <!-- 底部操作栏 -->
+        <div class="absolute bottom-0 left-0 right-0 bg-white border-t border-deep-100 p-4 flex gap-3">
+          <button class="flex-1 bg-deep-100 text-deep-700 font-semibold py-3 rounded-xl">☆ 收藏</button>
+          <button class="flex-1 bg-ocean-600 text-white font-semibold py-3 rounded-xl">立即投递（需实名）</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 7. 职位详情（已实名） -->
+  <div>
+    <span class="label">07 · 职位详情（已实名 · 完整功能）</span>
     <div class="phone">
       <div class="status"><span>9:41</span><span>● ● ● 100%</span></div>
       <div class="h-full pb-24 overflow-hidden bg-white">
@@ -265,9 +612,9 @@ tailwind.config = {
     </div>
   </div>
 
-  <!-- 5. 投递确认 -->
+  <!-- 8. 投递确认 -->
   <div>
-    <span class="label">05 · 投递确认</span>
+    <span class="label">08 · 投递确认</span>
     <div class="phone">
       <div class="status"><span>9:41</span><span>● ● ● 100%</span></div>
       <div class="h-full bg-deep-900/30 relative">
@@ -295,9 +642,9 @@ tailwind.config = {
     </div>
   </div>
 
-  <!-- 6. 聊天列表 -->
+  <!-- 9. 聊天列表 -->
   <div>
-    <span class="label">06 · 聊天列表</span>
+    <span class="label">09 · 聊天列表</span>
     <div class="phone">
       <div class="status"><span>9:41</span><span>● ● ● 100%</span></div>
       <div class="bg-white h-full pb-24">
@@ -341,9 +688,9 @@ tailwind.config = {
   <p class="text-center text-deep-500 text-xs mt-12">— 第 1 / 2 页 · 下方还有 6 屏 —</p>
   <div class="flex flex-wrap gap-x-10 gap-y-16 mt-8">
 
-  <!-- 7. 聊天对话 -->
+  <!-- 10. 聊天对话 -->
   <div>
-    <span class="label">07 · 聊天对话（含敏感词遮罩）</span>
+    <span class="label">10 · 聊天对话（含敏感词遮罩）</span>
     <div class="phone">
       <div class="status"><span>9:41</span><span>● ● ● 100%</span></div>
       <div class="bg-deep-50 h-full pb-20 flex flex-col">
@@ -369,9 +716,9 @@ tailwind.config = {
     </div>
   </div>
 
-  <!-- 8. 我的 -->
+  <!-- 11. 我的 -->
   <div>
-    <span class="label">08 · 我的（个人中心）</span>
+    <span class="label">11 · 我的（个人中心）</span>
     <div class="phone">
       <div class="status"><span>9:41</span><span>● ● ● 100%</span></div>
       <div class="bg-deep-50 h-full pb-24 overflow-hidden">
@@ -412,13 +759,143 @@ tailwind.config = {
     </div>
   </div>
 
-  <!-- 9. 简历 -->
+  <!-- 28. 通知中心 -->
   <div>
-    <span class="label">09 · 我的简历（已实名继承学院信息）</span>
+    <span class="label">28 · 通知中心</span>
+    <div class="phone">
+      <div class="status"><span>9:41</span><span>● ● ● 100%</span></div>
+      <div class="bg-white h-full pb-6 overflow-hidden">
+        <div class="px-5 py-3 border-b border-deep-100 flex items-center gap-3">
+          <button class="text-xl">←</button>
+          <h2 class="text-base font-semibold flex-1">通知中心</h2>
+          <button class="text-xs text-ocean-600">全部已读</button>
+        </div>
+        <div class="bg-white border-b border-deep-100 px-2 py-2 flex text-xs">
+          <span class="flex-1 text-center py-1.5 rounded-lg bg-ocean-600 text-white">全部</span>
+          <span class="flex-1 text-center py-1.5 text-deep-500">投递</span>
+          <span class="flex-1 text-center py-1.5 text-deep-500">面试</span>
+          <span class="flex-1 text-center py-1.5 text-deep-500">系统</span>
+        </div>
+        <div class="overflow-y-auto h-[calc(100%-120px)]">
+          <!-- 面试邀请通知 -->
+          <div class="px-5 py-4 border-b border-deep-100 bg-amber-50">
+            <div class="flex gap-3">
+              <div class="w-10 h-10 rounded-full bg-amber-500 flex items-center justify-center text-white flex-shrink-0">📅</div>
+              <div class="flex-1">
+                <div class="flex items-center gap-2 mb-1">
+                  <p class="font-semibold text-sm">面试邀请</p>
+                  <span class="text-[10px] px-1.5 py-0.5 bg-amber-500 text-white rounded">待确认</span>
+                </div>
+                <p class="text-sm text-deep-700 leading-relaxed">福建闽南海运邀请您参加"轮机长"职位的视频面试，时间：明天 14:00</p>
+                <div class="flex items-center justify-between mt-2">
+                  <p class="text-xs text-deep-400">2 小时前</p>
+                  <button class="text-xs text-ocean-600 font-medium">查看详情 ›</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 录用通知 -->
+          <div class="px-5 py-4 border-b border-deep-100 bg-emerald-50">
+            <div class="flex gap-3">
+              <div class="w-10 h-10 rounded-full bg-emerald-500 flex items-center justify-center text-white flex-shrink-0">🎉</div>
+              <div class="flex-1">
+                <div class="flex items-center gap-2 mb-1">
+                  <p class="font-semibold text-sm">录用通知</p>
+                  <span class="text-[10px] px-1.5 py-0.5 bg-emerald-500 text-white rounded">待确认</span>
+                </div>
+                <p class="text-sm text-deep-700 leading-relaxed">恭喜！青岛海洋捕捞向您发出"大副"职位的录用通知，请在 48 小时内确认</p>
+                <div class="flex items-center justify-between mt-2">
+                  <p class="text-xs text-deep-400">5 小时前</p>
+                  <button class="text-xs text-ocean-600 font-medium">查看详情 ›</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 企业查看简历 -->
+          <div class="px-5 py-4 border-b border-deep-100">
+            <div class="flex gap-3">
+              <div class="w-10 h-10 rounded-full bg-ocean-100 flex items-center justify-center text-ocean-600 flex-shrink-0">👁️</div>
+              <div class="flex-1">
+                <p class="font-semibold text-sm mb-1">企业查看了您的简历</p>
+                <p class="text-sm text-deep-700">舟山远洋渔业查看了您投递的"一级船长"职位</p>
+                <div class="flex items-center justify-between mt-2">
+                  <p class="text-xs text-deep-400">昨天 16:20</p>
+                  <button class="text-xs text-ocean-600 font-medium">查看投递 ›</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 证书审核通过 -->
+          <div class="px-5 py-4 border-b border-deep-100">
+            <div class="flex gap-3">
+              <div class="w-10 h-10 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-600 flex-shrink-0">✓</div>
+              <div class="flex-1">
+                <p class="font-semibold text-sm mb-1">证书审核通过</p>
+                <p class="text-sm text-deep-700">您的"海员证"已审核通过</p>
+                <div class="flex items-center justify-between mt-2">
+                  <p class="text-xs text-deep-400">昨天 10:30</p>
+                  <button class="text-xs text-ocean-600 font-medium">查看证书 ›</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 证书即将到期 -->
+          <div class="px-5 py-4 border-b border-deep-100">
+            <div class="flex gap-3">
+              <div class="w-10 h-10 rounded-full bg-amber-100 flex items-center justify-center text-amber-600 flex-shrink-0">⏰</div>
+              <div class="flex-1">
+                <p class="font-semibold text-sm mb-1">证书即将到期</p>
+                <p class="text-sm text-deep-700">您的"船员健康证"将于 18 天后过期，请及时续期</p>
+                <div class="flex items-center justify-between mt-2">
+                  <p class="text-xs text-deep-400">2 天前</p>
+                  <button class="text-xs text-ocean-600 font-medium">去续期 ›</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 企业发起沟通 -->
+          <div class="px-5 py-4 border-b border-deep-100">
+            <div class="flex gap-3">
+              <div class="w-10 h-10 rounded-full bg-ocean-100 flex items-center justify-center text-ocean-600 flex-shrink-0">💬</div>
+              <div class="flex-1">
+                <p class="font-semibold text-sm mb-1">企业发起沟通</p>
+                <p class="text-sm text-deep-700">舟山远洋渔业向您发送了消息</p>
+                <div class="flex items-center justify-between mt-2">
+                  <p class="text-xs text-deep-400">3 天前</p>
+                  <button class="text-xs text-ocean-600 font-medium">查看消息 ›</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 系统通知 -->
+          <div class="px-5 py-4 border-b border-deep-100">
+            <div class="flex gap-3">
+              <div class="w-10 h-10 rounded-full bg-deep-100 flex items-center justify-center text-deep-600 flex-shrink-0">🔔</div>
+              <div class="flex-1">
+                <p class="font-semibold text-sm mb-1">系统通知</p>
+                <p class="text-sm text-deep-700">您的信用分已更新，当前信用分：82 分（A 级）</p>
+                <p class="text-xs text-deep-400 mt-2">5 天前</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 12. 简历查看 -->
+  <div>
+    <span class="label">12 · 简历查看（已创建）</span>
     <div class="phone">
       <div class="status"><span>9:41</span><span>● ● ● 100%</span></div>
       <div class="bg-deep-50 h-full pb-6 overflow-hidden">
-        <div class="bg-white px-5 py-3 border-b border-deep-100 flex items-center gap-3"><button class="text-xl">←</button><h2 class="text-base font-semibold flex-1">我的简历</h2><span class="text-ocean-600 text-sm">编辑</span></div>
+        <div class="bg-white px-5 py-3 border-b border-deep-100 flex items-center gap-3"><button class="text-xl">←</button><h2 class="text-base font-semibold flex-1">我的简历</h2><button class="text-ocean-600 text-sm font-medium">编辑</button></div>
         <div class="p-4 space-y-3">
           <div class="bg-emerald-50 border border-emerald-200 rounded-2xl p-3 flex gap-2 text-[11px] text-emerald-900">
             <span>✓</span><span>已通过中渔学院实名认证 · 姓名/身份证已自动同步</span>
@@ -454,13 +931,248 @@ tailwind.config = {
     </div>
   </div>
 
-  <!-- 10. 履历 -->
+  <!-- 13. 创建简历 -->
   <div>
-    <span class="label">10 · 船员履历</span>
+    <span class="label">13 · 创建简历（首次创建）</span>
+    <div class="phone">
+      <div class="status"><span>9:41</span><span>● ● ● 100%</span></div>
+      <div class="bg-white h-full pb-20 overflow-hidden">
+        <div class="px-5 py-3 border-b border-deep-100 flex items-center gap-3"><button class="text-xl">←</button><h2 class="text-base font-semibold flex-1">创建简历</h2></div>
+        <div class="px-5 py-4 space-y-5 overflow-y-auto h-[calc(100%-140px)]">
+          <div class="bg-ocean-50 border border-ocean-200 rounded-2xl p-4 flex gap-3">
+            <span class="text-lg">ℹ️</span>
+            <div class="text-xs text-ocean-900 leading-relaxed">
+              <p class="font-medium mb-1">实名信息已自动同步</p>
+              <p>姓名、身份证号来自中渔学院实名认证，不可修改</p>
+            </div>
+          </div>
+
+          <!-- 基础信息 -->
+          <div class="bg-white rounded-2xl p-4 border border-deep-200">
+            <p class="text-sm font-semibold mb-4">基础信息</p>
+            <div class="space-y-4">
+              <div>
+                <p class="text-xs text-deep-500 mb-2">姓名 <span class="text-deep-400">（已同步）</span></p>
+                <input value="张大海" disabled class="w-full border border-deep-200 bg-deep-50 rounded-xl px-3 py-2.5 text-sm outline-none">
+              </div>
+              <div class="grid grid-cols-2 gap-3">
+                <div>
+                  <p class="text-xs text-deep-500 mb-2">性别 <span class="text-rose-600">*</span></p>
+                  <select class="w-full border border-deep-300 rounded-xl px-3 py-2.5 text-sm outline-none">
+                    <option>男</option>
+                    <option>女</option>
+                  </select>
+                </div>
+                <div>
+                  <p class="text-xs text-deep-500 mb-2">年龄 <span class="text-rose-600">*</span></p>
+                  <input type="number" placeholder="请输入年龄" class="w-full border border-deep-300 rounded-xl px-3 py-2.5 text-sm outline-none">
+                </div>
+              </div>
+              <div>
+                <p class="text-xs text-deep-500 mb-2">手机号 <span class="text-deep-400">（已同步）</span></p>
+                <input value="138****1234" disabled class="w-full border border-deep-200 bg-deep-50 rounded-xl px-3 py-2.5 text-sm outline-none">
+              </div>
+              <div>
+                <p class="text-xs text-deep-500 mb-2">现居地 <span class="text-rose-600">*</span></p>
+                <input placeholder="请选择省市区" class="w-full border border-deep-300 rounded-xl px-3 py-2.5 text-sm outline-none">
+              </div>
+              <div>
+                <p class="text-xs text-deep-500 mb-2">学历</p>
+                <select class="w-full border border-deep-300 rounded-xl px-3 py-2.5 text-sm outline-none">
+                  <option>请选择学历</option>
+                  <option>初中及以下</option>
+                  <option>高中/中专</option>
+                  <option>大专</option>
+                  <option>本科</option>
+                  <option>本科以上</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- 求职意向 -->
+          <div class="bg-white rounded-2xl p-4 border border-deep-200">
+            <p class="text-sm font-semibold mb-4">求职意向</p>
+            <div class="space-y-4">
+              <div>
+                <p class="text-xs text-deep-500 mb-2">期望职位 <span class="text-rose-600">*</span></p>
+                <select class="w-full border border-deep-300 rounded-xl px-3 py-2.5 text-sm outline-none">
+                  <option>请选择期望职位</option>
+                  <option>一级船长</option>
+                  <option>二级船长</option>
+                  <option>三级船长</option>
+                  <option>大副</option>
+                  <option>轮机长</option>
+                  <option>普通船员</option>
+                </select>
+              </div>
+              <div>
+                <p class="text-xs text-deep-500 mb-2">期望薪资 <span class="text-rose-600">*</span></p>
+                <div class="grid grid-cols-2 gap-3">
+                  <input type="number" placeholder="最低薪资" class="w-full border border-deep-300 rounded-xl px-3 py-2.5 text-sm outline-none">
+                  <input type="number" placeholder="最高薪资" class="w-full border border-deep-300 rounded-xl px-3 py-2.5 text-sm outline-none">
+                </div>
+                <p class="text-[10px] text-deep-400 mt-1">单位：元/月</p>
+              </div>
+              <div>
+                <p class="text-xs text-deep-500 mb-2">期望海域</p>
+                <div class="flex gap-2 flex-wrap">
+                  <button class="px-3 py-1.5 border border-ocean-500 bg-ocean-50 text-ocean-700 rounded-lg text-xs">东海</button>
+                  <button class="px-3 py-1.5 border border-deep-200 text-deep-600 rounded-lg text-xs">南海</button>
+                  <button class="px-3 py-1.5 border border-deep-200 text-deep-600 rounded-lg text-xs">黄海</button>
+                  <button class="px-3 py-1.5 border border-deep-200 text-deep-600 rounded-lg text-xs">渤海</button>
+                  <button class="px-3 py-1.5 border border-deep-200 text-deep-600 rounded-lg text-xs">远洋</button>
+                </div>
+              </div>
+              <div>
+                <p class="text-xs text-deep-500 mb-2">工作经验 <span class="text-rose-600">*</span></p>
+                <select class="w-full border border-deep-300 rounded-xl px-3 py-2.5 text-sm outline-none">
+                  <option>请选择工作经验</option>
+                  <option>无经验</option>
+                  <option>1年以下</option>
+                  <option>1-3年</option>
+                  <option>3-5年</option>
+                  <option>5-10年</option>
+                  <option>10年以上</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- 自我评价 -->
+          <div class="bg-white rounded-2xl p-4 border border-deep-200">
+            <p class="text-sm font-semibold mb-4">自我评价</p>
+            <textarea placeholder="简单介绍您的工作经历、技能特长、性格特点等（选填）" class="w-full border border-deep-300 rounded-xl px-3 py-2.5 text-sm outline-none h-24 resize-none"></textarea>
+            <p class="text-[10px] text-deep-400 mt-1">0/200</p>
+          </div>
+        </div>
+
+        <div class="absolute bottom-0 left-0 right-0 bg-white border-t border-deep-100 p-4">
+          <button class="w-full bg-ocean-600 text-white font-semibold py-3.5 rounded-2xl">保存简历</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 14. 编辑简历 -->
+  <div>
+    <span class="label">14 · 编辑简历</span>
+    <div class="phone">
+      <div class="status"><span>9:41</span><span>● ● ● 100%</span></div>
+      <div class="bg-white h-full pb-20 overflow-hidden">
+        <div class="px-5 py-3 border-b border-deep-100 flex items-center gap-3"><button class="text-xl">←</button><h2 class="text-base font-semibold flex-1">编辑简历</h2></div>
+        <div class="px-5 py-4 space-y-5 overflow-y-auto h-[calc(100%-140px)]">
+          <!-- 基础信息 -->
+          <div class="bg-white rounded-2xl p-4 border border-deep-200">
+            <p class="text-sm font-semibold mb-4">基础信息</p>
+            <div class="space-y-4">
+              <div>
+                <p class="text-xs text-deep-500 mb-2">姓名 <span class="text-deep-400">（不可修改）</span></p>
+                <input value="张大海" disabled class="w-full border border-deep-200 bg-deep-50 rounded-xl px-3 py-2.5 text-sm outline-none">
+              </div>
+              <div class="grid grid-cols-2 gap-3">
+                <div>
+                  <p class="text-xs text-deep-500 mb-2">性别 <span class="text-rose-600">*</span></p>
+                  <select class="w-full border border-deep-300 rounded-xl px-3 py-2.5 text-sm outline-none">
+                    <option selected>男</option>
+                    <option>女</option>
+                  </select>
+                </div>
+                <div>
+                  <p class="text-xs text-deep-500 mb-2">年龄 <span class="text-rose-600">*</span></p>
+                  <input type="number" value="38" class="w-full border border-deep-300 rounded-xl px-3 py-2.5 text-sm outline-none">
+                </div>
+              </div>
+              <div>
+                <p class="text-xs text-deep-500 mb-2">手机号 <span class="text-deep-400">（不可修改）</span></p>
+                <input value="138****1234" disabled class="w-full border border-deep-200 bg-deep-50 rounded-xl px-3 py-2.5 text-sm outline-none">
+              </div>
+              <div>
+                <p class="text-xs text-deep-500 mb-2">现居地 <span class="text-rose-600">*</span></p>
+                <input value="浙江省 舟山市 定海区" class="w-full border border-deep-300 rounded-xl px-3 py-2.5 text-sm outline-none">
+              </div>
+              <div>
+                <p class="text-xs text-deep-500 mb-2">学历</p>
+                <select class="w-full border border-deep-300 rounded-xl px-3 py-2.5 text-sm outline-none">
+                  <option>初中及以下</option>
+                  <option selected>高中/中专</option>
+                  <option>大专</option>
+                  <option>本科</option>
+                  <option>本科以上</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- 求职意向 -->
+          <div class="bg-white rounded-2xl p-4 border border-deep-200">
+            <p class="text-sm font-semibold mb-4">求职意向</p>
+            <div class="space-y-4">
+              <div>
+                <p class="text-xs text-deep-500 mb-2">期望职位 <span class="text-rose-600">*</span></p>
+                <select class="w-full border border-deep-300 rounded-xl px-3 py-2.5 text-sm outline-none">
+                  <option selected>一级船长</option>
+                  <option>二级船长</option>
+                  <option>三级船长</option>
+                  <option>大副</option>
+                  <option>轮机长</option>
+                  <option>普通船员</option>
+                </select>
+              </div>
+              <div>
+                <p class="text-xs text-deep-500 mb-2">期望薪资 <span class="text-rose-600">*</span></p>
+                <div class="grid grid-cols-2 gap-3">
+                  <input type="number" value="15000" class="w-full border border-deep-300 rounded-xl px-3 py-2.5 text-sm outline-none">
+                  <input type="number" value="20000" class="w-full border border-deep-300 rounded-xl px-3 py-2.5 text-sm outline-none">
+                </div>
+                <p class="text-[10px] text-deep-400 mt-1">单位：元/月</p>
+              </div>
+              <div>
+                <p class="text-xs text-deep-500 mb-2">期望海域</p>
+                <div class="flex gap-2 flex-wrap">
+                  <button class="px-3 py-1.5 border border-deep-200 text-deep-600 rounded-lg text-xs">东海</button>
+                  <button class="px-3 py-1.5 border border-ocean-500 bg-ocean-50 text-ocean-700 rounded-lg text-xs">南海</button>
+                  <button class="px-3 py-1.5 border border-deep-200 text-deep-600 rounded-lg text-xs">黄海</button>
+                  <button class="px-3 py-1.5 border border-deep-200 text-deep-600 rounded-lg text-xs">渤海</button>
+                  <button class="px-3 py-1.5 border border-ocean-500 bg-ocean-50 text-ocean-700 rounded-lg text-xs">远洋</button>
+                </div>
+              </div>
+              <div>
+                <p class="text-xs text-deep-500 mb-2">工作经验 <span class="text-rose-600">*</span></p>
+                <select class="w-full border border-deep-300 rounded-xl px-3 py-2.5 text-sm outline-none">
+                  <option>无经验</option>
+                  <option>1年以下</option>
+                  <option>1-3年</option>
+                  <option>3-5年</option>
+                  <option>5-10年</option>
+                  <option selected>10年以上</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- 自我评价 -->
+          <div class="bg-white rounded-2xl p-4 border border-deep-200">
+            <p class="text-sm font-semibold mb-4">自我评价</p>
+            <textarea class="w-full border border-deep-300 rounded-xl px-3 py-2.5 text-sm outline-none h-24 resize-none">本人有8年南海围网作业经验，持有一级船长证书，熟悉南海渔场，能够独立指挥船队作业。工作认真负责，服从管理。</textarea>
+            <p class="text-[10px] text-deep-400 mt-1">56/200</p>
+          </div>
+        </div>
+
+        <div class="absolute bottom-0 left-0 right-0 bg-white border-t border-deep-100 p-4">
+          <button class="w-full bg-ocean-600 text-white font-semibold py-3.5 rounded-2xl">保存修改</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 15. 履历列表 -->
+  <div>
+    <span class="label">15 · 船员履历（列表）</span>
     <div class="phone">
       <div class="status"><span>9:41</span><span>● ● ● 100%</span></div>
       <div class="bg-deep-50 h-full pb-6">
-        <div class="bg-white px-5 py-3 border-b border-deep-100 flex items-center gap-3"><button class="text-xl">←</button><h2 class="text-base font-semibold flex-1">我的履历</h2></div>
+        <div class="bg-white px-5 py-3 border-b border-deep-100 flex items-center gap-3"><button class="text-xl">←</button><h2 class="text-base font-semibold flex-1">我的履历</h2><button class="text-ocean-600 text-sm font-medium">+ 添加</button></div>
         <div class="bg-gradient-to-r from-ocean-700 to-ocean-500 mx-4 mt-4 rounded-2xl p-4 text-white">
           <p class="text-xs opacity-80">行业从业总时长</p>
           <p class="text-3xl font-bold mt-1">8.5 <span class="text-base font-normal">年</span></p>
@@ -474,28 +1186,298 @@ tailwind.config = {
                 <p class="text-xs text-deep-500 mt-1">舟山远洋渔业 · 围网 · 南海</p>
                 <p class="text-[11px] text-deep-400 mt-2">上船：2026.02.15 · 下船：— · 已 84 天</p>
               </div>
+              <button class="text-deep-400 text-sm">›</button>
             </div>
           </div>
           <div class="bg-white rounded-2xl p-4">
-            <div class="flex justify-between items-start"><div><p class="font-semibold">大副 · 浙海 12345</p><p class="text-xs text-deep-500 mt-1">青岛海洋捕捞 · 拖网 · 东海</p><p class="text-[11px] text-deep-400 mt-2">2025.05 - 2025.11 · 6 个月</p></div><span class="text-[10px] text-emerald-600">已完成</span></div>
+            <div class="flex justify-between items-start">
+              <div class="flex-1">
+                <p class="font-semibold">大副 · 浙海 12345</p>
+                <p class="text-xs text-deep-500 mt-1">青岛海洋捕捞 · 拖网 · 东海</p>
+                <p class="text-[11px] text-deep-400 mt-2">2025.05 - 2025.11 · 6 个月</p>
+              </div>
+              <button class="text-deep-400 text-sm">›</button>
+            </div>
           </div>
           <div class="bg-white rounded-2xl p-4">
-            <div class="flex justify-between items-start"><div><p class="font-semibold">大副 · 闽渔 66666</p><p class="text-xs text-deep-500 mt-1">福建闽南海运 · 围网 · 南海</p><p class="text-[11px] text-deep-400 mt-2">2024.03 - 2024.10 · 7 个月</p></div><span class="text-[10px] text-emerald-600">已完成</span></div>
+            <div class="flex justify-between items-start">
+              <div class="flex-1">
+                <p class="font-semibold">大副 · 闽渔 66666</p>
+                <p class="text-xs text-deep-500 mt-1">福建闽南海运 · 围网 · 南海</p>
+                <p class="text-[11px] text-deep-400 mt-2">2024.03 - 2024.10 · 7 个月</p>
+              </div>
+              <button class="text-deep-400 text-sm">›</button>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- 11. 证书管理 -->
+  <!-- 23. 履历详情 -->
   <div>
-    <span class="label">11 · 证书管理（含到期）</span>
+    <span class="label">23 · 履历详情</span>
+    <div class="phone">
+      <div class="status"><span>9:41</span><span>● ● ● 100%</span></div>
+      <div class="bg-white h-full pb-6 overflow-hidden">
+        <div class="px-5 py-3 border-b border-deep-100 flex items-center gap-3"><button class="text-xl">←</button><h2 class="text-base font-semibold flex-1">履历详情</h2><button class="text-ocean-600 text-sm">编辑</button></div>
+        <div class="overflow-y-auto h-[calc(100%-60px)]">
+          <div class="p-5 space-y-4">
+            <!-- 状态标签 -->
+            <div class="flex items-center gap-2">
+              <span class="text-[10px] px-2 py-1 bg-emerald-50 text-emerald-700 rounded">已完成</span>
+              <span class="text-xs text-deep-500">来源：平台录用自动生成</span>
+            </div>
+
+            <!-- 基本信息 -->
+            <div class="bg-white rounded-2xl p-4 border border-deep-200">
+              <p class="text-sm font-semibold mb-3">基本信息</p>
+              <div class="space-y-2 text-sm">
+                <div class="flex gap-3"><span class="text-deep-500 w-20">职位</span><span class="font-medium">大副</span></div>
+                <div class="flex gap-3"><span class="text-deep-500 w-20">船名</span><span>浙海 12345</span></div>
+                <div class="flex gap-3"><span class="text-deep-500 w-20">企业</span><span>青岛海洋捕捞</span></div>
+                <div class="flex gap-3"><span class="text-deep-500 w-20">船型</span><span>拖网</span></div>
+                <div class="flex gap-3"><span class="text-deep-500 w-20">工作海域</span><span>东海</span></div>
+              </div>
+            </div>
+
+            <!-- 工作时间 -->
+            <div class="bg-white rounded-2xl p-4 border border-deep-200">
+              <p class="text-sm font-semibold mb-3">工作时间</p>
+              <div class="space-y-2 text-sm">
+                <div class="flex gap-3"><span class="text-deep-500 w-20">上船时间</span><span>2025-05-10</span></div>
+                <div class="flex gap-3"><span class="text-deep-500 w-20">下船时间</span><span>2025-11-08</span></div>
+                <div class="flex gap-3"><span class="text-deep-500 w-20">工作时长</span><span class="font-medium text-ocean-600">6 个月</span></div>
+              </div>
+            </div>
+
+            <!-- 工作描述 -->
+            <div class="bg-white rounded-2xl p-4 border border-deep-200">
+              <p class="text-sm font-semibold mb-2">工作描述</p>
+              <p class="text-sm text-deep-700 leading-relaxed">负责协助船长进行航行指挥，管理甲板部工作，参与渔获作业。期间完成东海作业任务，表现良好。</p>
+            </div>
+
+            <!-- 企业评价 -->
+            <div class="bg-white rounded-2xl p-4 border border-deep-200">
+              <p class="text-sm font-semibold mb-3">企业评价</p>
+              <div class="flex items-center gap-2 mb-2">
+                <span class="text-2xl font-bold text-ocean-600">4.5</span>
+                <div class="flex gap-0.5">
+                  <span class="text-amber-400">★</span>
+                  <span class="text-amber-400">★</span>
+                  <span class="text-amber-400">★</span>
+                  <span class="text-amber-400">★</span>
+                  <span class="text-deep-300">★</span>
+                </div>
+              </div>
+              <div class="space-y-1 text-xs">
+                <div class="flex justify-between"><span class="text-deep-500">是否守时</span><span class="text-emerald-600">是</span></div>
+                <div class="flex justify-between"><span class="text-deep-500">专业技能</span><span>⭐⭐⭐⭐⭐</span></div>
+                <div class="flex justify-between"><span class="text-deep-500">是否稳定</span><span class="text-emerald-600">是</span></div>
+              </div>
+              <p class="text-sm text-deep-700 mt-3 leading-relaxed">工作认真负责，专业技能扎实，与船员相处融洽。</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 24. 添加履历 -->
+  <div>
+    <span class="label">24 · 添加履历</span>
+    <div class="phone">
+      <div class="status"><span>9:41</span><span>● ● ● 100%</span></div>
+      <div class="bg-white h-full pb-20 overflow-hidden">
+        <div class="px-5 py-3 border-b border-deep-100 flex items-center gap-3"><button class="text-xl">←</button><h2 class="text-base font-semibold flex-1">添加履历</h2></div>
+        <div class="px-5 py-4 space-y-5 overflow-y-auto h-[calc(100%-140px)]">
+          <div class="bg-ocean-50 border border-ocean-200 rounded-2xl p-4 flex gap-3">
+            <span class="text-lg">ℹ️</span>
+            <div class="text-xs text-ocean-900 leading-relaxed">
+              <p class="font-medium mb-1">手动添加履历</p>
+              <p>平台录用完成后会自动生成履历，也可手动添加历史工作经历</p>
+            </div>
+          </div>
+
+          <!-- 基本信息 -->
+          <div class="bg-white rounded-2xl p-4 border border-deep-200">
+            <p class="text-sm font-semibold mb-4">基本信息</p>
+            <div class="space-y-4">
+              <div>
+                <p class="text-xs text-deep-500 mb-2">职位 <span class="text-rose-600">*</span></p>
+                <select class="w-full border border-deep-300 rounded-xl px-3 py-2.5 text-sm outline-none">
+                  <option>请选择职位</option>
+                  <option>一级船长</option>
+                  <option>二级船长</option>
+                  <option>三级船长</option>
+                  <option>大副</option>
+                  <option>轮机长</option>
+                  <option>普通船员</option>
+                </select>
+              </div>
+              <div>
+                <p class="text-xs text-deep-500 mb-2">船名 <span class="text-rose-600">*</span></p>
+                <input placeholder="请输入船名" class="w-full border border-deep-300 rounded-xl px-3 py-2.5 text-sm outline-none">
+              </div>
+              <div>
+                <p class="text-xs text-deep-500 mb-2">企业名称 <span class="text-rose-600">*</span></p>
+                <input placeholder="请输入企业名称" class="w-full border border-deep-300 rounded-xl px-3 py-2.5 text-sm outline-none">
+              </div>
+              <div>
+                <p class="text-xs text-deep-500 mb-2">船型 <span class="text-rose-600">*</span></p>
+                <select class="w-full border border-deep-300 rounded-xl px-3 py-2.5 text-sm outline-none">
+                  <option>请选择船型</option>
+                  <option>拖网</option>
+                  <option>围网</option>
+                  <option>流网</option>
+                  <option>钓具</option>
+                  <option>其他</option>
+                </select>
+              </div>
+              <div>
+                <p class="text-xs text-deep-500 mb-2">工作海域 <span class="text-rose-600">*</span></p>
+                <select class="w-full border border-deep-300 rounded-xl px-3 py-2.5 text-sm outline-none">
+                  <option>请选择海域</option>
+                  <option>东海</option>
+                  <option>南海</option>
+                  <option>黄海</option>
+                  <option>渤海</option>
+                  <option>远洋</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- 工作时间 -->
+          <div class="bg-white rounded-2xl p-4 border border-deep-200">
+            <p class="text-sm font-semibold mb-4">工作时间</p>
+            <div class="space-y-4">
+              <div>
+                <p class="text-xs text-deep-500 mb-2">上船时间 <span class="text-rose-600">*</span></p>
+                <input type="date" class="w-full border border-deep-300 rounded-xl px-3 py-2.5 text-sm outline-none">
+              </div>
+              <div>
+                <p class="text-xs text-deep-500 mb-2">下船时间 <span class="text-rose-600">*</span></p>
+                <input type="date" class="w-full border border-deep-300 rounded-xl px-3 py-2.5 text-sm outline-none">
+              </div>
+              <div class="bg-deep-50 rounded-xl p-3 text-xs text-deep-600">
+                <p>工作时长将自动计算</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- 工作描述 -->
+          <div class="bg-white rounded-2xl p-4 border border-deep-200">
+            <p class="text-sm font-semibold mb-4">工作描述</p>
+            <textarea placeholder="简单描述您的工作内容、职责等（选填）" class="w-full border border-deep-300 rounded-xl px-3 py-2.5 text-sm outline-none h-24 resize-none"></textarea>
+            <p class="text-[10px] text-deep-400 mt-1">0/200</p>
+          </div>
+        </div>
+
+        <div class="absolute bottom-0 left-0 right-0 bg-white border-t border-deep-100 p-4">
+          <button class="w-full bg-ocean-600 text-white font-semibold py-3.5 rounded-2xl">保存履历</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 25. 编辑履历 -->
+  <div>
+    <span class="label">25 · 编辑履历</span>
+    <div class="phone">
+      <div class="status"><span>9:41</span><span>● ● ● 100%</span></div>
+      <div class="bg-white h-full pb-20 overflow-hidden">
+        <div class="px-5 py-3 border-b border-deep-100 flex items-center gap-3"><button class="text-xl">←</button><h2 class="text-base font-semibold flex-1">编辑履历</h2><button class="text-rose-600 text-sm">删除</button></div>
+        <div class="px-5 py-4 space-y-5 overflow-y-auto h-[calc(100%-140px)]">
+          <!-- 基本信息 -->
+          <div class="bg-white rounded-2xl p-4 border border-deep-200">
+            <p class="text-sm font-semibold mb-4">基本信息</p>
+            <div class="space-y-4">
+              <div>
+                <p class="text-xs text-deep-500 mb-2">职位 <span class="text-rose-600">*</span></p>
+                <select class="w-full border border-deep-300 rounded-xl px-3 py-2.5 text-sm outline-none">
+                  <option>一级船长</option>
+                  <option>二级船长</option>
+                  <option>三级船长</option>
+                  <option selected>大副</option>
+                  <option>轮机长</option>
+                  <option>普通船员</option>
+                </select>
+              </div>
+              <div>
+                <p class="text-xs text-deep-500 mb-2">船名 <span class="text-rose-600">*</span></p>
+                <input value="浙海 12345" class="w-full border border-deep-300 rounded-xl px-3 py-2.5 text-sm outline-none">
+              </div>
+              <div>
+                <p class="text-xs text-deep-500 mb-2">企业名称 <span class="text-rose-600">*</span></p>
+                <input value="青岛海洋捕捞" class="w-full border border-deep-300 rounded-xl px-3 py-2.5 text-sm outline-none">
+              </div>
+              <div>
+                <p class="text-xs text-deep-500 mb-2">船型 <span class="text-rose-600">*</span></p>
+                <select class="w-full border border-deep-300 rounded-xl px-3 py-2.5 text-sm outline-none">
+                  <option selected>拖网</option>
+                  <option>围网</option>
+                  <option>流网</option>
+                  <option>钓具</option>
+                  <option>其他</option>
+                </select>
+              </div>
+              <div>
+                <p class="text-xs text-deep-500 mb-2">工作海域 <span class="text-rose-600">*</span></p>
+                <select class="w-full border border-deep-300 rounded-xl px-3 py-2.5 text-sm outline-none">
+                  <option selected>东海</option>
+                  <option>南海</option>
+                  <option>黄海</option>
+                  <option>渤海</option>
+                  <option>远洋</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- 工作时间 -->
+          <div class="bg-white rounded-2xl p-4 border border-deep-200">
+            <p class="text-sm font-semibold mb-4">工作时间</p>
+            <div class="space-y-4">
+              <div>
+                <p class="text-xs text-deep-500 mb-2">上船时间 <span class="text-rose-600">*</span></p>
+                <input type="date" value="2025-05-10" class="w-full border border-deep-300 rounded-xl px-3 py-2.5 text-sm outline-none">
+              </div>
+              <div>
+                <p class="text-xs text-deep-500 mb-2">下船时间 <span class="text-rose-600">*</span></p>
+                <input type="date" value="2025-11-08" class="w-full border border-deep-300 rounded-xl px-3 py-2.5 text-sm outline-none">
+              </div>
+              <div class="bg-emerald-50 rounded-xl p-3 text-xs text-emerald-700">
+                <p>工作时长：6 个月</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- 工作描述 -->
+          <div class="bg-white rounded-2xl p-4 border border-deep-200">
+            <p class="text-sm font-semibold mb-4">工作描述</p>
+            <textarea class="w-full border border-deep-300 rounded-xl px-3 py-2.5 text-sm outline-none h-24 resize-none">负责协助船长进行航行指挥，管理甲板部工作，参与渔获作业。期间完成东海作业任务，表现良好。</textarea>
+            <p class="text-[10px] text-deep-400 mt-1">48/200</p>
+          </div>
+        </div>
+
+        <div class="absolute bottom-0 left-0 right-0 bg-white border-t border-deep-100 p-4">
+          <button class="w-full bg-ocean-600 text-white font-semibold py-3.5 rounded-2xl">保存修改</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 16. 证书管理 -->
+  <div>
+    <span class="label">16 · 证书管理（含到期提醒）</span>
     <div class="phone">
       <div class="status"><span>9:41</span><span>● ● ● 100%</span></div>
       <div class="bg-deep-50 h-full pb-6">
-        <div class="bg-white px-5 py-3 border-b border-deep-100 flex items-center gap-3"><button class="text-xl">←</button><h2 class="text-base font-semibold flex-1">证书管理</h2><span class="text-ocean-600 text-sm">+ 添加</span></div>
+        <div class="bg-white px-5 py-3 border-b border-deep-100 flex items-center gap-3"><button class="text-xl">←</button><h2 class="text-base font-semibold flex-1">证书管理</h2><button class="text-ocean-600 text-sm font-medium">+ 添加证书</button></div>
         <div class="bg-amber-50 mx-4 mt-4 rounded-2xl p-3 text-xs text-amber-900 flex gap-2"><span>⏰</span><span>您的"健康证"将于 18 天后过期，请及时续期</span></div>
         <div class="px-4 py-3 space-y-3">
+          <!-- 中渔学院证书（已认证，不可编辑） -->
           <div class="bg-white rounded-2xl p-4">
             <div class="flex justify-between items-start">
               <div class="flex gap-3 flex-1">
@@ -508,8 +1490,9 @@ tailwind.config = {
               </div>
               <span class="text-[10px] px-2 py-1 bg-emerald-50 text-emerald-700 rounded">已认证</span>
             </div>
-            <p class="text-[10px] text-ocean-600 mt-3">来源 · 中渔学院</p>
+            <p class="text-[10px] text-ocean-600 mt-3">来源 · 中渔学院（不可编辑）</p>
           </div>
+          <!-- 用户上传证书（即将到期） -->
           <div class="bg-white rounded-2xl p-4 border border-amber-200">
             <div class="flex justify-between items-start">
               <div class="flex gap-3 flex-1">
@@ -522,7 +1505,12 @@ tailwind.config = {
               </div>
               <span class="text-[10px] px-2 py-1 bg-amber-50 text-amber-700 rounded">即将到期</span>
             </div>
+            <div class="flex gap-2 mt-3 pt-3 border-t border-deep-100">
+              <button class="flex-1 text-xs text-ocean-600 py-2 border border-ocean-200 rounded-lg">续期</button>
+              <button class="flex-1 text-xs text-deep-600 py-2 border border-deep-200 rounded-lg">编辑</button>
+            </div>
           </div>
+          <!-- 用户上传证书（已认证） -->
           <div class="bg-white rounded-2xl p-4">
             <div class="flex justify-between items-start">
               <div class="flex gap-3 flex-1">
@@ -531,15 +1519,336 @@ tailwind.config = {
               </div>
               <span class="text-[10px] px-2 py-1 bg-emerald-50 text-emerald-700 rounded">已认证</span>
             </div>
+            <div class="flex gap-2 mt-3 pt-3 border-t border-deep-100">
+              <button class="flex-1 text-xs text-deep-600 py-2 border border-deep-200 rounded-lg">查看详情</button>
+              <button class="flex-1 text-xs text-deep-600 py-2 border border-deep-200 rounded-lg">编辑</button>
+            </div>
+          </div>
+          <!-- 用户上传证书（待审核） -->
+          <div class="bg-white rounded-2xl p-4 border border-ocean-200">
+            <div class="flex justify-between items-start">
+              <div class="flex gap-3 flex-1">
+                <div class="w-12 h-14 bg-gradient-to-br from-blue-400 to-blue-600 rounded flex items-center justify-center text-white">📋</div>
+                <div class="flex-1"><p class="font-semibold">GMDSS 证书</p><p class="text-[11px] text-deep-500 mt-1">编号 GM2024******</p><p class="text-[11px] text-deep-500">有效期至 2028.08.15</p></div>
+              </div>
+              <span class="text-[10px] px-2 py-1 bg-ocean-50 text-ocean-700 rounded">待审核</span>
+            </div>
+            <p class="text-[10px] text-deep-400 mt-3">审核中，预计 1-2 个工作日完成</p>
+          </div>
+          <!-- 用户上传证书（已拒绝） -->
+          <div class="bg-white rounded-2xl p-4 border border-rose-200">
+            <div class="flex justify-between items-start">
+              <div class="flex gap-3 flex-1">
+                <div class="w-12 h-14 bg-gradient-to-br from-purple-400 to-purple-600 rounded flex items-center justify-center text-white">🔧</div>
+                <div class="flex-1"><p class="font-semibold">四小证</p><p class="text-[11px] text-deep-500 mt-1">编号 SX2024******</p><p class="text-[11px] text-deep-500">有效期至 2027.06.20</p></div>
+              </div>
+              <span class="text-[10px] px-2 py-1 bg-rose-50 text-rose-700 rounded">已拒绝</span>
+            </div>
+            <div class="bg-rose-50 rounded-xl p-2 mt-3 text-[11px] text-rose-900">
+              <p class="font-medium">拒绝原因：证书图片不清晰</p>
+              <p class="mt-1 text-[10px]">请重新上传清晰的证书照片</p>
+            </div>
+            <button class="w-full mt-3 text-xs text-ocean-600 py-2 border border-ocean-200 rounded-lg">重新上传</button>
           </div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- 12. 投递记录 -->
+  <!-- 15. 添加证书 -->
   <div>
-    <span class="label">12 · 投递记录</span>
+    <span class="label">17 · 添加证书（上传）</span>
+    <div class="phone">
+      <div class="status"><span>9:41</span><span>● ● ● 100%</span></div>
+      <div class="bg-white h-full pb-6">
+        <div class="px-5 py-3 border-b border-deep-100 flex items-center gap-3"><button class="text-xl">←</button><h2 class="text-base font-semibold flex-1">添加证书</h2></div>
+        <div class="px-5 py-4 space-y-5">
+          <div class="bg-ocean-50 border border-ocean-200 rounded-2xl p-4 flex gap-3">
+            <span class="text-lg">ℹ️</span>
+            <div class="text-xs text-ocean-900 leading-relaxed">
+              <p class="font-medium mb-1">证书审核说明</p>
+              <p>• 上传后需运营审核，1-2个工作日完成</p>
+              <p>• 请确保证书照片清晰完整</p>
+              <p>• 证书信息需与实际一致</p>
+            </div>
+          </div>
+          <div>
+            <p class="text-xs text-deep-500 mb-2">证书类型 <span class="text-rose-600">*</span></p>
+            <select class="w-full border border-deep-300 rounded-xl px-3 py-3 text-sm outline-none">
+              <option>请选择证书类型</option>
+              <option>一级船长</option>
+              <option>二级船长</option>
+              <option>三级船长</option>
+              <option>普通船员证</option>
+              <option>海员证</option>
+              <option>四小证</option>
+              <option>GMDSS</option>
+              <option>健康证</option>
+            </select>
+          </div>
+          <div>
+            <p class="text-xs text-deep-500 mb-2">证书编号 <span class="text-rose-600">*</span></p>
+            <input placeholder="请输入证书编号" class="w-full border border-deep-300 rounded-xl px-3 py-3 text-sm outline-none">
+          </div>
+          <div>
+            <p class="text-xs text-deep-500 mb-2">发证机关 <span class="text-rose-600">*</span></p>
+            <input placeholder="请输入发证机关" class="w-full border border-deep-300 rounded-xl px-3 py-3 text-sm outline-none">
+          </div>
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <p class="text-xs text-deep-500 mb-2">发证日期 <span class="text-rose-600">*</span></p>
+              <input type="date" class="w-full border border-deep-300 rounded-xl px-3 py-3 text-sm outline-none">
+            </div>
+            <div>
+              <p class="text-xs text-deep-500 mb-2">到期日期 <span class="text-rose-600">*</span></p>
+              <input type="date" class="w-full border border-deep-300 rounded-xl px-3 py-3 text-sm outline-none">
+            </div>
+          </div>
+          <div>
+            <p class="text-xs text-deep-500 mb-2">证书照片 <span class="text-rose-600">*</span></p>
+            <div class="border-2 border-dashed border-ocean-300 rounded-2xl py-8 flex flex-col items-center text-ocean-600">
+              <span class="text-4xl mb-2">📷</span>
+              <span class="text-sm font-medium">点击上传证书照片</span>
+              <span class="text-xs text-deep-400 mt-1">支持 JPG、PNG 格式，不超过 5MB</span>
+            </div>
+          </div>
+          <div class="bg-amber-50 rounded-xl p-3 text-xs text-amber-900 flex gap-2">
+            <span>💡</span>
+            <span>请确保证书照片清晰完整，包含所有关键信息（编号、日期、印章等）</span>
+          </div>
+        </div>
+        <div class="absolute bottom-0 left-0 right-0 bg-white border-t border-deep-100 p-4">
+          <button class="w-full bg-ocean-600 text-white font-semibold py-3.5 rounded-2xl">提交审核</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 16. 编辑证书 -->
+  <div>
+    <span class="label">18 · 编辑证书</span>
+    <div class="phone">
+      <div class="status"><span>9:41</span><span>● ● ● 100%</span></div>
+      <div class="bg-white h-full pb-6">
+        <div class="px-5 py-3 border-b border-deep-100 flex items-center gap-3"><button class="text-xl">←</button><h2 class="text-base font-semibold flex-1">编辑证书</h2><button class="text-rose-600 text-sm">删除</button></div>
+        <div class="px-5 py-4 space-y-5">
+          <div>
+            <p class="text-xs text-deep-500 mb-2">证书类型 <span class="text-rose-600">*</span></p>
+            <select class="w-full border border-deep-300 rounded-xl px-3 py-3 text-sm outline-none bg-deep-50" disabled>
+              <option>海员证</option>
+            </select>
+            <p class="text-[10px] text-deep-400 mt-1">证书类型不可修改</p>
+          </div>
+          <div>
+            <p class="text-xs text-deep-500 mb-2">证书编号 <span class="text-rose-600">*</span></p>
+            <input value="HM2024123456789" class="w-full border border-deep-300 rounded-xl px-3 py-3 text-sm outline-none">
+          </div>
+          <div>
+            <p class="text-xs text-deep-500 mb-2">发证机关 <span class="text-rose-600">*</span></p>
+            <input value="中华人民共和国海事局" class="w-full border border-deep-300 rounded-xl px-3 py-3 text-sm outline-none">
+          </div>
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <p class="text-xs text-deep-500 mb-2">发证日期 <span class="text-rose-600">*</span></p>
+              <input type="date" value="2020-12-01" class="w-full border border-deep-300 rounded-xl px-3 py-3 text-sm outline-none">
+            </div>
+            <div>
+              <p class="text-xs text-deep-500 mb-2">到期日期 <span class="text-rose-600">*</span></p>
+              <input type="date" value="2030-12-01" class="w-full border border-deep-300 rounded-xl px-3 py-3 text-sm outline-none">
+            </div>
+          </div>
+          <div>
+            <p class="text-xs text-deep-500 mb-2">证书照片 <span class="text-rose-600">*</span></p>
+            <div class="border border-deep-200 rounded-2xl overflow-hidden">
+              <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='300'%3E%3Crect fill='%23e2e8f0' width='400' height='300'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-family='sans-serif' font-size='18' fill='%2364748b'%3E证书照片预览%3C/text%3E%3C/svg%3E" class="w-full">
+            </div>
+            <button class="w-full mt-2 text-xs text-ocean-600 py-2 border border-ocean-200 rounded-lg">重新上传</button>
+          </div>
+          <div class="bg-amber-50 rounded-xl p-3 text-xs text-amber-900 flex gap-2">
+            <span>⚠️</span>
+            <span>修改证书信息后需重新提交审核</span>
+          </div>
+        </div>
+        <div class="absolute bottom-0 left-0 right-0 bg-white border-t border-deep-100 p-4">
+          <button class="w-full bg-ocean-600 text-white font-semibold py-3.5 rounded-2xl">保存并提交审核</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 18. 投递详情 -->
+  <div>
+    <span class="label">34 · 投递详情（查看投递状态）</span>
+    <div class="phone">
+      <div class="status"><span>9:41</span><span>● ● ● 100%</span></div>
+      <div class="bg-white h-full pb-6 overflow-hidden">
+        <div class="px-5 py-3 border-b border-deep-100 flex items-center gap-3"><button class="text-xl">←</button><h2 class="text-base font-semibold flex-1">投递详情</h2></div>
+        <div class="p-5 space-y-4">
+          <!-- 职位信息 -->
+          <div class="bg-gradient-to-br from-ocean-700 to-ocean-900 rounded-2xl p-4 text-white">
+            <div class="flex justify-between items-start">
+              <div>
+                <h3 class="text-lg font-bold">一级船长</h3>
+                <p class="text-sm opacity-80 mt-1">舟山远洋渔业有限公司</p>
+              </div>
+              <p class="text-xl font-bold text-amber-300">1.5-2万</p>
+            </div>
+            <div class="flex gap-2 mt-3 text-xs">
+              <span class="px-2 py-1 bg-white/20 rounded">南海</span>
+              <span class="px-2 py-1 bg-white/20 rounded">围网</span>
+              <span class="px-2 py-1 bg-white/20 rounded">3个月</span>
+            </div>
+          </div>
+
+          <!-- 投递状态 -->
+          <div class="bg-white rounded-2xl p-4 border border-deep-200">
+            <div class="flex items-center justify-between mb-4">
+              <p class="text-sm font-semibold">投递状态</p>
+              <span class="text-xs px-2 py-1 bg-emerald-50 text-emerald-700 rounded">沟通中</span>
+            </div>
+            <div class="space-y-3">
+              <div class="flex gap-3">
+                <div class="flex flex-col items-center">
+                  <div class="w-6 h-6 rounded-full bg-emerald-500 flex items-center justify-center text-white text-xs">✓</div>
+                  <div class="w-0.5 h-8 bg-emerald-500"></div>
+                </div>
+                <div class="flex-1 pb-3">
+                  <p class="text-sm font-medium">已投递</p>
+                  <p class="text-xs text-deep-500 mt-0.5">2024-05-10 14:30</p>
+                </div>
+              </div>
+              <div class="flex gap-3">
+                <div class="flex flex-col items-center">
+                  <div class="w-6 h-6 rounded-full bg-emerald-500 flex items-center justify-center text-white text-xs">✓</div>
+                  <div class="w-0.5 h-8 bg-emerald-500"></div>
+                </div>
+                <div class="flex-1 pb-3">
+                  <p class="text-sm font-medium">企业已查看</p>
+                  <p class="text-xs text-deep-500 mt-0.5">2024-05-10 16:20</p>
+                </div>
+              </div>
+              <div class="flex gap-3">
+                <div class="flex flex-col items-center">
+                  <div class="w-6 h-6 rounded-full bg-emerald-500 flex items-center justify-center text-white text-xs">✓</div>
+                  <div class="w-0.5 h-8 bg-deep-200"></div>
+                </div>
+                <div class="flex-1 pb-3">
+                  <p class="text-sm font-medium">企业发起沟通</p>
+                  <p class="text-xs text-deep-500 mt-0.5">2024-05-10 18:45</p>
+                  <p class="text-xs text-ocean-600 mt-1">企业：您好，我们看了您的简历...</p>
+                </div>
+              </div>
+              <div class="flex gap-3">
+                <div class="flex flex-col items-center">
+                  <div class="w-6 h-6 rounded-full bg-deep-200 flex items-center justify-center text-deep-500 text-xs">4</div>
+                </div>
+                <div class="flex-1">
+                  <p class="text-sm text-deep-400">待面试邀请</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 投递附言 -->
+          <div class="bg-white rounded-2xl p-4 border border-deep-200">
+            <p class="text-sm font-semibold mb-2">投递附言</p>
+            <p class="text-sm text-deep-700 leading-relaxed">本人有 8 年南海围网作业经验，证书齐全，可即时入职。</p>
+          </div>
+
+          <!-- 操作按钮 -->
+          <div class="flex gap-3">
+            <button class="flex-1 py-3 border border-deep-300 rounded-xl text-sm font-medium">查看职位</button>
+            <button class="flex-1 py-3 bg-ocean-600 text-white rounded-xl text-sm font-medium">继续沟通</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 19. 企业详情 -->
+  <div>
+    <span class="label">19 · 企业详情</span>
+    <div class="phone">
+      <div class="status"><span>9:41</span><span>● ● ● 100%</span></div>
+      <div class="bg-white h-full pb-6 overflow-hidden">
+        <div class="px-5 py-3 border-b border-deep-100 flex items-center gap-3"><button class="text-xl">←</button><h2 class="text-base font-semibold flex-1">企业详情</h2><button class="text-lg">⋯</button></div>
+        <div class="overflow-y-auto h-[calc(100%-60px)]">
+          <!-- 企业头部 -->
+          <div class="bg-gradient-to-br from-ocean-700 to-ocean-900 p-5 text-white">
+            <div class="flex items-start gap-3">
+              <div class="w-16 h-16 bg-white rounded-2xl flex items-center justify-center text-2xl">🏢</div>
+              <div class="flex-1">
+                <h3 class="text-lg font-bold">舟山远洋渔业有限公司</h3>
+                <p class="text-sm opacity-80 mt-1">浙江 · 舟山</p>
+                <div class="flex items-center gap-2 mt-2">
+                  <span class="text-xs px-2 py-0.5 bg-amber-400 text-amber-900 rounded font-medium">A+ 认证</span>
+                  <span class="text-xs opacity-80">信用分 92</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 企业信息 -->
+          <div class="p-5 space-y-4">
+            <div class="bg-white rounded-2xl p-4 border border-deep-200">
+              <p class="text-sm font-semibold mb-3">企业信息</p>
+              <div class="space-y-2 text-sm">
+                <div class="flex justify-between"><span class="text-deep-500">企业类型</span><span>民营企业</span></div>
+                <div class="flex justify-between"><span class="text-deep-500">成立时间</span><span>2008年</span></div>
+                <div class="flex justify-between"><span class="text-deep-500">企业规模</span><span>100-500人</span></div>
+                <div class="flex justify-between"><span class="text-deep-500">船队规模</span><span>12艘</span></div>
+              </div>
+            </div>
+
+            <div class="bg-white rounded-2xl p-4 border border-deep-200">
+              <p class="text-sm font-semibold mb-3">联系方式</p>
+              <div class="space-y-2 text-sm">
+                <div class="flex justify-between"><span class="text-deep-500">联系人</span><span>李经理</span></div>
+                <div class="flex justify-between"><span class="text-deep-500">联系电话</span><span class="text-ocean-600">0580-1234567</span></div>
+                <div class="flex justify-between"><span class="text-deep-500">企业地址</span><span class="text-right">浙江省舟山市定海区海洋路123号</span></div>
+              </div>
+            </div>
+
+            <div class="bg-white rounded-2xl p-4 border border-deep-200">
+              <p class="text-sm font-semibold mb-3">招聘统计</p>
+              <div class="grid grid-cols-3 gap-3 text-center">
+                <div><p class="text-2xl font-bold text-ocean-600">8</p><p class="text-xs text-deep-500 mt-1">在招职位</p></div>
+                <div><p class="text-2xl font-bold text-ocean-600">156</p><p class="text-xs text-deep-500 mt-1">累计招聘</p></div>
+                <div><p class="text-2xl font-bold text-ocean-600">4.2</p><p class="text-xs text-deep-500 mt-1">企业评分</p></div>
+              </div>
+            </div>
+
+            <div class="bg-white rounded-2xl p-4 border border-deep-200">
+              <div class="flex justify-between items-center mb-3">
+                <p class="text-sm font-semibold">在招职位</p>
+                <span class="text-xs text-ocean-600">查看全部 ›</span>
+              </div>
+              <div class="space-y-3">
+                <div class="border-l-2 border-ocean-500 pl-3">
+                  <div class="flex justify-between items-start">
+                    <p class="font-medium">一级船长</p>
+                    <span class="text-rose-600 font-bold text-sm">1.5-2万</span>
+                  </div>
+                  <p class="text-xs text-deep-500 mt-1">南海 · 围网 · 3个月</p>
+                </div>
+                <div class="border-l-2 border-deep-200 pl-3">
+                  <div class="flex justify-between items-start">
+                    <p class="font-medium">大副</p>
+                    <span class="text-rose-600 font-bold text-sm">1.2-1.5万</span>
+                  </div>
+                  <p class="text-xs text-deep-500 mt-1">南海 · 围网 · 3个月</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 17. 投递记录 -->
+  <div>
+    <span class="label">22 · 投递记录</span>
     <div class="phone">
       <div class="status"><span>9:41</span><span>● ● ● 100%</span></div>
       <div class="bg-deep-50 h-full pb-6">
@@ -582,8 +1891,676 @@ tailwind.config = {
     </div>
   </div>
 
+  <!-- 20. 面试邀请详情 -->
+  <div>
+    <span class="label">20 · 面试邀请详情</span>
+    <div class="phone">
+      <div class="status"><span>9:41</span><span>● ● ● 100%</span></div>
+      <div class="bg-white h-full pb-24 overflow-hidden">
+        <div class="px-5 py-3 border-b border-deep-100 flex items-center gap-3"><button class="text-xl">←</button><h2 class="text-base font-semibold flex-1">面试邀请</h2></div>
+        <div class="p-5 space-y-4">
+          <!-- 面试状态提示 -->
+          <div class="bg-amber-50 border border-amber-200 rounded-2xl p-4 flex gap-3">
+            <span class="text-2xl">📅</span>
+            <div class="flex-1">
+              <p class="font-semibold text-amber-900">待确认面试</p>
+              <p class="text-xs text-amber-800 mt-1">企业邀请您参加面试，请尽快确认</p>
+            </div>
+          </div>
+
+          <!-- 职位信息 -->
+          <div class="bg-white rounded-2xl p-4 border border-deep-200">
+            <p class="text-xs text-deep-500 mb-3">面试职位</p>
+            <div class="flex justify-between items-start">
+              <div>
+                <h3 class="font-bold">轮机长</h3>
+                <p class="text-sm text-deep-500 mt-1">福建闽南海运</p>
+              </div>
+              <p class="text-rose-600 font-bold">1.3-1.8万</p>
+            </div>
+            <div class="flex gap-2 mt-2 text-xs">
+              <span class="px-2 py-0.5 bg-ocean-50 rounded">东海</span>
+              <span class="px-2 py-0.5 bg-ocean-50 rounded">拖网</span>
+              <span class="px-2 py-0.5 bg-ocean-50 rounded">2个月</span>
+            </div>
+          </div>
+
+          <!-- 面试信息 -->
+          <div class="bg-white rounded-2xl p-4 border border-deep-200">
+            <p class="text-sm font-semibold mb-3">面试信息</p>
+            <div class="space-y-3">
+              <div class="flex gap-3">
+                <span class="text-deep-500 text-sm w-20">面试方式</span>
+                <span class="text-sm font-medium">视频面试</span>
+              </div>
+              <div class="flex gap-3">
+                <span class="text-deep-500 text-sm w-20">面试时间</span>
+                <div class="flex-1">
+                  <p class="text-sm font-medium">2026-05-12（明天）14:00</p>
+                  <p class="text-xs text-deep-500 mt-0.5">预计时长 30 分钟</p>
+                </div>
+              </div>
+              <div class="flex gap-3">
+                <span class="text-deep-500 text-sm w-20">面试官</span>
+                <span class="text-sm">王船长</span>
+              </div>
+              <div class="flex gap-3">
+                <span class="text-deep-500 text-sm w-20">联系电话</span>
+                <span class="text-sm text-ocean-600">0592-1234567</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- 面试要求 -->
+          <div class="bg-white rounded-2xl p-4 border border-deep-200">
+            <p class="text-sm font-semibold mb-2">面试要求</p>
+            <p class="text-sm text-deep-700 leading-relaxed">请提前准备好相关证书原件，面试时需要展示。请确保网络环境良好，提前5分钟进入面试间。</p>
+          </div>
+
+          <!-- 温馨提示 -->
+          <div class="bg-ocean-50 rounded-xl p-3 text-xs text-ocean-900">
+            <p class="font-medium mb-1">💡 面试提示</p>
+            <p>• 提前测试设备和网络</p>
+            <p>• 准备好证书和履历材料</p>
+            <p>• 着装整洁，保持良好形象</p>
+          </div>
+        </div>
+
+        <!-- 底部操作 -->
+        <div class="absolute bottom-0 left-0 right-0 bg-white border-t border-deep-100 p-4 flex gap-3">
+          <button class="flex-1 py-3 border border-deep-300 rounded-xl text-sm font-medium">拒绝面试</button>
+          <button class="flex-1 py-3 bg-ocean-600 text-white rounded-xl text-sm font-medium">确认参加</button>
+        </div>
+      </div>
+    </div>
   </div>
-  <footer class="mt-16 text-center text-xs text-deep-500">船员端 共 12 屏 · 嵌入中渔学院 APP · <a href="index.html" class="text-ocean-500">返回导航</a></footer>
+
+  <!-- 21. 录用通知详情 -->
+  <div>
+    <span class="label">21 · 录用通知详情</span>
+    <div class="phone">
+      <div class="status"><span>9:41</span><span>● ● ● 100%</span></div>
+      <div class="bg-white h-full pb-24 overflow-hidden">
+        <div class="px-5 py-3 border-b border-deep-100 flex items-center gap-3"><button class="text-xl">←</button><h2 class="text-base font-semibold flex-1">录用通知</h2></div>
+        <div class="p-5 space-y-4">
+          <!-- 录用状态提示 -->
+          <div class="bg-emerald-50 border border-emerald-200 rounded-2xl p-4 flex gap-3">
+            <span class="text-2xl">🎉</span>
+            <div class="flex-1">
+              <p class="font-semibold text-emerald-900">恭喜！企业向您发出录用通知</p>
+              <p class="text-xs text-emerald-800 mt-1">请在 48 小时内确认，逾期将自动拒绝</p>
+            </div>
+          </div>
+
+          <!-- 职位信息 -->
+          <div class="bg-white rounded-2xl p-4 border border-deep-200">
+            <p class="text-xs text-deep-500 mb-3">录用职位</p>
+            <div class="flex justify-between items-start">
+              <div>
+                <h3 class="font-bold">大副</h3>
+                <p class="text-sm text-deep-500 mt-1">青岛海洋捕捞</p>
+              </div>
+              <p class="text-rose-600 font-bold">1.2-1.5万</p>
+            </div>
+          </div>
+
+          <!-- 录用信息 -->
+          <div class="bg-white rounded-2xl p-4 border border-deep-200">
+            <p class="text-sm font-semibold mb-3">录用信息</p>
+            <div class="space-y-3">
+              <div class="flex gap-3">
+                <span class="text-deep-500 text-sm w-20">约定薪资</span>
+                <span class="text-sm font-medium text-rose-600">14,000 元/月</span>
+              </div>
+              <div class="flex gap-3">
+                <span class="text-deep-500 text-sm w-20">上船时间</span>
+                <span class="text-sm font-medium">2026-05-20</span>
+              </div>
+              <div class="flex gap-3">
+                <span class="text-deep-500 text-sm w-20">合同周期</span>
+                <span class="text-sm">3 个月</span>
+              </div>
+              <div class="flex gap-3">
+                <span class="text-deep-500 text-sm w-20">工作海域</span>
+                <span class="text-sm">东海</span>
+              </div>
+              <div class="flex gap-3">
+                <span class="text-deep-500 text-sm w-20">船型</span>
+                <span class="text-sm">拖网</span>
+              </div>
+              <div class="flex gap-3">
+                <span class="text-deep-500 text-sm w-20">出发港口</span>
+                <span class="text-sm">青岛港</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- 福利待遇 -->
+          <div class="bg-white rounded-2xl p-4 border border-deep-200">
+            <p class="text-sm font-semibold mb-2">福利待遇</p>
+            <div class="flex gap-2 flex-wrap text-xs">
+              <span class="px-2 py-1 bg-emerald-50 text-emerald-700 rounded">包吃住</span>
+              <span class="px-2 py-1 bg-emerald-50 text-emerald-700 rounded">缴纳保险</span>
+              <span class="px-2 py-1 bg-emerald-50 text-emerald-700 rounded">高温津贴</span>
+              <span class="px-2 py-1 bg-emerald-50 text-emerald-700 rounded">节日福利</span>
+            </div>
+          </div>
+
+          <!-- 其他说明 -->
+          <div class="bg-white rounded-2xl p-4 border border-deep-200">
+            <p class="text-sm font-semibold mb-2">其他说明</p>
+            <p class="text-sm text-deep-700 leading-relaxed">上船前需体检合格，携带相关证书原件。公司提供往返交通费用报销。</p>
+          </div>
+
+          <!-- 联系方式 -->
+          <div class="bg-white rounded-2xl p-4 border border-deep-200">
+            <p class="text-sm font-semibold mb-3">联系方式</p>
+            <div class="space-y-2 text-sm">
+              <div class="flex justify-between"><span class="text-deep-500">联系人</span><span>张经理</span></div>
+              <div class="flex justify-between"><span class="text-deep-500">联系电话</span><span class="text-ocean-600">0532-1234567</span></div>
+            </div>
+          </div>
+
+          <!-- 温馨提示 -->
+          <div class="bg-amber-50 rounded-xl p-3 text-xs text-amber-900">
+            <p class="font-medium mb-1">⚠️ 重要提示</p>
+            <p>• 确认录用后，请按时到岗</p>
+            <p>• 如有变化，请提前与企业沟通</p>
+            <p>• 确认后 48 小时内未到岗将影响信用分</p>
+          </div>
+        </div>
+
+        <!-- 底部操作 -->
+        <div class="absolute bottom-0 left-0 right-0 bg-white border-t border-deep-100 p-4 flex gap-3">
+          <button class="flex-1 py-3 border border-deep-300 rounded-xl text-sm font-medium">拒绝录用</button>
+          <button class="flex-1 py-3 bg-ocean-600 text-white rounded-xl text-sm font-medium">确认录用</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 29. 职位筛选器（展开态） -->
+  <div>
+    <span class="label">29 · 职位筛选器（展开）</span>
+    <div class="phone">
+      <div class="status"><span>9:41</span><span>● ● ● 100%</span></div>
+      <div class="bg-white h-full pb-20 overflow-hidden">
+        <div class="px-5 py-3 border-b border-deep-100 flex items-center gap-3"><button class="text-xl">✕</button><h2 class="text-base font-semibold flex-1">筛选条件</h2><button class="text-ocean-600 text-sm">重置</button></div>
+        <div class="overflow-y-auto h-[calc(100%-120px)] px-5 py-4 space-y-5">
+          <div>
+            <p class="text-sm font-semibold mb-3">工作海域</p>
+            <div class="flex gap-2 flex-wrap">
+              <button class="px-3 py-1.5 border border-ocean-500 bg-ocean-50 text-ocean-700 rounded-lg text-xs">东海</button>
+              <button class="px-3 py-1.5 border border-deep-200 text-deep-600 rounded-lg text-xs">南海</button>
+              <button class="px-3 py-1.5 border border-ocean-500 bg-ocean-50 text-ocean-700 rounded-lg text-xs">黄海</button>
+              <button class="px-3 py-1.5 border border-deep-200 text-deep-600 rounded-lg text-xs">渤海</button>
+              <button class="px-3 py-1.5 border border-deep-200 text-deep-600 rounded-lg text-xs">远洋</button>
+            </div>
+          </div>
+          <div>
+            <p class="text-sm font-semibold mb-3">船型</p>
+            <div class="flex gap-2 flex-wrap">
+              <button class="px-3 py-1.5 border border-ocean-500 bg-ocean-50 text-ocean-700 rounded-lg text-xs">拖网</button>
+              <button class="px-3 py-1.5 border border-deep-200 text-deep-600 rounded-lg text-xs">围网</button>
+              <button class="px-3 py-1.5 border border-deep-200 text-deep-600 rounded-lg text-xs">流网</button>
+              <button class="px-3 py-1.5 border border-deep-200 text-deep-600 rounded-lg text-xs">钓具</button>
+              <button class="px-3 py-1.5 border border-deep-200 text-deep-600 rounded-lg text-xs">其他</button>
+            </div>
+          </div>
+          <div>
+            <p class="text-sm font-semibold mb-3">薪资范围</p>
+            <div class="grid grid-cols-2 gap-2">
+              <button class="px-3 py-1.5 border border-deep-200 text-deep-600 rounded-lg text-xs">5千以下</button>
+              <button class="px-3 py-1.5 border border-deep-200 text-deep-600 rounded-lg text-xs">5千-1万</button>
+              <button class="px-3 py-1.5 border border-ocean-500 bg-ocean-50 text-ocean-700 rounded-lg text-xs">1万-2万</button>
+              <button class="px-3 py-1.5 border border-deep-200 text-deep-600 rounded-lg text-xs">2万以上</button>
+            </div>
+          </div>
+          <div>
+            <p class="text-sm font-semibold mb-3">出海周期</p>
+            <div class="grid grid-cols-2 gap-2">
+              <button class="px-3 py-1.5 border border-deep-200 text-deep-600 rounded-lg text-xs">1个月内</button>
+              <button class="px-3 py-1.5 border border-ocean-500 bg-ocean-50 text-ocean-700 rounded-lg text-xs">1-3个月</button>
+              <button class="px-3 py-1.5 border border-deep-200 text-deep-600 rounded-lg text-xs">3-6个月</button>
+              <button class="px-3 py-1.5 border border-deep-200 text-deep-600 rounded-lg text-xs">6个月以上</button>
+            </div>
+          </div>
+          <div>
+            <p class="text-sm font-semibold mb-3">工作经验</p>
+            <div class="grid grid-cols-3 gap-2">
+              <button class="px-3 py-1.5 border border-deep-200 text-deep-600 rounded-lg text-xs">无要求</button>
+              <button class="px-3 py-1.5 border border-deep-200 text-deep-600 rounded-lg text-xs">1年+</button>
+              <button class="px-3 py-1.5 border border-deep-200 text-deep-600 rounded-lg text-xs">3年+</button>
+              <button class="px-3 py-1.5 border border-ocean-500 bg-ocean-50 text-ocean-700 rounded-lg text-xs">5年+</button>
+              <button class="px-3 py-1.5 border border-deep-200 text-deep-600 rounded-lg text-xs">10年+</button>
+            </div>
+          </div>
+          <div>
+            <p class="text-sm font-semibold mb-3">福利</p>
+            <div class="flex gap-2 flex-wrap">
+              <button class="px-3 py-1.5 border border-ocean-500 bg-ocean-50 text-ocean-700 rounded-lg text-xs">✓ 包吃住</button>
+              <button class="px-3 py-1.5 border border-ocean-500 bg-ocean-50 text-ocean-700 rounded-lg text-xs">✓ 缴纳保险</button>
+              <button class="px-3 py-1.5 border border-deep-200 text-deep-600 rounded-lg text-xs">高温津贴</button>
+              <button class="px-3 py-1.5 border border-deep-200 text-deep-600 rounded-lg text-xs">节日福利</button>
+            </div>
+          </div>
+          <div>
+            <p class="text-sm font-semibold mb-3">企业类型</p>
+            <div class="grid grid-cols-3 gap-2">
+              <button class="px-3 py-1.5 border border-deep-200 text-deep-600 rounded-lg text-xs">国营</button>
+              <button class="px-3 py-1.5 border border-ocean-500 bg-ocean-50 text-ocean-700 rounded-lg text-xs">民营</button>
+              <button class="px-3 py-1.5 border border-deep-200 text-deep-600 rounded-lg text-xs">个体</button>
+            </div>
+          </div>
+        </div>
+        <div class="absolute bottom-0 left-0 right-0 bg-white border-t border-deep-100 p-4 flex gap-3">
+          <button class="flex-1 py-3 border border-deep-300 rounded-xl text-sm font-medium">取消</button>
+          <button class="flex-1 py-3 bg-ocean-600 text-white rounded-xl text-sm font-medium">应用筛选（23）</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 30. 证书详情 -->
+  <div>
+    <span class="label">30 · 证书详情</span>
+    <div class="phone">
+      <div class="status"><span>9:41</span><span>● ● ● 100%</span></div>
+      <div class="bg-white h-full pb-20 overflow-hidden">
+        <div class="px-5 py-3 border-b border-deep-100 flex items-center gap-3"><button class="text-xl">←</button><h2 class="text-base font-semibold flex-1">证书详情</h2><button class="text-ocean-600 text-sm">编辑</button></div>
+        <div class="overflow-y-auto h-[calc(100%-60px)]">
+          <div class="p-5 space-y-4">
+            <!-- 证书图片 -->
+            <div class="bg-gradient-to-br from-amber-100 to-amber-200 rounded-2xl p-4 text-center">
+              <div class="bg-white rounded-xl overflow-hidden shadow-sm">
+                <div class="h-56 bg-gradient-to-br from-amber-50 to-amber-100 flex items-center justify-center">
+                  <span class="text-6xl">📜</span>
+                </div>
+              </div>
+              <p class="text-xs text-amber-800 mt-3">点击图片放大查看</p>
+            </div>
+
+            <!-- 证书状态 -->
+            <div class="flex items-center justify-between bg-emerald-50 border border-emerald-200 rounded-xl p-3">
+              <div class="flex items-center gap-2">
+                <span class="text-emerald-600 text-lg">✓</span>
+                <span class="text-sm font-medium text-emerald-900">已认证</span>
+              </div>
+              <span class="text-xs text-emerald-700">来源 · 中渔学院</span>
+            </div>
+
+            <!-- 基本信息 -->
+            <div class="bg-white rounded-2xl p-4 border border-deep-200">
+              <p class="text-sm font-semibold mb-3">基本信息</p>
+              <div class="space-y-3 text-sm">
+                <div class="flex justify-between"><span class="text-deep-500">证书类型</span><span class="font-medium">一级船长适任证书</span></div>
+                <div class="flex justify-between"><span class="text-deep-500">证书编号</span><span>ZJ20240315001</span></div>
+                <div class="flex justify-between"><span class="text-deep-500">发证机关</span><span>中华人民共和国海事局</span></div>
+                <div class="flex justify-between"><span class="text-deep-500">发证日期</span><span>2024-03-15</span></div>
+                <div class="flex justify-between"><span class="text-deep-500">到期日期</span><span>2029-03-15</span></div>
+                <div class="flex justify-between"><span class="text-deep-500">剩余有效期</span><span class="text-ocean-600 font-medium">1095 天</span></div>
+              </div>
+            </div>
+
+            <!-- 审核信息 -->
+            <div class="bg-white rounded-2xl p-4 border border-deep-200">
+              <p class="text-sm font-semibold mb-3">审核信息</p>
+              <div class="space-y-3 text-sm">
+                <div class="flex justify-between"><span class="text-deep-500">提交时间</span><span>2024-03-15 10:30</span></div>
+                <div class="flex justify-between"><span class="text-deep-500">审核时间</span><span>2024-03-15 11:20</span></div>
+                <div class="flex justify-between"><span class="text-deep-500">审核状态</span><span class="text-emerald-600">已通过</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 31. 设置 -->
+  <div>
+    <span class="label">31 · 设置</span>
+    <div class="phone">
+      <div class="status"><span>9:41</span><span>● ● ● 100%</span></div>
+      <div class="bg-deep-50 h-full pb-6 overflow-hidden">
+        <div class="px-5 py-3 border-b border-deep-100 flex items-center gap-3 bg-white"><button class="text-xl">←</button><h2 class="text-base font-semibold flex-1">设置</h2></div>
+        <div class="p-4 space-y-3">
+          <!-- 账号设置 -->
+          <div class="bg-white rounded-2xl overflow-hidden">
+            <div class="px-4 py-3 border-b border-deep-100 flex items-center justify-between">
+              <div class="flex items-center gap-3"><span>🔐</span><span class="text-sm">账号安全</span></div>
+              <span class="text-deep-300">›</span>
+            </div>
+            <div class="px-4 py-3 border-b border-deep-100 flex items-center justify-between">
+              <div class="flex items-center gap-3"><span>👤</span><span class="text-sm">实名认证</span></div>
+              <div class="flex items-center gap-2"><span class="text-xs text-emerald-600">已认证</span><span class="text-deep-300">›</span></div>
+            </div>
+            <div class="px-4 py-3 flex items-center justify-between">
+              <div class="flex items-center gap-3"><span>📱</span><span class="text-sm">绑定手机</span></div>
+              <div class="flex items-center gap-2"><span class="text-xs text-deep-500">138****1234</span><span class="text-deep-300">›</span></div>
+            </div>
+          </div>
+
+          <!-- 通知设置 -->
+          <div class="bg-white rounded-2xl overflow-hidden">
+            <div class="px-4 py-3 border-b border-deep-100 flex items-center justify-between">
+              <div class="flex items-center gap-3"><span>🔔</span><span class="text-sm">通知设置</span></div>
+              <span class="text-deep-300">›</span>
+            </div>
+            <div class="px-4 py-3 border-b border-deep-100 flex items-center justify-between">
+              <div class="flex items-center gap-3"><span>💬</span><span class="text-sm">消息免打扰</span></div>
+              <div class="relative inline-flex items-center">
+                <div class="w-10 h-6 bg-ocean-500 rounded-full"><div class="w-5 h-5 bg-white rounded-full mt-0.5 ml-[18px]"></div></div>
+              </div>
+            </div>
+            <div class="px-4 py-3 flex items-center justify-between">
+              <div class="flex items-center gap-3"><span>📳</span><span class="text-sm">新消息提示音</span></div>
+              <div class="relative inline-flex items-center">
+                <div class="w-10 h-6 bg-deep-200 rounded-full"><div class="w-5 h-5 bg-white rounded-full mt-0.5 ml-0.5"></div></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 偏好设置 -->
+          <div class="bg-white rounded-2xl overflow-hidden">
+            <div class="px-4 py-3 border-b border-deep-100 flex items-center justify-between">
+              <div class="flex items-center gap-3"><span>🎯</span><span class="text-sm">求职偏好</span></div>
+              <span class="text-deep-300">›</span>
+            </div>
+            <div class="px-4 py-3 border-b border-deep-100 flex items-center justify-between">
+              <div class="flex items-center gap-3"><span>🔒</span><span class="text-sm">隐私设置</span></div>
+              <span class="text-deep-300">›</span>
+            </div>
+            <div class="px-4 py-3 flex items-center justify-between">
+              <div class="flex items-center gap-3"><span>🗑️</span><span class="text-sm">清除缓存</span></div>
+              <div class="flex items-center gap-2"><span class="text-xs text-deep-500">23.5 MB</span><span class="text-deep-300">›</span></div>
+            </div>
+          </div>
+
+          <!-- 关于 -->
+          <div class="bg-white rounded-2xl overflow-hidden">
+            <div class="px-4 py-3 border-b border-deep-100 flex items-center justify-between">
+              <div class="flex items-center gap-3"><span>📖</span><span class="text-sm">用户协议</span></div>
+              <span class="text-deep-300">›</span>
+            </div>
+            <div class="px-4 py-3 border-b border-deep-100 flex items-center justify-between">
+              <div class="flex items-center gap-3"><span>🛡️</span><span class="text-sm">隐私政策</span></div>
+              <span class="text-deep-300">›</span>
+            </div>
+            <div class="px-4 py-3 border-b border-deep-100 flex items-center justify-between">
+              <div class="flex items-center gap-3"><span>💡</span><span class="text-sm">意见反馈</span></div>
+              <span class="text-deep-300">›</span>
+            </div>
+            <div class="px-4 py-3 flex items-center justify-between">
+              <div class="flex items-center gap-3"><span>ℹ️</span><span class="text-sm">关于我们</span></div>
+              <div class="flex items-center gap-2"><span class="text-xs text-deep-500">v1.0.0</span><span class="text-deep-300">›</span></div>
+            </div>
+          </div>
+
+          <!-- 退出登录 -->
+          <button class="w-full py-3 bg-white rounded-2xl text-sm text-rose-600 font-medium">退出登录</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 32. 账号安全 -->
+  <div>
+    <span class="label">32 · 账号安全</span>
+    <div class="phone">
+      <div class="status"><span>9:41</span><span>● ● ● 100%</span></div>
+      <div class="bg-deep-50 h-full pb-6 overflow-hidden">
+        <div class="px-5 py-3 border-b border-deep-100 flex items-center gap-3 bg-white"><button class="text-xl">←</button><h2 class="text-base font-semibold flex-1">账号安全</h2></div>
+        <div class="p-4 space-y-3">
+          <!-- 安全评分 -->
+          <div class="bg-gradient-to-br from-emerald-500 to-emerald-700 rounded-2xl p-4 text-white">
+            <div class="flex items-center gap-3">
+              <span class="text-3xl">🛡️</span>
+              <div>
+                <p class="text-sm opacity-80">账号安全等级</p>
+                <p class="text-2xl font-bold mt-1">高</p>
+              </div>
+            </div>
+            <p class="text-xs opacity-80 mt-3">您的账号安全等级较高，建议保持良好习惯</p>
+          </div>
+
+          <!-- 安全设置 -->
+          <div class="bg-white rounded-2xl overflow-hidden">
+            <div class="px-4 py-3 border-b border-deep-100 flex items-center justify-between">
+              <div>
+                <p class="text-sm font-medium">登录密码</p>
+                <p class="text-[11px] text-deep-500 mt-0.5">定期更换密码可保障账号安全</p>
+              </div>
+              <button class="text-xs text-ocean-600">修改</button>
+            </div>
+            <div class="px-4 py-3 border-b border-deep-100 flex items-center justify-between">
+              <div>
+                <p class="text-sm font-medium">手机号绑定</p>
+                <p class="text-[11px] text-deep-500 mt-0.5">138****1234</p>
+              </div>
+              <button class="text-xs text-ocean-600">换绑</button>
+            </div>
+            <div class="px-4 py-3 border-b border-deep-100 flex items-center justify-between">
+              <div>
+                <p class="text-sm font-medium">实名认证</p>
+                <p class="text-[11px] text-emerald-600 mt-0.5">✓ 已认证 · 张大海</p>
+              </div>
+              <span class="text-deep-300">›</span>
+            </div>
+            <div class="px-4 py-3 flex items-center justify-between">
+              <div>
+                <p class="text-sm font-medium">人脸识别</p>
+                <p class="text-[11px] text-emerald-600 mt-0.5">✓ 已开启</p>
+              </div>
+              <div class="relative inline-flex items-center">
+                <div class="w-10 h-6 bg-ocean-500 rounded-full"><div class="w-5 h-5 bg-white rounded-full mt-0.5 ml-[18px]"></div></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 登录设备 -->
+          <div class="bg-white rounded-2xl p-4">
+            <div class="flex justify-between items-center mb-3">
+              <p class="text-sm font-medium">登录设备</p>
+              <button class="text-xs text-ocean-600">查看全部</button>
+            </div>
+            <div class="space-y-3">
+              <div class="flex items-center justify-between py-2">
+                <div class="flex items-center gap-3">
+                  <span class="text-2xl">📱</span>
+                  <div>
+                    <p class="text-sm font-medium">iPhone 15 Pro</p>
+                    <p class="text-[11px] text-deep-500 mt-0.5">浙江舟山 · 当前设备</p>
+                  </div>
+                </div>
+                <span class="text-[10px] px-2 py-0.5 bg-emerald-50 text-emerald-700 rounded">在线</span>
+              </div>
+              <div class="flex items-center justify-between py-2 border-t border-deep-100 pt-3">
+                <div class="flex items-center gap-3">
+                  <span class="text-2xl">📱</span>
+                  <div>
+                    <p class="text-sm font-medium">Android · 华为 Mate 60</p>
+                    <p class="text-[11px] text-deep-500 mt-0.5">浙江舟山 · 3 天前</p>
+                  </div>
+                </div>
+                <button class="text-[10px] text-rose-600">下线</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- 账号操作 -->
+          <div class="bg-white rounded-2xl overflow-hidden">
+            <div class="px-4 py-3 border-b border-deep-100 flex items-center justify-between">
+              <p class="text-sm">登录日志</p>
+              <span class="text-deep-300">›</span>
+            </div>
+            <div class="px-4 py-3 flex items-center justify-between">
+              <p class="text-sm text-rose-600">注销账号</p>
+              <span class="text-deep-300">›</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 33. 评价企业 -->
+  <div>
+    <span class="label">33 · 评价企业（履约完成后）</span>
+    <div class="phone">
+      <div class="status"><span>9:41</span><span>● ● ● 100%</span></div>
+      <div class="bg-white h-full pb-20 overflow-hidden">
+        <div class="px-5 py-3 border-b border-deep-100 flex items-center gap-3"><button class="text-xl">←</button><h2 class="text-base font-semibold flex-1">评价企业</h2></div>
+        <div class="overflow-y-auto h-[calc(100%-120px)]">
+          <div class="p-5 space-y-4">
+            <!-- 企业信息 -->
+            <div class="bg-ocean-50 border border-ocean-200 rounded-2xl p-4">
+              <div class="flex items-center gap-3">
+                <div class="w-12 h-12 bg-white rounded-xl flex items-center justify-center text-2xl">🏢</div>
+                <div class="flex-1">
+                  <p class="font-semibold">青岛海洋捕捞</p>
+                  <p class="text-xs text-deep-500 mt-0.5">大副 · 2025.05-2025.11</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- 综合评分 -->
+            <div class="bg-white rounded-2xl p-4 border border-deep-200">
+              <p class="text-sm font-semibold mb-3">综合评分 <span class="text-rose-600">*</span></p>
+              <div class="flex justify-center gap-3 text-4xl">
+                <span class="text-amber-400">★</span>
+                <span class="text-amber-400">★</span>
+                <span class="text-amber-400">★</span>
+                <span class="text-amber-400">★</span>
+                <span class="text-deep-200">★</span>
+              </div>
+              <p class="text-center text-sm text-amber-600 mt-2">4 分 · 满意</p>
+            </div>
+
+            <!-- 评价维度 -->
+            <div class="bg-white rounded-2xl p-4 border border-deep-200">
+              <p class="text-sm font-semibold mb-4">具体评价</p>
+              <div class="space-y-4">
+                <div>
+                  <p class="text-sm mb-2">工资是否真实 <span class="text-rose-600">*</span></p>
+                  <div class="flex gap-2">
+                    <button class="flex-1 py-2 border border-emerald-500 bg-emerald-50 text-emerald-700 rounded-lg text-xs">✓ 真实</button>
+                    <button class="flex-1 py-2 border border-deep-200 text-deep-600 rounded-lg text-xs">与约定不符</button>
+                  </div>
+                </div>
+                <div>
+                  <p class="text-sm mb-2">工作环境 <span class="text-rose-600">*</span></p>
+                  <div class="flex gap-1 text-2xl">
+                    <span class="text-amber-400">★</span>
+                    <span class="text-amber-400">★</span>
+                    <span class="text-amber-400">★</span>
+                    <span class="text-amber-400">★</span>
+                    <span class="text-deep-200">★</span>
+                  </div>
+                </div>
+                <div>
+                  <p class="text-sm mb-2">是否拖欠工资 <span class="text-rose-600">*</span></p>
+                  <div class="grid grid-cols-3 gap-2">
+                    <button class="py-2 border border-emerald-500 bg-emerald-50 text-emerald-700 rounded-lg text-xs">从不</button>
+                    <button class="py-2 border border-deep-200 text-deep-600 rounded-lg text-xs">偶尔</button>
+                    <button class="py-2 border border-deep-200 text-deep-600 rounded-lg text-xs">经常</button>
+                  </div>
+                </div>
+                <div>
+                  <p class="text-sm mb-2">管理是否规范</p>
+                  <div class="flex gap-1 text-2xl">
+                    <span class="text-amber-400">★</span>
+                    <span class="text-amber-400">★</span>
+                    <span class="text-amber-400">★</span>
+                    <span class="text-amber-400">★</span>
+                    <span class="text-amber-400">★</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 文字评价 -->
+            <div class="bg-white rounded-2xl p-4 border border-deep-200">
+              <p class="text-sm font-semibold mb-3">评价内容</p>
+              <textarea placeholder="分享您的真实工作体验，帮助其他船员更好地选择（选填）" class="w-full border border-deep-300 rounded-xl px-3 py-2.5 text-sm outline-none h-24 resize-none"></textarea>
+              <p class="text-[10px] text-deep-400 mt-1">0/500</p>
+            </div>
+
+            <!-- 提示 -->
+            <div class="bg-amber-50 rounded-xl p-3 text-xs text-amber-900 flex gap-2">
+              <span>💡</span>
+              <span>评价一旦提交无法修改，请如实填写。恶意差评将被平台审核删除</span>
+            </div>
+          </div>
+        </div>
+        <div class="absolute bottom-0 left-0 right-0 bg-white border-t border-deep-100 p-4">
+          <button class="w-full bg-ocean-600 text-white font-semibold py-3.5 rounded-2xl">提交评价</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  </div>
+  <footer class="mt-16 text-center text-xs text-deep-500">船员端 共 33 屏 · 嵌入中渔学院 APP · <a href="index.html" class="text-ocean-500">返回导航</a></footer>
 </div>
+<script>
+// 按功能模块自动分组
+(function(){
+  const modules = [
+    {title: '模块 1 · 权限与认证', desc: '游客 / 已登录未实名 / 已实名 三种状态切换', screens: [1,3,5,6]},
+    {title: '模块 2 · 首页与导航', desc: '主入口、个人中心、通知中心', screens: [2,11,28]},
+    {title: '模块 3 · 职位浏览', desc: '列表 → 搜索/筛选/收藏 → 详情 → 企业详情 → 投递', screens: [4,26,29,27,7,19,8]},
+    {title: '模块 4 · 简历管理', desc: '查看 / 创建 / 编辑（投递前置）', screens: [12,13,14]},
+    {title: '模块 5 · 履历管理', desc: '列表 / 详情 / 添加 / 编辑', screens: [15,23,24,25]},
+    {title: '模块 6 · 证书管理', desc: '列表 → 添加 / 编辑 → 详情（含审核状态）', screens: [16,17,18,30]},
+    {title: '模块 7 · 投递与沟通', desc: '投递记录 → 投递详情 → 聊天 → 面试邀请', screens: [22,34,9,10,20]},
+    {title: '模块 8 · 录用与评价', desc: '录用通知 → 评价企业（履约完成后）', screens: [21,33]},
+    {title: '模块 9 · 设置与安全', desc: '设置 / 账号安全', screens: [31,32]}
+  ];
+
+  const containers = document.querySelectorAll('.flex.flex-wrap');
+  if (!containers.length) return;
+
+  // 收集所有屏幕（label号 → DOM）
+  const screensMap = {};
+  containers.forEach(c => {
+    Array.from(c.children).forEach(child => {
+      const labelEl = child.querySelector('.label');
+      if (!labelEl) return;
+      const m = labelEl.textContent.match(/^(\d+)\s*·/);
+      if (m) screensMap[parseInt(m[1])] = child;
+    });
+  });
+
+  // 清空原容器（保留第一个作为宿主，其他删除）
+  const container = containers[0];
+  container.innerHTML = '';
+  container.className = '';
+  // 删除多余的容器和中间的分页提示
+  for (let i = 1; i < containers.length; i++) {
+    containers[i].remove();
+  }
+  // 删除分页提示
+  document.querySelectorAll('p.text-center').forEach(p => {
+    if (p.textContent.includes('第') && p.textContent.includes('页')) p.remove();
+  });
+
+  // 按模块重新组装
+  modules.forEach(mod => {
+    const section = document.createElement('div');
+    section.className = 'module-section';
+    section.innerHTML = `
+      <h2 class="module-title">${mod.title} <span class="module-badge">${mod.screens.length} 屏</span></h2>
+      <p class="module-desc">${mod.desc}</p>
+      <div class="module-row"></div>
+    `;
+    const row = section.querySelector('.module-row');
+    mod.screens.forEach(num => {
+      if (screensMap[num]) row.appendChild(screensMap[num]);
+    });
+    container.appendChild(section);
+  });
+})();
+</script>
 </body>
 </html>

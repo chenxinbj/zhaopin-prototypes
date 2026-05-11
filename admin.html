@@ -22,6 +22,18 @@ tailwind.config={theme:{extend:{colors:{
   .nav-item.active{background:#0891b2;color:#fff;}
   .nav-item:hover:not(.active){background:#1e293b;color:#fff;}
   .nav-section{font-size:10px;color:#475569;letter-spacing:.1em;padding:12px 14px 4px;text-transform:uppercase;}
+  .pc{flex-shrink:0;}
+  .module-section{margin-bottom:60px;}
+  .module-title{font-size:20px;font-weight:700;color:#fff;margin-bottom:6px;display:flex;align-items:center;gap:12px;}
+  .module-badge{font-size:11px;background:#0891b2;color:#fff;padding:2px 10px;border-radius:10px;font-weight:500;}
+  .module-desc{font-size:13px;color:#64748b;margin-bottom:24px;}
+  .module-row{display:flex;gap:32px;overflow-x:auto;padding:30px 4px 30px;}
+  .module-row::-webkit-scrollbar{height:12px;}
+  .module-row::-webkit-scrollbar-track{background:#1e293b;border-radius:6px;}
+  .module-row::-webkit-scrollbar-thumb{background:#475569;border-radius:6px;}
+  .module-row::-webkit-scrollbar-thumb:hover{background:#64748b;}
+  .module-row > div{flex-shrink:0;padding-top:20px;}
+  .module-row > div .label{display:block;font-size:12px;color:#cbd5e1;background:#1e293b;padding:6px 14px;border-radius:6px;margin-bottom:14px;max-width:1280px;}
 </style>
 </head>
 <body>
@@ -30,7 +42,7 @@ tailwind.config={theme:{extend:{colors:{
     <div>
       <a href="index.html" class="text-deep-500 text-sm hover:text-ocean-500">← 返回导航</a>
       <h1 class="text-3xl font-bold text-white mt-2">运营后台 <span class="text-deep-500 text-base font-normal">/ Admin Console</span></h1>
-      <p class="text-deep-500 mt-1">10 屏 · 审核 / 风控 / RBAC / 数据 · 1280×800</p>
+      <p class="text-deep-500 mt-1">14 屏 · 审核 / 风控 / RBAC / 数据 + 证书/职位/用户详情 · 1280×800</p>
     </div>
     <div class="text-xs text-deep-500">PRD §22 / §23 + 附录 D4 / D11</div>
   </header>
@@ -702,8 +714,527 @@ tailwind.config={theme:{extend:{colors:{
     </div>
   </div>
 
+  <!-- 11. 证书审核列表 -->
+  <div>
+    <span class="label">11 · 证书审核（待审列表 + 详情）</span>
+    <div class="pc">
+      <div class="pc-bar"><span class="dot bg-rose-400"></span><span class="dot bg-amber-400"></span><span class="dot bg-emerald-400"></span><span class="ml-4 text-xs">/audit/certificates</span></div>
+      <div class="flex-1 flex">
+        <aside class="w-56 bg-deep-900 p-4">
+          <div class="flex items-center gap-2 px-2 pb-4 border-b border-deep-700"><div class="w-8 h-8 bg-ocean-600 rounded-lg flex items-center justify-center text-white text-sm">🛡️</div><span class="text-white font-semibold text-sm">运营后台</span></div>
+          <div class="nav-section">审核</div>
+          <nav class="space-y-0.5">
+            <div class="nav-item">🏢 企业认证 <span class="ml-auto text-[10px] bg-rose-500 px-1.5 rounded">12</span></div>
+            <div class="nav-item">📋 职位审核 <span class="ml-auto text-[10px] bg-rose-500 px-1.5 rounded">28</span></div>
+            <div class="nav-item active">📜 证书审核 <span class="ml-auto text-[10px] bg-rose-500 px-1.5 rounded">45</span></div>
+          </nav>
+          <div class="nav-section">用户/风控</div>
+          <nav class="space-y-0.5">
+            <div class="nav-item">👥 用户管理</div>
+            <div class="nav-item">🚫 黑名单</div>
+            <div class="nav-item">📢 投诉举报</div>
+          </nav>
+          <div class="nav-section">系统</div>
+          <nav class="space-y-0.5">
+            <div class="nav-item">🔧 RBAC</div>
+            <div class="nav-item">📜 审计日志</div>
+          </nav>
+        </aside>
+        <main class="flex-1 bg-deep-50 flex">
+          <!-- 左侧待审列表 -->
+          <div class="w-72 bg-white border-r border-deep-100 overflow-auto">
+            <div class="p-3 border-b border-deep-100">
+              <div class="flex gap-1 text-xs mb-2">
+                <button class="flex-1 px-2 py-1.5 bg-rose-500 text-white rounded">待审 45</button>
+                <button class="flex-1 px-2 py-1.5 bg-deep-100 text-deep-700 rounded">已通过</button>
+                <button class="flex-1 px-2 py-1.5 bg-deep-100 text-deep-700 rounded">已拒绝</button>
+              </div>
+              <div class="flex gap-1 text-[10px] text-deep-500">
+                <select class="flex-1 border border-deep-200 rounded px-1 py-0.5">
+                  <option>全部类型</option>
+                  <option>一级船长</option>
+                  <option>海员证</option>
+                  <option>健康证</option>
+                </select>
+                <button class="px-2 py-0.5 bg-deep-50 rounded">⇅ 时间</button>
+              </div>
+            </div>
+            <div class="divide-y divide-deep-100">
+              <div class="p-3 bg-ocean-50 border-l-2 border-ocean-600">
+                <div class="flex justify-between items-start">
+                  <p class="font-medium text-sm">海员证</p>
+                  <span class="text-[10px] px-1.5 py-0.5 bg-amber-100 text-amber-800 rounded">待审</span>
+                </div>
+                <p class="text-[11px] text-deep-500 mt-1">张大海 · 138****1234</p>
+                <p class="text-[10px] text-deep-400 mt-1">提交 1 小时前 · 已等待 1h</p>
+              </div>
+              <div class="p-3">
+                <div class="flex justify-between items-start">
+                  <p class="font-medium text-sm">健康证</p>
+                  <span class="text-[10px] px-1.5 py-0.5 bg-amber-100 text-amber-800 rounded">待审</span>
+                </div>
+                <p class="text-[11px] text-deep-500 mt-1">李建国 · 138****5678</p>
+                <p class="text-[10px] text-deep-400 mt-1">提交 3 小时前</p>
+              </div>
+              <div class="p-3">
+                <div class="flex justify-between items-start">
+                  <p class="font-medium text-sm">GMDSS</p>
+                  <span class="text-[10px] px-1.5 py-0.5 bg-rose-100 text-rose-800 rounded">超时</span>
+                </div>
+                <p class="text-[11px] text-deep-500 mt-1">王海涛 · 138****9999</p>
+                <p class="text-[10px] text-rose-500 mt-1">提交 3 天前 · 已超时</p>
+              </div>
+              <div class="p-3">
+                <div class="flex justify-between items-start">
+                  <p class="font-medium text-sm">四小证</p>
+                  <span class="text-[10px] px-1.5 py-0.5 bg-amber-100 text-amber-800 rounded">待审</span>
+                </div>
+                <p class="text-[11px] text-deep-500 mt-1">陈船员 · 137****1111</p>
+                <p class="text-[10px] text-deep-400 mt-1">昨天</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- 右侧详情 -->
+          <div class="flex-1 p-6 overflow-auto">
+            <div class="bg-white rounded-2xl p-6">
+              <div class="flex justify-between items-start mb-6">
+                <div>
+                  <div class="flex items-center gap-2">
+                    <h3 class="text-lg font-bold">海员证</h3>
+                    <span class="text-xs px-3 py-1 bg-amber-100 text-amber-800 rounded-full">待审核</span>
+                  </div>
+                  <p class="text-xs text-deep-500 mt-1">证书ID: cert#10245 · 提交于 2026-05-11 09:30</p>
+                </div>
+                <div class="flex gap-2">
+                  <button class="text-sm text-deep-500">← 上一条</button>
+                  <button class="text-sm text-deep-500">下一条 →</button>
+                </div>
+              </div>
+
+              <div class="grid grid-cols-2 gap-6">
+                <!-- 证书照片 -->
+                <div>
+                  <p class="text-xs text-deep-500 mb-2">证书照片（点击放大）</p>
+                  <div class="bg-deep-50 rounded-xl h-80 flex items-center justify-center">
+                    <div class="text-center">
+                      <div class="text-7xl mb-3">⚓</div>
+                      <p class="text-xs text-deep-500">海员证.jpg · 1.2 MB</p>
+                      <p class="text-xs text-ocean-600 mt-1">点击查看大图</p>
+                    </div>
+                  </div>
+                </div>
+                <!-- 证书信息 -->
+                <div>
+                  <p class="text-xs text-deep-500 mb-2">证书信息</p>
+                  <div class="space-y-3 text-sm bg-deep-50 rounded-xl p-4">
+                    <div class="flex justify-between"><span class="text-deep-500">证书类型</span><span class="font-medium">海员证</span></div>
+                    <div class="flex justify-between"><span class="text-deep-500">证书编号</span><span class="font-medium">HM2024123456789</span></div>
+                    <div class="flex justify-between"><span class="text-deep-500">发证机关</span><span class="font-medium">中华人民共和国海事局</span></div>
+                    <div class="flex justify-between"><span class="text-deep-500">发证日期</span><span class="font-medium">2020-12-01</span></div>
+                    <div class="flex justify-between"><span class="text-deep-500">到期日期</span><span class="font-medium">2030-12-01</span></div>
+                    <div class="flex justify-between"><span class="text-deep-500">剩余有效期</span><span class="text-emerald-600 font-medium">1675 天</span></div>
+                  </div>
+
+                  <p class="text-xs text-deep-500 mb-2 mt-4">用户信息</p>
+                  <div class="space-y-3 text-sm bg-deep-50 rounded-xl p-4">
+                    <div class="flex justify-between"><span class="text-deep-500">姓名</span><span class="font-medium">张大海</span></div>
+                    <div class="flex justify-between"><span class="text-deep-500">手机号</span><span>138****1234</span></div>
+                    <div class="flex justify-between"><span class="text-deep-500">实名认证</span><span class="text-emerald-600">✓ 已认证</span></div>
+                    <div class="flex justify-between"><span class="text-deep-500">信用分</span><span class="font-medium">82（A级）</span></div>
+                    <div class="flex justify-between"><span class="text-deep-500">历史审核</span><span>共3张 · 全部通过</span></div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- 审核操作 -->
+              <div class="mt-6 pt-6 border-t border-deep-100">
+                <p class="text-sm font-medium mb-3">审核操作</p>
+                <div class="grid grid-cols-2 gap-4">
+                  <div>
+                    <p class="text-xs text-deep-500 mb-2">拒绝原因（驳回时必选）</p>
+                    <select class="w-full border border-deep-200 rounded-xl p-2.5 text-sm outline-none">
+                      <option>请选择拒绝原因</option>
+                      <option>证书图片不清晰</option>
+                      <option>证书信息与记录不符</option>
+                      <option>证书已过期</option>
+                      <option>证书编号格式错误</option>
+                      <option>疑似伪造证书</option>
+                      <option>其他（需补充说明）</option>
+                    </select>
+                  </div>
+                  <div>
+                    <p class="text-xs text-deep-500 mb-2">审核备注</p>
+                    <input class="w-full border border-deep-200 rounded-xl p-2.5 text-sm outline-none" placeholder="可填写补充说明">
+                  </div>
+                </div>
+                <div class="flex justify-between items-center mt-4">
+                  <p class="text-xs text-deep-500">⏱ 标准时效：1-2 个工作日 · 当前已等待 1 小时</p>
+                  <div class="flex gap-2">
+                    <button class="px-5 py-2 border border-rose-500 text-rose-500 rounded-xl text-sm">驳回</button>
+                    <button class="px-5 py-2 bg-emerald-500 text-white rounded-xl text-sm font-semibold">审核通过</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
   </div>
-  <footer class="mt-16 text-center text-xs text-deep-500">运营后台共 10 屏 · <a href="index.html" class="text-ocean-500">返回导航</a></footer>
+
+  <!-- 12. 用户详情 -->
+  <div>
+    <span class="label">12 · 用户详情（含封禁/解封操作）</span>
+    <div class="pc">
+      <div class="pc-bar"><span class="dot bg-rose-400"></span><span class="dot bg-amber-400"></span><span class="dot bg-emerald-400"></span><span class="ml-4 text-xs">/users/10245</span></div>
+      <div class="flex-1 flex">
+        <aside class="w-56 bg-deep-900 p-4">
+          <div class="flex items-center gap-2 px-2 pb-4 border-b border-deep-700"><div class="w-8 h-8 bg-ocean-600 rounded-lg flex items-center justify-center text-white text-sm">🛡️</div><span class="text-white font-semibold text-sm">运营后台</span></div>
+          <div class="nav-section">用户/风控</div>
+          <nav class="space-y-0.5">
+            <div class="nav-item active">👥 用户管理</div>
+            <div class="nav-item">🚫 黑名单</div>
+            <div class="nav-item">⚠️ 违规处理</div>
+          </nav>
+        </aside>
+        <main class="flex-1 bg-deep-50 p-6 overflow-auto">
+          <div class="flex items-center gap-2 text-xs text-deep-500 mb-4">
+            <a href="#">用户管理</a><span>›</span><span>用户详情</span>
+          </div>
+          <div class="bg-white rounded-2xl p-6">
+            <div class="flex justify-between items-start mb-6">
+              <div class="flex items-center gap-4">
+                <div class="w-16 h-16 bg-ocean-100 rounded-2xl flex items-center justify-center text-3xl">🧑‍✈️</div>
+                <div>
+                  <div class="flex items-center gap-2">
+                    <h3 class="text-xl font-bold">张大海</h3>
+                    <span class="text-xs px-2 py-0.5 bg-emerald-100 text-emerald-700 rounded">已实名</span>
+                    <span class="text-xs px-2 py-0.5 bg-amber-100 text-amber-700 rounded">A级船员</span>
+                    <span class="text-xs px-2 py-0.5 bg-ocean-100 text-ocean-700 rounded">中渔学员</span>
+                  </div>
+                  <p class="text-sm text-deep-500 mt-1">用户ID: 10245 · 注册于 2024-03-15</p>
+                </div>
+              </div>
+              <div class="flex gap-2">
+                <button class="px-4 py-2 border border-amber-500 text-amber-600 rounded-xl text-sm">⚠️ 警告</button>
+                <button class="px-4 py-2 border border-rose-500 text-rose-600 rounded-xl text-sm">🚫 封禁</button>
+                <button class="px-4 py-2 bg-deep-100 text-deep-700 rounded-xl text-sm">⋯</button>
+              </div>
+            </div>
+
+            <!-- 关键统计 -->
+            <div class="grid grid-cols-5 gap-4 mb-6">
+              <div class="bg-deep-50 rounded-xl p-4 text-center"><p class="text-2xl font-bold text-ocean-600">82</p><p class="text-xs text-deep-500 mt-1">信用分</p></div>
+              <div class="bg-deep-50 rounded-xl p-4 text-center"><p class="text-2xl font-bold">23</p><p class="text-xs text-deep-500 mt-1">投递</p></div>
+              <div class="bg-deep-50 rounded-xl p-4 text-center"><p class="text-2xl font-bold">5</p><p class="text-xs text-deep-500 mt-1">履历</p></div>
+              <div class="bg-deep-50 rounded-xl p-4 text-center"><p class="text-2xl font-bold">3</p><p class="text-xs text-deep-500 mt-1">证书</p></div>
+              <div class="bg-deep-50 rounded-xl p-4 text-center"><p class="text-2xl font-bold">0</p><p class="text-xs text-deep-500 mt-1">违规</p></div>
+            </div>
+
+            <!-- 信息分块 -->
+            <div class="grid grid-cols-2 gap-6 text-sm">
+              <div>
+                <p class="font-semibold mb-3">基本信息</p>
+                <div class="space-y-2">
+                  <div class="flex justify-between"><span class="text-deep-500">姓名</span><span>张大海</span></div>
+                  <div class="flex justify-between"><span class="text-deep-500">身份证号</span><span>3306****1234</span></div>
+                  <div class="flex justify-between"><span class="text-deep-500">手机号</span><span>138****1234</span></div>
+                  <div class="flex justify-between"><span class="text-deep-500">现居地</span><span>浙江舟山</span></div>
+                  <div class="flex justify-between"><span class="text-deep-500">最近登录</span><span>2026-05-11 08:30</span></div>
+                  <div class="flex justify-between"><span class="text-deep-500">登录IP</span><span>61.130.*.*</span></div>
+                </div>
+              </div>
+              <div>
+                <p class="font-semibold mb-3">账号状态</p>
+                <div class="space-y-2">
+                  <div class="flex justify-between"><span class="text-deep-500">账号状态</span><span class="text-emerald-600">✓ 正常</span></div>
+                  <div class="flex justify-between"><span class="text-deep-500">实名认证</span><span class="text-emerald-600">✓ 已认证</span></div>
+                  <div class="flex justify-between"><span class="text-deep-500">学院实名</span><span class="text-emerald-600">✓ 已继承</span></div>
+                  <div class="flex justify-between"><span class="text-deep-500">企业关联</span><span>0 家</span></div>
+                  <div class="flex justify-between"><span class="text-deep-500">收到投诉</span><span>0 次</span></div>
+                  <div class="flex justify-between"><span class="text-deep-500">违规记录</span><span class="text-emerald-600">无</span></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Tab区 -->
+            <div class="mt-6 pt-6 border-t border-deep-100">
+              <div class="flex gap-4 text-sm mb-4 border-b border-deep-100">
+                <button class="pb-3 border-b-2 border-ocean-600 font-semibold text-ocean-600">投递记录（23）</button>
+                <button class="pb-3 text-deep-500">履历（5）</button>
+                <button class="pb-3 text-deep-500">证书（3）</button>
+                <button class="pb-3 text-deep-500">操作日志</button>
+              </div>
+              <table class="w-full text-sm">
+                <thead class="text-xs text-deep-500 bg-deep-50">
+                  <tr><th class="px-3 py-2 text-left">职位</th><th class="px-3 py-2 text-left">企业</th><th class="px-3 py-2 text-left">状态</th><th class="px-3 py-2 text-left">投递时间</th></tr>
+                </thead>
+                <tbody class="divide-y divide-deep-50">
+                  <tr><td class="px-3 py-3">一级船长</td><td>舟山远洋渔业</td><td><span class="text-[11px] text-amber-600">沟通中</span></td><td class="text-xs">2 小时前</td></tr>
+                  <tr><td class="px-3 py-3">大副</td><td>青岛海洋捕捞</td><td><span class="text-[11px] text-emerald-600">已录用</span></td><td class="text-xs">5 天前</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+  </div>
+
+  <!-- 13. 封禁用户对话框 -->
+  <div>
+    <span class="label">13 · 封禁用户（二次确认）</span>
+    <div class="pc">
+      <div class="pc-bar"><span class="dot bg-rose-400"></span><span class="dot bg-amber-400"></span><span class="dot bg-emerald-400"></span><span class="ml-4 text-xs">/users/10245</span></div>
+      <div class="flex-1 bg-deep-900/40 flex items-center justify-center relative">
+        <div class="absolute inset-0 bg-deep-50/30"></div>
+        <div class="relative bg-white rounded-2xl p-6 w-[520px] shadow-2xl">
+          <div class="flex items-center gap-3 mb-4">
+            <div class="w-12 h-12 bg-rose-100 rounded-full flex items-center justify-center text-2xl">🚫</div>
+            <div>
+              <h3 class="text-lg font-bold">封禁用户</h3>
+              <p class="text-xs text-deep-500">敏感操作 · 需二次密码确认</p>
+            </div>
+          </div>
+          <div class="bg-rose-50 border border-rose-200 rounded-xl p-3 text-xs text-rose-900 flex gap-2 mb-4">
+            <span>⚠️</span>
+            <span>封禁后用户将无法登录、投递、聊天，所有进行中的业务将被冻结。请谨慎操作。</span>
+          </div>
+          <div class="space-y-4">
+            <div>
+              <p class="text-xs text-deep-500 mb-2">封禁对象</p>
+              <div class="bg-deep-50 rounded-xl p-3 text-sm flex items-center gap-2">
+                <span class="text-xl">🧑‍✈️</span>
+                <span class="font-medium">张大海 · 138****1234</span>
+              </div>
+            </div>
+            <div>
+              <p class="text-xs text-deep-500 mb-2">封禁类型 <span class="text-rose-600">*</span></p>
+              <div class="grid grid-cols-3 gap-2 text-xs">
+                <button class="py-2 border border-rose-500 bg-rose-50 text-rose-700 rounded-lg">永久封禁</button>
+                <button class="py-2 border border-deep-200 rounded-lg">封禁 30 天</button>
+                <button class="py-2 border border-deep-200 rounded-lg">封禁 7 天</button>
+              </div>
+            </div>
+            <div>
+              <p class="text-xs text-deep-500 mb-2">封禁原因 <span class="text-rose-600">*</span></p>
+              <select class="w-full border border-deep-300 rounded-xl px-3 py-2 text-sm outline-none">
+                <option>请选择封禁原因</option>
+                <option>违反平台规则</option>
+                <option>多次违规</option>
+                <option>恶意行为</option>
+                <option>欺诈</option>
+                <option>其他（需补充）</option>
+              </select>
+            </div>
+            <div>
+              <p class="text-xs text-deep-500 mb-2">补充说明</p>
+              <textarea class="w-full border border-deep-300 rounded-xl px-3 py-2 text-sm outline-none h-16 resize-none" placeholder="详细说明封禁理由（将记录到审计日志）"></textarea>
+            </div>
+            <div>
+              <p class="text-xs text-deep-500 mb-2">二次密码验证 <span class="text-rose-600">*</span></p>
+              <input type="password" placeholder="请输入您的登录密码" class="w-full border border-deep-300 rounded-xl px-3 py-2 text-sm outline-none">
+            </div>
+          </div>
+          <div class="flex justify-end gap-2 mt-5">
+            <button class="px-4 py-2 border border-deep-300 rounded-xl text-sm">取消</button>
+            <button class="px-4 py-2 bg-rose-500 text-white rounded-xl text-sm font-semibold">确认封禁</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 14. 投诉处理详情 -->
+  <div>
+    <span class="label">14 · 投诉处理详情</span>
+    <div class="pc">
+      <div class="pc-bar"><span class="dot bg-rose-400"></span><span class="dot bg-amber-400"></span><span class="dot bg-emerald-400"></span><span class="ml-4 text-xs">/complaints/2024050001</span></div>
+      <div class="flex-1 flex">
+        <aside class="w-56 bg-deep-900 p-4">
+          <div class="flex items-center gap-2 px-2 pb-4 border-b border-deep-700"><div class="w-8 h-8 bg-ocean-600 rounded-lg flex items-center justify-center text-white text-sm">🛡️</div><span class="text-white font-semibold text-sm">运营后台</span></div>
+          <div class="nav-section">用户/风控</div>
+          <nav class="space-y-0.5">
+            <div class="nav-item">👥 用户管理</div>
+            <div class="nav-item active">📢 投诉举报 <span class="ml-auto text-[10px] bg-rose-500 px-1.5 rounded">7</span></div>
+          </nav>
+        </aside>
+        <main class="flex-1 bg-deep-50 p-6 overflow-auto">
+          <div class="flex items-center gap-2 text-xs text-deep-500 mb-4">
+            <a href="#">投诉举报</a><span>›</span><span>投诉详情 #2024050001</span>
+          </div>
+          <div class="grid grid-cols-3 gap-4">
+            <!-- 主信息 -->
+            <div class="col-span-2 bg-white rounded-2xl p-5">
+              <div class="flex justify-between items-start mb-4">
+                <div>
+                  <div class="flex items-center gap-2">
+                    <h3 class="text-lg font-bold">投诉 · 拖欠工资</h3>
+                    <span class="text-xs px-2 py-0.5 bg-amber-100 text-amber-800 rounded">待处理</span>
+                  </div>
+                  <p class="text-xs text-deep-500 mt-1">工单ID: 2024050001 · 提交于 2 天前</p>
+                </div>
+                <span class="text-xs px-3 py-1 bg-rose-100 text-rose-700 rounded-full">高优先级</span>
+              </div>
+
+              <div class="grid grid-cols-2 gap-4 mb-5 text-sm">
+                <div class="bg-deep-50 rounded-xl p-3">
+                  <p class="text-xs text-deep-500 mb-2">投诉人</p>
+                  <div class="flex items-center gap-2">
+                    <span class="text-xl">🧑‍✈️</span>
+                    <div>
+                      <p class="font-medium">王海涛</p>
+                      <p class="text-[11px] text-deep-500">船员 · 138****9999</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="bg-deep-50 rounded-xl p-3">
+                  <p class="text-xs text-deep-500 mb-2">被投诉方</p>
+                  <div class="flex items-center gap-2">
+                    <span class="text-xl">🏢</span>
+                    <div>
+                      <p class="font-medium">某某渔业公司</p>
+                      <p class="text-[11px] text-deep-500">企业 · 信用 65</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="mb-5">
+                <p class="text-sm font-semibold mb-2">投诉内容</p>
+                <div class="bg-deep-50 rounded-xl p-4 text-sm leading-relaxed">
+                  2025年11月完成合同后，企业拖欠最后一个月工资共8000元至今未发，多次联系企业被推诿。希望平台介入处理。
+                </div>
+              </div>
+
+              <div class="mb-5">
+                <p class="text-sm font-semibold mb-2">证据材料</p>
+                <div class="flex gap-3">
+                  <div class="w-24 h-24 bg-deep-50 rounded-xl flex items-center justify-center text-3xl">💬</div>
+                  <div class="w-24 h-24 bg-deep-50 rounded-xl flex items-center justify-center text-3xl">📄</div>
+                  <div class="w-24 h-24 bg-deep-50 rounded-xl flex items-center justify-center text-3xl">📷</div>
+                </div>
+                <p class="text-xs text-deep-500 mt-2">3 张证据图片 · 点击查看</p>
+              </div>
+
+              <div class="pt-5 border-t border-deep-100">
+                <p class="text-sm font-semibold mb-3">处理意见</p>
+                <div class="space-y-3">
+                  <div>
+                    <p class="text-xs text-deep-500 mb-2">处理结果 <span class="text-rose-600">*</span></p>
+                    <div class="grid grid-cols-4 gap-2 text-xs">
+                      <button class="py-2 border border-emerald-500 bg-emerald-50 text-emerald-700 rounded-lg">投诉成立</button>
+                      <button class="py-2 border border-deep-200 rounded-lg">投诉不成立</button>
+                      <button class="py-2 border border-deep-200 rounded-lg">证据不足</button>
+                      <button class="py-2 border border-deep-200 rounded-lg">协商解决</button>
+                    </div>
+                  </div>
+                  <div>
+                    <p class="text-xs text-deep-500 mb-2">对企业处罚</p>
+                    <div class="grid grid-cols-3 gap-2 text-xs">
+                      <button class="py-2 border border-amber-500 bg-amber-50 text-amber-700 rounded-lg">扣信用分 -10</button>
+                      <button class="py-2 border border-deep-200 rounded-lg">警告</button>
+                      <button class="py-2 border border-rose-200 text-rose-600 rounded-lg">冻结账号</button>
+                    </div>
+                  </div>
+                  <div>
+                    <p class="text-xs text-deep-500 mb-2">处理说明</p>
+                    <textarea class="w-full border border-deep-300 rounded-xl px-3 py-2 text-sm outline-none h-20 resize-none" placeholder="详细说明处理结果和理由（将发送给双方）"></textarea>
+                  </div>
+                  <div class="flex justify-end gap-2">
+                    <button class="px-4 py-2 border border-deep-300 rounded-xl text-sm">暂存</button>
+                    <button class="px-4 py-2 bg-ocean-600 text-white rounded-xl text-sm font-semibold">提交处理</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 侧边历史 -->
+            <div class="space-y-4">
+              <div class="bg-white rounded-2xl p-4">
+                <p class="font-semibold text-sm mb-3">处理时间轴</p>
+                <div class="space-y-3 text-xs">
+                  <div class="flex gap-2">
+                    <div class="w-2 h-2 rounded-full bg-emerald-500 mt-1"></div>
+                    <div class="flex-1">
+                      <p class="font-medium">用户提交投诉</p>
+                      <p class="text-deep-500 mt-0.5">2 天前 · 王海涛</p>
+                    </div>
+                  </div>
+                  <div class="flex gap-2">
+                    <div class="w-2 h-2 rounded-full bg-emerald-500 mt-1"></div>
+                    <div class="flex-1">
+                      <p class="font-medium">系统自动分配</p>
+                      <p class="text-deep-500 mt-0.5">2 天前 · 分配给陈客服</p>
+                    </div>
+                  </div>
+                  <div class="flex gap-2">
+                    <div class="w-2 h-2 rounded-full bg-emerald-500 mt-1"></div>
+                    <div class="flex-1">
+                      <p class="font-medium">联系企业核实</p>
+                      <p class="text-deep-500 mt-0.5">1 天前 · 陈客服</p>
+                    </div>
+                  </div>
+                  <div class="flex gap-2">
+                    <div class="w-2 h-2 rounded-full bg-amber-500 mt-1"></div>
+                    <div class="flex-1">
+                      <p class="font-medium">等待处理决定</p>
+                      <p class="text-deep-500 mt-0.5">现在</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="bg-white rounded-2xl p-4">
+                <p class="font-semibold text-sm mb-3">企业历史</p>
+                <div class="space-y-2 text-xs">
+                  <div class="flex justify-between"><span class="text-deep-500">累计投诉</span><span class="font-medium text-rose-600">3 次</span></div>
+                  <div class="flex justify-between"><span class="text-deep-500">投诉成立</span><span class="font-medium">2 次</span></div>
+                  <div class="flex justify-between"><span class="text-deep-500">当前信用分</span><span class="font-medium">65 · C级</span></div>
+                  <div class="flex justify-between"><span class="text-deep-500">已发布职位</span><span>5 个</span></div>
+                  <div class="flex justify-between"><span class="text-deep-500">注册时长</span><span>2 年</span></div>
+                </div>
+                <button class="w-full mt-3 text-xs text-ocean-600 py-2 border border-ocean-200 rounded-lg">查看企业详情</button>
+              </div>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+  </div>
+
+  </div>
+  <footer class="mt-16 text-center text-xs text-deep-500">运营后台共 14 屏 · <a href="index.html" class="text-ocean-500">返回导航</a></footer>
 </div>
+<script>
+(function(){
+  const modules = [
+    {title: '模块 1 · 登录与看板', desc: '管理员登录（含 TOTP）→ 数据总览', screens: [1,2]},
+    {title: '模块 2 · 业务审核', desc: '企业认证 / 职位审核 / 证书审核（含详情）', screens: [3,4,11]},
+    {title: '模块 3 · 用户与风控', desc: '用户管理 → 用户详情 → 封禁操作 → 投诉处理', screens: [5,12,13,6,7]},
+    {title: '模块 4 · 系统与RBAC', desc: 'RBAC 角色 → 系统配置 → 审计日志', screens: [8,9,10]}
+  ];
+  const container = document.querySelector('.space-y-12');
+  if (!container) return;
+  const screensMap = {};
+  Array.from(container.children).forEach(child => {
+    const labelEl = child.querySelector('.label');
+    if (!labelEl) return;
+    const m = labelEl.textContent.match(/^(\d+)\s*·/);
+    if (m) screensMap[parseInt(m[1])] = child;
+  });
+  container.innerHTML = '';
+  container.className = '';
+  modules.forEach(mod => {
+    const section = document.createElement('div');
+    section.className = 'module-section';
+    section.innerHTML = `<h2 class="module-title">${mod.title} <span class="module-badge">${mod.screens.length} 屏</span></h2><p class="module-desc">${mod.desc}</p><div class="module-row"></div>`;
+    const row = section.querySelector('.module-row');
+    mod.screens.forEach(num => { if (screensMap[num]) row.appendChild(screensMap[num]); });
+    container.appendChild(section);
+  });
+})();
+</script>
 </body>
 </html>
