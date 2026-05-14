@@ -1,0 +1,998 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>船员端 APP · 可交互原型</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  theme: { extend: {
+    colors: {
+      ocean: { 50:'#ecfeff',100:'#cffafe',500:'#06b6d4',600:'#0891b2',700:'#0e7490',900:'#164e63' },
+      deep: { 50:'#f8fafc',100:'#f1f5f9',300:'#cbd5e1',500:'#64748b',700:'#334155',900:'#0f172a' },
+      lighthouse: { 500:'#f59e0b',600:'#d97706' }
+    }
+  }}
+}
+</script>
+<script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<style>
+* { box-sizing: border-box; }
+body { background: #0b1220; color: #cbd5e1; font-family: "PingFang SC", -apple-system, sans-serif; margin: 0; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+.phone-shell { width: 375px; height: 812px; background: #fff; border-radius: 44px; box-shadow: 0 30px 80px rgba(0,0,0,.5), 0 0 0 14px #1e293b, 0 0 0 16px #334155; overflow: hidden; position: relative; color: #0f172a; flex-shrink: 0; }
+.phone-shell::before { content:''; position: absolute; top: 14px; left: 50%; transform: translateX(-50%); width: 120px; height: 30px; background: #000; border-radius: 18px; z-index: 50; }
+.screen-container { position: absolute; inset: 0; overflow: hidden; }
+.screen { position: absolute; inset: 0; transition: transform 0.3s ease, opacity 0.3s ease; }
+.screen.slide-left { transform: translateX(-100%); opacity: 0; }
+.screen.slide-right { transform: translateX(100%); opacity: 0; }
+.screen.active { transform: translateX(0); opacity: 1; }
+.tabbar { position: absolute; bottom: 0; left: 0; right: 0; height: 84px; background: #fff; border-top: 1px solid #e2e8f0; display: flex; justify-content: space-around; padding-top: 8px; padding-bottom: 24px; z-index: 40; }
+.tab { display: flex; flex-direction: column; align-items: center; gap: 2px; font-size: 10px; color: #94a3b8; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+.tab.active { color: #0891b2; }
+.tab-icon { width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; font-size: 20px; }
+.status-bar { height: 44px; display: flex; justify-content: space-between; align-items: flex-end; padding: 0 28px 6px; font-size: 14px; font-weight: 600; color: #0f172a; position: relative; z-index: 51; }
+.scrim { position: absolute; inset: 0; background: rgba(15,23,42,.5); z-index: 10; }
+.bottom-sheet { position: absolute; bottom: 0; left: 0; right: 0; background: #fff; border-radius: 24px 24px 0 0; padding: 24px; padding-bottom: 40px; z-index: 20; transform: translateY(100%); transition: transform 0.3s ease; }
+.bottom-sheet.show { transform: translateY(0); }
+.toast { position: absolute; top: 60px; left: 50%; transform: translateX(-50%); background: #0f172a; color: #fff; padding: 10px 24px; border-radius: 12px; font-size: 13px; z-index: 100; opacity: 0; transition: opacity 0.3s; pointer-events: none; white-space: nowrap; }
+.toast.show { opacity: 1; }
+::-webkit-scrollbar { width: 0; }
+.clickable { cursor: pointer; -webkit-tap-highlight-color: transparent; }
+.clickable:active { opacity: 0.7; }
+.flow-hint { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: rgba(15,23,42,0.8); color: #cbd5e1; padding: 8px 20px; border-radius: 20px; font-size: 12px; z-index: 999; white-space: nowrap; }
+</style>
+</head>
+<body>
+<div id="root"></div>
+<div class="flow-hint">可交互原型 · 点击按钮和卡片体验完整流程 · 返回键在顶部左侧</div>
+
+<script type="text/babel">
+const { useState, useCallback, useEffect } = React;
+
+const JOBS = [
+  { id: 1, title: '一级船长', company: '舟山远洋渔业有限公司', salary: '1.5-2万', tags: ['南海','围网','3个月'], urgent: true, credit: 92, grade: 'A+', desc: '负责整艘围网渔船的航行指挥与渔获生产管理，要求持有一级船长适任证书，5年以上同船型经验，南海作业经验优先。', certs: ['一级船长','健康证','海员证'], benefits: ['包吃住','缴纳保险','高温津贴'], port: '舟山港' },
+  { id: 2, title: '大副', company: '青岛海洋捕捞', salary: '1.2-1.5万', tags: ['东海','拖网','2个月'], urgent: false, credit: 88, grade: 'A', desc: '协助船长完成航行和捕捞作业，要求持有大副适任证书，3年以上经验。', certs: ['大副证','健康证'], benefits: ['包吃住','缴纳保险'], port: '青岛港' },
+  { id: 3, title: '轮机长', company: '福建闽南海运', salary: '1.3-1.8万', tags: ['南海','远洋','6个月'], urgent: true, credit: 85, grade: 'A', desc: '负责船舶轮机设备的维护和管理，要求持有轮机长证书，远洋经验优先。', certs: ['轮机长证','健康证','海员证'], benefits: ['包吃住','缴纳保险','远洋津贴'], port: '厦门港' },
+  { id: 4, title: '二级船长', company: '宁波渔业集团', salary: '1-1.3万', tags: ['东海','钓具','1个月'], urgent: false, credit: 90, grade: 'A+', desc: '负责钓具渔船的日常作业管理，2年以上钓具经验。', certs: ['二级船长','健康证'], benefits: ['包吃住','缴纳保险'], port: '宁波港' },
+  { id: 5, title: '水手长', company: '大连远洋渔业', salary: '8千-1.2万', tags: ['黄海','拖网','3个月'], urgent: false, credit: 82, grade: 'B+', desc: '协助甲板作业，负责渔具操作和日常维护，要求有1年以上海上作业经验。', certs: ['水手证','健康证'], benefits: ['包吃住'], port: '大连港' },
+];
+
+const MESSAGES = [
+  { id: 1, company: '舟山远洋渔业', avatar: '🏢', color: 'ocean', lastMsg: '您好，我们看了您的简历，想约个电话聊...', time: '10:23', unread: 2, chat: [
+    { from: 'them', text: '您好，我们看了您的简历，对您很感兴趣，想约个电话聊聊', time: '10:18' },
+    { from: 'me', text: '好的，请问什么时候方便？', time: '10:19' },
+    { from: 'them', text: '这是我微信 ***（微信号已隐藏）', time: '10:20', warning: '检测到联系方式已隐藏，请通过平台沟通' },
+    { from: 'me', text: '明天上午10点电话方便吗？', time: '10:21' },
+    { from: 'them', text: '可以，到时候我电话过去 👍', time: '10:23' },
+  ]},
+  { id: 2, company: '青岛海洋捕捞', avatar: '🏢', color: 'amber', lastMsg: '面试时间已确认：明天下午2点', time: '昨天', unread: 0, chat: [
+    { from: 'them', text: '您好，恭喜通过初筛，我们想安排一个视频面试', time: '昨天 14:00' },
+    { from: 'me', text: '好的，我随时都可以', time: '昨天 14:05' },
+    { from: 'them', text: '面试时间已确认：明天下午2点', time: '昨天 15:30' },
+  ]},
+  { id: 3, company: '深海渔业集团', avatar: '🏢', color: 'emerald', lastMsg: '您的投递已查看，请耐心等待', time: '2天前', unread: 0, chat: [
+    { from: 'them', text: '感谢您的投递，我们正在审核您的简历', time: '2天前' },
+    { from: 'me', text: '好的，期待您的回复', time: '2天前' },
+    { from: 'them', text: '您的投递已查看，请耐心等待', time: '2天前' },
+  ]},
+];
+
+const STATUS_BAR = () => (
+  <div className="status-bar"><span>9:41</span><span>● ● ● 100%</span></div>
+);
+
+function App() {
+  const [screen, setScreen] = useState('home');
+  const [history, setHistory] = useState([]);
+  const [toast, setToast] = useState('');
+  const [toastVisible, setToastVisible] = useState(false);
+  const [appliedJobs, setAppliedJobs] = useState(new Set());
+  const [showDeliverSheet, setShowDeliverSheet] = useState(false);
+  const [showFilterSheet, setShowFilterSheet] = useState(false);
+  const [showHireSheet, setShowHireSheet] = useState(false);
+  const [showInterviewSheet, setShowInterviewSheet] = useState(false);
+  const [selectedJob, setSelectedJob] = useState(null);
+  const [selectedCompany, setSelectedCompany] = useState(null);
+  const [selectedChat, setSelectedChat] = useState(null);
+  const [currentTab, setCurrentTab] = useState('home');
+  const [searchQuery, setSearchQuery] = useState('');
+
+  const showToast = useCallback((msg) => {
+    setToast(msg);
+    setToastVisible(true);
+    setTimeout(() => setToastVisible(false), 2000);
+  }, []);
+
+  const go = useCallback((next) => {
+    setHistory(prev => [...prev, screen]);
+    setScreen(next);
+  }, [screen]);
+
+  const goBack = useCallback(() => {
+    if (history.length > 0) {
+      const prev = history[history.length - 1];
+      setHistory(h => h.slice(0, -1));
+      setScreen(prev);
+    }
+  }, [history]);
+
+  const applyJob = useCallback((job) => {
+    setAppliedJobs(prev => new Set([...prev, job.id]));
+    setShowDeliverSheet(false);
+    showToast('投递成功！企业将查看您的简历');
+  }, [showToast]);
+
+  const openJob = useCallback((job) => {
+    setSelectedJob(job);
+    go('jobDetail');
+  }, [go]);
+
+  const openCompany = useCallback((company) => {
+    setSelectedCompany(company);
+    go('companyDetail');
+  }, [go]);
+
+  const openChat = useCallback((msg) => {
+    setSelectedChat(msg);
+    go('chat');
+  }, [go]);
+
+  const handleTab = useCallback((tab) => {
+    setCurrentTab(tab);
+    setScreen(tab);
+    setHistory([]);
+  }, []);
+
+  const filteredJobs = searchQuery
+    ? JOBS.filter(j => j.title.includes(searchQuery) || j.company.includes(searchQuery))
+    : JOBS;
+
+  // ---- Screens ----
+
+  const HomeScreen = (
+    <div className="screen active" key="home">
+      <STATUS_BAR />
+      <div className="bg-gradient-to-b from-ocean-50 to-white overflow-y-auto" style={{height:'calc(100% - 44px - 84px)',paddingBottom:12}}>
+        <div className="px-5 pt-3">
+          <div className="flex items-center justify-between text-[10px] text-deep-400 mb-2 px-1">
+            <span>← 中渔学院 · 职介</span>
+            <span className="clickable" onClick={() => handleTab('profile')}>张大海 ▾</span>
+          </div>
+          <div className="flex items-center gap-2 mb-4 bg-white rounded-2xl p-1 shadow-sm border border-deep-100">
+            <button className="flex-1 py-2 rounded-xl bg-ocean-600 text-white text-sm font-medium">船员版</button>
+            <button className="flex-1 py-2 rounded-xl text-deep-500 text-sm">+ 创建/加入企业</button>
+          </div>
+          <div className="bg-white rounded-2xl px-4 py-3 flex items-center gap-2 shadow-sm border border-deep-100 clickable"
+               onClick={() => go('search')}>
+            <span className="text-deep-300">🔍</span>
+            <span className="flex-1 text-sm text-deep-300">搜索职位、企业、海域</span>
+            <span className="text-ocean-600 text-xs">搜索</span>
+          </div>
+        </div>
+        <div className="grid grid-cols-4 gap-2 px-5 mt-5 text-center">
+          <div className="clickable" onClick={() => go('certs')}><div className="w-12 h-12 mx-auto bg-ocean-100 rounded-2xl flex items-center justify-center text-xl">📜</div><p className="text-xs mt-1">我的证书</p></div>
+          <div className="clickable" onClick={() => go('resume')}><div className="w-12 h-12 mx-auto bg-amber-100 rounded-2xl flex items-center justify-center text-xl">🚢</div><p className="text-xs mt-1">我的履历</p></div>
+          <div className="clickable" onClick={() => go('deliveries')}><div className="w-12 h-12 mx-auto bg-emerald-100 rounded-2xl flex items-center justify-center text-xl">📨</div><p className="text-xs mt-1">投递记录</p></div>
+          <div className="clickable" onClick={() => go('jobList')}><div className="w-12 h-12 mx-auto bg-rose-100 rounded-2xl flex items-center justify-center text-xl">🔥</div><p className="text-xs mt-1">急招专区</p></div>
+        </div>
+        <div className="mx-5 mt-5 rounded-2xl bg-gradient-to-r from-ocean-700 to-ocean-500 p-4 text-white clickable"
+             onClick={() => go('profile')}>
+          <p className="text-xs opacity-80">您的信用分</p>
+          <p className="text-2xl font-bold mt-1">82 <span className="text-sm font-normal opacity-80">A 级船员</span></p>
+          <div className="h-1 bg-white/30 rounded-full mt-2 overflow-hidden"><div className="h-full bg-amber-300" style={{width:'80%'}}></div></div>
+        </div>
+        <div className="px-5 mt-6">
+          <div className="flex justify-between items-center mb-3">
+            <h3 className="font-semibold text-deep-900">为你推荐</h3>
+            <span className="text-xs text-ocean-600 clickable" onClick={() => go('jobList')}>查看更多 ›</span>
+          </div>
+          {JOBS.slice(0,2).map(job => (
+            <div key={job.id} className="bg-white rounded-2xl p-4 shadow-sm border border-deep-100 mb-3 clickable"
+                 onClick={() => openJob(job)}>
+              <div className="flex justify-between items-start">
+                <div>
+                  <div className="flex items-center gap-2">
+                    <h4 className="font-semibold">{job.title}</h4>
+                    {job.urgent && <span className="text-[10px] px-1.5 py-0.5 bg-rose-50 text-rose-600 rounded">急招</span>}
+                  </div>
+                  <p className="text-xs text-deep-500 mt-1">{job.company} · {job.grade}认证</p>
+                </div>
+                <p className="text-rose-600 font-bold">{job.salary}</p>
+              </div>
+              <div className="flex gap-1.5 mt-2 text-[11px]">
+                {job.tags.map(t => <span key={t} className="px-2 py-0.5 bg-deep-100 rounded">{t}</span>)}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+      <div className="tabbar">
+        <div className={`tab ${currentTab==='home'?'active':''}`} onClick={() => handleTab('home')}><div className="tab-icon">🏠</div><span>首页</span></div>
+        <div className={`tab ${currentTab==='jobList'?'active':''}`} onClick={() => {handleTab('jobList');setScreen('jobList');}}><div className="tab-icon">💼</div><span>职介</span></div>
+        <div className={`tab ${currentTab==='profile'?'active':''}`} onClick={() => handleTab('profile')}><div className="tab-icon">👤</div><span>我的</span></div>
+      </div>
+    </div>
+  );
+
+  const JobListScreen = (
+    <div className="screen active" key="jobList">
+      <STATUS_BAR />
+      <div className="bg-deep-50 overflow-y-auto" style={{height:'calc(100% - 44px - 84px)'}}>
+        <div className="bg-white px-5 pt-3 pb-3 sticky top-0 border-b border-deep-100 z-30">
+          <div className="flex items-center justify-between mb-2">
+            <div className="text-xs text-deep-400">← 中渔学院 · 职介</div>
+          </div>
+          <div className="flex items-center gap-2 bg-deep-50 rounded-xl px-3 py-2 clickable" onClick={() => go('search')}>
+            <span className="text-deep-300 text-sm">🔍</span>
+            <span className="flex-1 text-sm text-deep-300">搜索职位、企业</span>
+          </div>
+          <div className="flex gap-3 mt-3 text-xs" onClick={() => setShowFilterSheet(true)}>
+            <span className="px-3 py-1.5 bg-ocean-600 text-white rounded-full cursor-pointer">海域 ▾</span>
+            <span className="px-3 py-1.5 bg-deep-100 rounded-full cursor-pointer">船型 ▾</span>
+            <span className="px-3 py-1.5 bg-deep-100 rounded-full cursor-pointer">薪资 ▾</span>
+          </div>
+        </div>
+        <div className="px-5 py-3 space-y-3">
+          {JOBS.map(job => (
+            <div key={job.id} className="bg-white rounded-2xl p-4 border border-deep-100 clickable"
+                 onClick={() => openJob(job)}>
+              <div className="flex justify-between items-start">
+                <div>
+                  <div className="flex items-center gap-1.5">
+                    <h4 className="font-semibold">{job.title}</h4>
+                    {job.urgent && <span className="text-[10px] px-1.5 py-0.5 bg-rose-50 text-rose-600 rounded">急招</span>}
+                  </div>
+                  <p className="text-xs text-deep-500 mt-1">{job.company} · 信用 {job.credit}</p>
+                </div>
+                <p className="text-rose-600 font-bold text-sm">{job.salary}</p>
+              </div>
+              <div className="flex gap-1.5 mt-2 text-[11px]">
+                {job.tags.map(t => <span key={t} className="px-2 py-0.5 bg-ocean-50 rounded">{t}</span>)}
+              </div>
+              {appliedJobs.has(job.id) && <p className="text-[10px] text-emerald-600 mt-2">✓ 已投递</p>}
+            </div>
+          ))}
+        </div>
+      </div>
+      <div className="tabbar">
+        <div className={`tab ${currentTab==='home'?'active':''}`} onClick={() => handleTab('home')}><div className="tab-icon">🏠</div><span>首页</span></div>
+        <div className={`tab active`} onClick={() => {}}><div className="tab-icon">💼</div><span>职介</span></div>
+        <div className={`tab ${currentTab==='profile'?'active':''}`} onClick={() => handleTab('profile')}><div className="tab-icon">👤</div><span>我的</span></div>
+      </div>
+    </div>
+  );
+
+  const SearchScreen = (
+    <div className="screen active" key="search">
+      <STATUS_BAR />
+      <div className="bg-white overflow-y-auto" style={{height:'calc(100% - 44px)'}}>
+        <div className="px-5 py-3 border-b border-deep-100">
+          <div className="flex items-center gap-2">
+            <button className="text-xl clickable" onClick={goBack}>←</button>
+            <div className="flex-1 flex items-center gap-2 bg-deep-50 rounded-xl px-3 py-2">
+              <span className="text-deep-300 text-sm">🔍</span>
+              <input value={searchQuery} onChange={e => setSearchQuery(e.target.value)}
+                     className="flex-1 outline-none bg-transparent text-sm" placeholder="搜索职位、企业" autoFocus />
+            </div>
+            <button className="text-sm text-ocean-600" onClick={goBack}>搜索</button>
+          </div>
+        </div>
+        <div className="px-5 py-3">
+          {searchQuery ? (
+            <>
+              <p className="text-xs text-deep-500 mb-3">找到 <span className="text-ocean-600 font-medium">{filteredJobs.length}</span> 个相关职位</p>
+              {filteredJobs.map(job => (
+                <div key={job.id} className="bg-white rounded-2xl p-4 border border-deep-100 mb-3 clickable" onClick={() => openJob(job)}>
+                  <div className="flex justify-between items-start">
+                    <div>
+                      <h4 className="font-semibold">{job.title}</h4>
+                      <p className="text-xs text-deep-500 mt-1">{job.company}</p>
+                    </div>
+                    <p className="text-rose-600 font-bold text-sm">{job.salary}</p>
+                  </div>
+                  <div className="flex gap-1.5 mt-2 text-[11px]">
+                    {job.tags.map(t => <span key={t} className="px-2 py-0.5 bg-ocean-50 rounded">{t}</span>)}
+                  </div>
+                </div>
+              ))}
+            </>
+          ) : (
+            <>
+              <p className="text-xs text-deep-500 mb-3">热门搜索</p>
+              <div className="flex flex-wrap gap-2">
+                {['船长','大副','轮机长','南海','围网','远洋'].map(k => (
+                  <span key={k} className="px-3 py-1.5 bg-deep-100 rounded-full text-sm clickable"
+                        onClick={() => setSearchQuery(k)}>{k}</span>
+                ))}
+              </div>
+            </>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+
+  const JobDetailScreen = selectedJob && (
+    <div className="screen active" key="jobDetail">
+      <STATUS_BAR />
+      <div className="overflow-y-auto bg-white" style={{height:'calc(100% - 44px - 72px)'}}>
+        <div className="bg-gradient-to-br from-ocean-700 to-ocean-900 text-white p-5 pt-2">
+          <div className="flex items-center justify-between">
+            <button className="text-2xl clickable" onClick={goBack}>←</button>
+            <div className="flex gap-3 text-lg">
+              <span className="clickable" onClick={() => showToast('已收藏')}>☆</span>
+              <span>⋯</span>
+            </div>
+          </div>
+          <div className="mt-4">
+            <div className="flex items-center gap-2">
+              <h2 className="text-xl font-bold">{selectedJob.title}</h2>
+              {selectedJob.urgent && <span className="text-[10px] px-1.5 py-0.5 bg-amber-400 text-amber-900 rounded font-medium">急招</span>}
+            </div>
+            <p className="text-2xl font-bold mt-2 text-amber-300">{selectedJob.salary} <span className="text-xs font-normal opacity-80">/月</span></p>
+            <div className="flex gap-1.5 mt-3 text-[11px]">
+              {selectedJob.tags.map(t => <span key={t} className="px-2 py-0.5 bg-white/20 rounded">{t}</span>)}
+              <span className="px-2 py-0.5 bg-white/20 rounded">{selectedJob.port}</span>
+            </div>
+          </div>
+        </div>
+        <div className="p-5 space-y-4 text-sm">
+          <div>
+            <h3 className="font-semibold mb-2">职位描述</h3>
+            <p className="text-deep-700 leading-relaxed">{selectedJob.desc}</p>
+          </div>
+          <div>
+            <h3 className="font-semibold mb-2">证书要求</h3>
+            <div className="flex gap-1.5 flex-wrap text-[11px]">
+              {selectedJob.certs.map(c => <span key={c} className="px-2 py-1 bg-emerald-50 text-emerald-700 rounded">{c} ✓</span>)}
+            </div>
+            <p className="text-[10px] text-emerald-600 mt-1">您持有的证书已满足要求</p>
+          </div>
+          <div>
+            <h3 className="font-semibold mb-2">福利</h3>
+            <div className="flex gap-1.5 flex-wrap text-[11px]">
+              {selectedJob.benefits.map(b => <span key={b} className="px-2 py-1 bg-deep-100 rounded">{b}</span>)}
+            </div>
+          </div>
+          <div className="border-t border-deep-100 pt-4 clickable" onClick={() => openCompany(selectedJob)}>
+            <div className="flex items-center gap-3">
+              <div className="w-12 h-12 bg-ocean-100 rounded-xl flex items-center justify-center">🏢</div>
+              <div className="flex-1">
+                <p className="font-semibold">{selectedJob.company}</p>
+                <p className="text-xs text-deep-500 mt-0.5">{selectedJob.grade} 信用 {selectedJob.credit} · 累计招聘 156 人</p>
+              </div>
+              <span className="text-deep-300">›</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="absolute bottom-0 left-0 right-0 bg-white border-t border-deep-100 px-5 py-3 flex gap-3 z-40" style={{paddingBottom:24}}>
+        <button className="px-5 py-3 border border-deep-300 rounded-2xl text-sm clickable"
+                onClick={() => showToast('已收藏')}>☆ 收藏</button>
+        {appliedJobs.has(selectedJob.id) ? (
+          <button className="flex-1 bg-deep-200 text-deep-500 font-semibold py-3 rounded-2xl">已投递</button>
+        ) : (
+          <button className="flex-1 bg-ocean-600 text-white font-semibold py-3 rounded-2xl clickable"
+                  onClick={() => setShowDeliverSheet(true)}>立即投递</button>
+        )}
+      </div>
+    </div>
+  );
+
+  const ChatListScreen = (
+    <div className="screen active" key="chatList">
+      <STATUS_BAR />
+      <div className="bg-white overflow-y-auto" style={{height:'calc(100% - 44px)'}}>
+        <div className="px-5 pt-3 pb-3 border-b border-deep-100 flex items-center gap-3">
+          <button className="text-xl clickable" onClick={goBack}>←</button>
+          <h2 className="text-lg font-semibold flex-1">消息</h2>
+        </div>
+        <div className="divide-y divide-deep-100">
+          {MESSAGES.map(msg => (
+            <div key={msg.id} className="px-5 py-4 flex items-center gap-3 clickable" onClick={() => openChat(msg)}>
+              <div className={`w-12 h-12 bg-${msg.color}-100 rounded-2xl flex items-center justify-center`}>{msg.avatar}</div>
+              <div className="flex-1 min-w-0">
+                <div className="flex justify-between"><p className="font-medium truncate">{msg.company}</p><span className="text-[10px] text-deep-500">{msg.time}</span></div>
+                <p className="text-xs text-deep-500 truncate mt-0.5">{msg.lastMsg}</p>
+              </div>
+              {msg.unread > 0 && <span className="bg-rose-500 text-white text-[10px] rounded-full w-5 h-5 flex items-center justify-center">{msg.unread}</span>}
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+
+  const ChatScreen = selectedChat && (
+    <div className="screen active" key="chat">
+      <STATUS_BAR />
+      <div className="bg-deep-50 flex flex-col" style={{height:'calc(100% - 44px)'}}>
+        <div className="bg-white px-5 py-3 border-b border-deep-100 flex items-center gap-3">
+          <button className="text-xl clickable" onClick={goBack}>←</button>
+          <div className="flex-1"><p className="font-semibold text-sm">{selectedChat.company}</p><p className="text-[10px] text-emerald-600">在线</p></div>
+          <span className="text-deep-400">⋯</span>
+        </div>
+        <div className="flex-1 overflow-auto p-4 space-y-3 text-sm">
+          {selectedChat.chat.map((c, i) => (
+            <div key={i}>
+              {i === 0 && <div className="text-center text-[10px] text-deep-400 mb-2">{c.time}</div>}
+              <div className={`flex ${c.from === 'me' ? 'justify-end' : 'justify-start'}`}>
+                <div className={`${c.from === 'me' ? 'bg-ocean-600 text-white rounded-2xl rounded-tr-sm' : 'bg-white rounded-2xl rounded-tl-sm shadow-sm'} p-3 max-w-[75%]`}>
+                  <p>{c.text}</p>
+                  {c.warning && <p className="text-[10px] text-amber-600 mt-1">⚠ {c.warning}</p>}
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+        <div className="bg-white px-3 py-3 border-t border-deep-100 flex items-center gap-2" style={{paddingBottom:28}}>
+          <span className="text-deep-400 text-lg">+</span>
+          <input className="flex-1 bg-deep-50 rounded-2xl px-4 py-2.5 text-sm outline-none" placeholder="输入消息" />
+          <button className="text-deep-400 text-lg clickable" onClick={() => showToast('消息已发送')}>➤</button>
+        </div>
+      </div>
+    </div>
+  );
+
+  const ProfileScreen = (
+    <div className="screen active" key="profile">
+      <STATUS_BAR />
+      <div className="bg-deep-50 overflow-y-auto" style={{height:'calc(100% - 44px - 84px)'}}>
+        <div className="bg-gradient-to-br from-ocean-700 to-ocean-900 text-white px-5 pt-4 pb-8">
+          <div className="flex items-center gap-3">
+            <div className="w-16 h-16 rounded-2xl bg-white/20 flex items-center justify-center text-3xl">🧑‍✈️</div>
+            <div>
+              <p className="font-bold text-lg">张大海</p>
+              <p className="text-xs opacity-80 mt-0.5">已实名 · 一级船长 · 8 年经验</p>
+              <div className="flex gap-1 mt-2 text-[10px]">
+                <span className="px-1.5 py-0.5 bg-amber-400 text-amber-900 rounded">A 级 82</span>
+                <span className="px-1.5 py-0.5 bg-white/20 rounded">中渔学员</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="px-4 -mt-5 grid grid-cols-3 gap-3">
+          <div className="bg-white rounded-2xl py-3 text-center clickable" onClick={() => go('deliveries')}>
+            <p className="font-bold text-lg">7</p><p className="text-[10px] text-deep-500">投递</p>
+          </div>
+          <div className="bg-white rounded-2xl py-3 text-center clickable" onClick={() => setShowInterviewSheet(true)}>
+            <p className="font-bold text-lg">3</p><p className="text-[10px] text-deep-500">面试中</p>
+          </div>
+          <div className="bg-white rounded-2xl py-3 text-center">
+            <p className="font-bold text-lg">12</p><p className="text-[10px] text-deep-500">收藏</p>
+          </div>
+        </div>
+        <div className="px-4 mt-5 space-y-3 text-sm">
+          <div className="bg-white rounded-2xl p-1">
+            {[
+              { icon: '📄', label: '我的简历', screen: 'resume' },
+              { icon: '📜', label: '证书管理', screen: 'certs', badge: '1张即将到期' },
+              { icon: '🚢', label: '船员履历', screen: 'history' },
+              { icon: '📨', label: '投递记录', screen: 'deliveries' },
+            ].map((item, i, arr) => (
+              <div key={item.label}
+                   className={`flex items-center justify-between px-3 py-3 clickable ${i < arr.length - 1 ? 'border-b border-deep-100' : ''}`}
+                   onClick={() => item.screen && go(item.screen)}>
+                <div className="flex items-center gap-3"><span>{item.icon}</span><span>{item.label}</span></div>
+                <div className="flex items-center gap-2 text-deep-400 text-xs">
+                  {item.badge && <span className="text-amber-600">{item.badge}</span>}
+                  <span>›</span>
+                </div>
+              </div>
+            ))}
+          </div>
+          <div className="bg-white rounded-2xl p-1">
+            <div className="flex items-center justify-between px-3 py-3 border-b border-deep-100 clickable"
+                 onClick={() => go('notifications')}>
+              <div className="flex items-center gap-3"><span>🔔</span><span>通知中心</span></div>
+              <div className="flex items-center gap-2"><span className="bg-rose-500 text-white text-[10px] rounded-full px-1.5 py-0.5">3</span><span className="text-deep-300">›</span></div>
+            </div>
+            <div className="flex items-center justify-between px-3 py-3 border-b border-deep-100 clickable"
+                 onClick={() => go('chatList')}>
+              <div className="flex items-center gap-3"><span>💬</span><span>我的消息</span></div>
+              <div className="flex items-center gap-2"><span className="bg-rose-500 text-white text-[10px] rounded-full px-1.5 py-0.5">2</span><span className="text-deep-300">›</span></div>
+            </div>
+            <div className="flex items-center justify-between px-3 py-3 clickable" onClick={() => go('settings')}>
+              <div className="flex items-center gap-3"><span>⚙️</span><span>设置</span></div>
+              <span className="text-deep-300">›</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="tabbar">
+        <div className={`tab ${currentTab==='home'?'active':''}`} onClick={() => handleTab('home')}><div className="tab-icon">🏠</div><span>首页</span></div>
+        <div className={`tab ${currentTab==='jobList'?'active':''}`} onClick={() => handleTab('jobList')}><div className="tab-icon">💼</div><span>职介</span></div>
+        <div className={`tab active`} onClick={() => {}}><div className="tab-icon">👤</div><span>我的</span></div>
+      </div>
+    </div>
+  );
+
+  const ResumeScreen = (
+    <div className="screen active" key="resume">
+      <STATUS_BAR />
+      <div className="bg-deep-50 overflow-y-auto" style={{height:'calc(100% - 44px)'}}>
+        <div className="bg-white px-5 py-3 border-b border-deep-100 flex items-center gap-3">
+          <button className="text-xl clickable" onClick={goBack}>←</button>
+          <h2 className="text-base font-semibold flex-1">我的简历</h2>
+          <button className="text-ocean-600 text-sm font-medium clickable" onClick={() => showToast('进入编辑模式')}>编辑</button>
+        </div>
+        <div className="p-4 space-y-3">
+          <div className="bg-emerald-50 border border-emerald-200 rounded-2xl p-3 flex gap-2 text-[11px] text-emerald-900">
+            <span>✓</span><span>已通过中渔学院实名认证 · 姓名/身份证已自动同步</span>
+          </div>
+          <div className="bg-white rounded-2xl p-4">
+            <p className="text-xs text-deep-500">基础信息</p>
+            <div className="flex items-center gap-3 mt-3">
+              <div className="w-14 h-14 bg-ocean-100 rounded-xl flex items-center justify-center text-2xl">🧑‍✈️</div>
+              <div><p className="font-semibold">张大海 · 男 · 38 岁</p><p className="text-xs text-deep-500 mt-1">浙江舟山 · 高中 · 8 年经验</p></div>
+            </div>
+          </div>
+          <div className="bg-white rounded-2xl p-4">
+            <p className="text-xs text-deep-500 mb-3">职业标签 · 自动生成</p>
+            <div className="flex gap-1.5 flex-wrap text-[11px]">
+              {['一级船长','围网经验','南海作业','远洋经验'].map(t => (
+                <span key={t} className="px-2 py-1 bg-ocean-50 text-ocean-700 rounded">{t}</span>
+              ))}
+            </div>
+          </div>
+          <div className="bg-white rounded-2xl p-4">
+            <p className="text-xs text-deep-500 mb-3">联系方式</p>
+            <div className="space-y-2 text-sm">
+              <div className="flex justify-between"><span className="text-deep-500">手机号</span><span>138****5678</span></div>
+              <div className="flex justify-between"><span className="text-deep-500">所在地区</span><span>浙江 · 舟山</span></div>
+              <div className="flex justify-between"><span className="text-deep-500">求职意向</span><span>南海 · 围网</span></div>
+            </div>
+          </div>
+          <div className="bg-white rounded-2xl p-4">
+            <div className="flex justify-between items-center mb-3">
+              <p className="text-xs text-deep-500">持有证书</p>
+              <span className="text-xs text-ocean-600 clickable">添加 ›</span>
+            </div>
+            <div className="space-y-2">
+              {[
+                { name: '一级船长适任证书', status: '已认证', color: 'emerald' },
+                { name: '船员健康证', status: '18天后到期', color: 'amber' },
+                { name: '海员证', status: '已认证', color: 'emerald' },
+              ].map(c => (
+                <div key={c.name} className="flex justify-between items-center text-sm">
+                  <span>{c.name}</span>
+                  <span className={`text-xs px-2 py-0.5 bg-${c.color}-50 text-${c.color}-700 rounded`}>{c.status}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+
+  const CertsScreen = (
+    <div className="screen active" key="certs">
+      <STATUS_BAR />
+      <div className="bg-deep-50 overflow-y-auto" style={{height:'calc(100% - 44px)'}}>
+        <div className="bg-white px-5 py-3 border-b border-deep-100 flex items-center gap-3">
+          <button className="text-xl clickable" onClick={goBack}>←</button>
+          <h2 className="text-base font-semibold flex-1">证书管理</h2>
+          <button className="text-ocean-600 text-sm font-medium clickable" onClick={() => showToast('添加证书')}>+ 添加</button>
+        </div>
+        <div className="p-4 space-y-3">
+          {[
+            { name: '一级船长适任证书', no: 'ZY-CZ-2024-001', date: '2026-12-31', status: '正常', color: 'emerald', icon: '📜' },
+            { name: '船员健康证', no: 'JK-2024-0892', date: '2026-06-01', status: '即将到期', color: 'amber', icon: '🏥' },
+            { name: '海员证', no: 'HY-2024-0341', date: '2029-03-15', status: '正常', color: 'emerald', icon: '⚓' },
+            { name: '四小证', no: 'SX-2023-0123', date: '2027-08-20', status: '正常', color: 'emerald', icon: '📘' },
+          ].map(c => (
+            <div key={c.no} className="bg-white rounded-2xl p-4 border border-deep-100 clickable"
+                 onClick={() => showToast('证书详情：' + c.name)}>
+              <div className="flex items-center gap-3">
+                <div className={`w-11 h-11 bg-${c.color}-100 rounded-xl flex items-center justify-center text-lg`}>{c.icon}</div>
+                <div className="flex-1">
+                  <p className="font-medium text-sm">{c.name}</p>
+                  <p className="text-xs text-deep-500 mt-0.5">{c.no}</p>
+                </div>
+                <span className={`text-xs px-2 py-1 bg-${c.color}-50 text-${c.color}-700 rounded`}>{c.status}</span>
+              </div>
+              <div className="flex justify-between mt-3 text-xs text-deep-500">
+                <span>有效期至 {c.date}</span>
+                <span className="text-deep-300">›</span>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+
+  const DeliveriesScreen = (
+    <div className="screen active" key="deliveries">
+      <STATUS_BAR />
+      <div className="bg-deep-50 overflow-y-auto" style={{height:'calc(100% - 44px)'}}>
+        <div className="bg-white px-5 py-3 border-b border-deep-100 flex items-center gap-3">
+          <button className="text-xl clickable" onClick={goBack}>←</button>
+          <h2 className="text-base font-semibold flex-1">投递记录</h2>
+        </div>
+        <div className="p-4 space-y-3">
+          {[
+            { job: JOBS[0], status: '沟通中', statusColor: 'emerald', time: '2024-05-10', progress: 3 },
+            { job: JOBS[1], status: '待查看', statusColor: 'amber', time: '2024-05-09', progress: 1 },
+            { job: JOBS[2], status: '面试邀请', statusColor: 'ocean', time: '2024-05-08', progress: 2 },
+          ].map((d, i) => (
+            <div key={i} className="bg-white rounded-2xl p-4 border border-deep-100 clickable"
+                 onClick={() => { setSelectedJob(d.job); go('deliveryDetail'); }}>
+              <div className="flex justify-between items-start">
+                <div>
+                  <h4 className="font-semibold text-sm">{d.job.title}</h4>
+                  <p className="text-xs text-deep-500 mt-1">{d.job.company}</p>
+                </div>
+                <span className={`text-xs px-2 py-1 bg-${d.statusColor}-50 text-${d.statusColor}-700 rounded`}>{d.status}</span>
+              </div>
+              <div className="flex gap-1.5 mt-2 text-[11px]">
+                {d.job.tags.map(t => <span key={t} className="px-2 py-0.5 bg-deep-100 rounded">{t}</span>)}
+              </div>
+              <div className="flex justify-between mt-3 text-xs text-deep-400">
+                <span>投递于 {d.time}</span>
+                <span className="text-deep-300">查看详情 ›</span>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+
+  const DeliveryDetailScreen = selectedJob && (
+    <div className="screen active" key="deliveryDetail">
+      <STATUS_BAR />
+      <div className="bg-white overflow-y-auto" style={{height:'calc(100% - 44px)'}}>
+        <div className="px-5 py-3 border-b border-deep-100 flex items-center gap-3">
+          <button className="text-xl clickable" onClick={goBack}>←</button>
+          <h2 className="text-base font-semibold flex-1">投递详情</h2>
+        </div>
+        <div className="p-5 space-y-4">
+          <div className="bg-gradient-to-br from-ocean-700 to-ocean-900 rounded-2xl p-4 text-white">
+            <div className="flex justify-between items-start">
+              <div>
+                <h3 className="text-lg font-bold">{selectedJob.title}</h3>
+                <p className="text-sm opacity-80 mt-1">{selectedJob.company}</p>
+              </div>
+              <p className="text-xl font-bold text-amber-300">{selectedJob.salary}</p>
+            </div>
+            <div className="flex gap-2 mt-3 text-xs">
+              {selectedJob.tags.map(t => <span key={t} className="px-2 py-1 bg-white/20 rounded">{t}</span>)}
+            </div>
+          </div>
+          <div className="bg-white rounded-2xl p-4 border border-deep-200">
+            <div className="flex items-center justify-between mb-4">
+              <p className="text-sm font-semibold">投递状态</p>
+              <span className="text-xs px-2 py-1 bg-emerald-50 text-emerald-700 rounded">沟通中</span>
+            </div>
+            <div className="space-y-3">
+              {[
+                { label: '已投递', time: '2024-05-10 14:30', done: true },
+                { label: '企业已查看', time: '2024-05-10 16:20', done: true },
+                { label: '企业发起沟通', time: '2024-05-10 18:45', done: true, extra: '企业：您好，我们看了您的简历...' },
+                { label: '待面试邀请', time: '', done: false },
+              ].map((s, i) => (
+                <div key={i} className="flex gap-3">
+                  <div className="flex flex-col items-center">
+                    <div className={`w-6 h-6 rounded-full ${s.done ? 'bg-emerald-500' : 'bg-deep-200'} flex items-center justify-center text-white text-xs`}>
+                      {s.done ? '✓' : i + 1}
+                    </div>
+                    {i < 3 && <div className={`w-0.5 h-8 ${s.done ? 'bg-emerald-500' : 'bg-deep-200'}`}></div>}
+                  </div>
+                  <div className="flex-1 pb-3">
+                    <p className={`text-sm font-medium ${s.done ? '' : 'text-deep-400'}`}>{s.label}</p>
+                    {s.time && <p className="text-xs text-deep-500 mt-0.5">{s.time}</p>}
+                    {s.extra && <p className="text-xs text-ocean-600 mt-1">{s.extra}</p>}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className="bg-white rounded-2xl p-4 border border-deep-200">
+            <p className="text-sm font-semibold mb-2">投递附言</p>
+            <p className="text-sm text-deep-700 leading-relaxed">本人有 8 年南海围网作业经验，证书齐全，可即时入职。</p>
+          </div>
+          <div className="flex gap-3">
+            <button className="flex-1 py-3 border border-deep-300 rounded-xl text-sm font-medium clickable"
+                    onClick={() => openJob(selectedJob)}>查看职位</button>
+            <button className="flex-1 py-3 bg-ocean-600 text-white rounded-xl text-sm font-medium clickable"
+                    onClick={() => { setSelectedChat(MESSAGES[0]); go('chat'); }}>继续沟通</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+
+  const NotificationsScreen = (
+    <div className="screen active" key="notifications">
+      <STATUS_BAR />
+      <div className="bg-white overflow-y-auto" style={{height:'calc(100% - 44px)'}}>
+        <div className="px-5 py-3 border-b border-deep-100 flex items-center gap-3">
+          <button className="text-xl clickable" onClick={goBack}>←</button>
+          <h2 className="text-base font-semibold flex-1">通知中心</h2>
+          <button className="text-xs text-ocean-600 clickable" onClick={() => showToast('已全部标为已读')}>全部已读</button>
+        </div>
+        <div className="bg-white border-b border-deep-100 px-2 py-2 flex text-xs">
+          {['全部','投递','面试','系统'].map((t, i) => (
+            <span key={t} className={`flex-1 text-center py-1.5 rounded-lg ${i === 0 ? 'bg-ocean-600 text-white' : 'text-deep-500'} clickable`}>{t}</span>
+          ))}
+        </div>
+        <div className="overflow-y-auto">
+          {[
+            { icon: '📅', color: 'amber', title: '面试邀请', badge: '待确认', desc: '福建闽南海运邀请您参加"轮机长"职位的视频面试，时间：明天 14:00', time: '2 小时前', action: () => setShowInterviewSheet(true) },
+            { icon: '🎉', color: 'emerald', title: '录用通知', badge: '待确认', desc: '恭喜！青岛海洋捕捞向您发出"大副"职位的录用通知，请在 48 小时内确认', time: '5 小时前', action: () => setShowHireSheet(true) },
+            { icon: '👁️', color: 'ocean', title: '企业查看了您的简历', desc: '舟山远洋渔业查看了您投递的"一级船长"职位', time: '昨天 16:20' },
+            { icon: '✓', color: 'emerald', title: '证书审核通过', desc: '您的"海员证"已审核通过', time: '昨天 10:30' },
+            { icon: '⏰', color: 'amber', title: '证书即将到期', desc: '您的"船员健康证"将于 18 天后过期，请及时续期', time: '2 天前' },
+            { icon: '💬', color: 'ocean', title: '企业发起沟通', desc: '舟山远洋渔业向您发送了消息', time: '3 天前', action: () => { setSelectedChat(MESSAGES[0]); go('chat'); } },
+          ].map((n, i) => (
+            <div key={i} className={`px-5 py-4 border-b border-deep-100 ${i < 2 ? `bg-${n.color}-50` : ''} clickable`}
+                 onClick={n.action}>
+              <div className="flex gap-3">
+                <div className={`w-10 h-10 rounded-full bg-${n.color}-500 flex items-center justify-center text-white flex-shrink-0`}>{n.icon}</div>
+                <div className="flex-1">
+                  <div className="flex items-center gap-2 mb-1">
+                    <p className="font-semibold text-sm">{n.title}</p>
+                    {n.badge && <span className={`text-[10px] px-1.5 py-0.5 bg-${n.color}-500 text-white rounded`}>{n.badge}</span>}
+                  </div>
+                  <p className="text-sm text-deep-700 leading-relaxed">{n.desc}</p>
+                  <p className="text-xs text-deep-400 mt-2">{n.time}</p>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+
+  const CompanyDetailScreen = selectedCompany && (
+    <div className="screen active" key="companyDetail">
+      <STATUS_BAR />
+      <div className="bg-white overflow-y-auto" style={{height:'calc(100% - 44px)'}}>
+        <div className="px-5 py-3 border-b border-deep-100 flex items-center gap-3">
+          <button className="text-xl clickable" onClick={goBack}>←</button>
+          <h2 className="text-base font-semibold flex-1">企业详情</h2>
+        </div>
+        <div className="bg-gradient-to-br from-ocean-700 to-ocean-900 p-5 text-white">
+          <div className="flex items-start gap-3">
+            <div className="w-16 h-16 bg-white rounded-2xl flex items-center justify-center text-2xl">🏢</div>
+            <div className="flex-1">
+              <h3 className="text-lg font-bold">{selectedCompany.company}</h3>
+              <p className="text-sm opacity-80 mt-1">浙江 · 舟山</p>
+              <div className="flex items-center gap-2 mt-2">
+                <span className="text-xs px-2 py-0.5 bg-amber-400 text-amber-900 rounded font-medium">{selectedCompany.grade} 认证</span>
+                <span className="text-xs opacity-80">信用分 {selectedCompany.credit}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="p-5 space-y-4">
+          <div className="bg-white rounded-2xl p-4 border border-deep-200">
+            <p className="text-sm font-semibold mb-3">企业信息</p>
+            <div className="space-y-2 text-sm">
+              <div className="flex justify-between"><span className="text-deep-500">企业类型</span><span>民营企业</span></div>
+              <div className="flex justify-between"><span className="text-deep-500">成立时间</span><span>2008年</span></div>
+              <div className="flex justify-between"><span className="text-deep-500">企业规模</span><span>100-500人</span></div>
+              <div className="flex justify-between"><span className="text-deep-500">船队规模</span><span>12艘</span></div>
+            </div>
+          </div>
+          <div className="bg-white rounded-2xl p-4 border border-deep-200">
+            <p className="text-sm font-semibold mb-3">招聘统计</p>
+            <div className="grid grid-cols-3 gap-3 text-center">
+              <div><p className="text-2xl font-bold text-ocean-600">8</p><p className="text-xs text-deep-500 mt-1">在招职位</p></div>
+              <div><p className="text-2xl font-bold text-ocean-600">156</p><p className="text-xs text-deep-500 mt-1">累计招聘</p></div>
+              <div><p className="text-2xl font-bold text-ocean-600">4.2</p><p className="text-xs text-deep-500 mt-1">企业评分</p></div>
+            </div>
+          </div>
+          <button className="w-full py-3 bg-ocean-600 text-white rounded-2xl text-sm font-medium clickable"
+                  onClick={() => { setSelectedChat(MESSAGES[0]); go('chat'); }}>联系企业</button>
+        </div>
+      </div>
+    </div>
+  );
+
+  const SettingsScreen = (
+    <div className="screen active" key="settings">
+      <STATUS_BAR />
+      <div className="bg-deep-50 overflow-y-auto" style={{height:'calc(100% - 44px)'}}>
+        <div className="bg-white px-5 py-3 border-b border-deep-100 flex items-center gap-3">
+          <button className="text-xl clickable" onClick={goBack}>←</button>
+          <h2 className="text-base font-semibold flex-1">设置</h2>
+        </div>
+        <div className="p-4 space-y-3 text-sm">
+          <div className="bg-white rounded-2xl p-1">
+            {['账号安全','隐私设置','消息通知','关于我们'].map((item, i, arr) => (
+              <div key={item}
+                   className={`flex items-center justify-between px-4 py-3.5 clickable ${i < arr.length - 1 ? 'border-b border-deep-100' : ''}`}
+                   onClick={() => showToast(item)}>
+                <span>{item}</span><span className="text-deep-300">›</span>
+              </div>
+            ))}
+          </div>
+          <div className="bg-white rounded-2xl p-1">
+            {['用户协议','隐私政策','意见反馈'].map((item, i, arr) => (
+              <div key={item}
+                   className={`flex items-center justify-between px-4 py-3.5 clickable ${i < arr.length - 1 ? 'border-b border-deep-100' : ''}`}
+                   onClick={() => showToast(item)}>
+                <span>{item}</span><span className="text-deep-300">›</span>
+              </div>
+            ))}
+          </div>
+          <button className="w-full py-3 bg-white rounded-2xl text-rose-600 font-medium text-center clickable"
+                  onClick={() => showToast('已退出登录')}>退出登录</button>
+          <p className="text-center text-xs text-deep-400 mt-4">渔匠之光 v1.0.0</p>
+        </div>
+      </div>
+    </div>
+  );
+
+  // ---- Screen Router ----
+  const screens = {
+    home: HomeScreen,
+    jobList: JobListScreen,
+    search: SearchScreen,
+    jobDetail: JobDetailScreen,
+    chatList: ChatListScreen,
+    chat: ChatScreen,
+    profile: ProfileScreen,
+    resume: ResumeScreen,
+    certs: CertsScreen,
+    deliveries: DeliveriesScreen,
+    deliveryDetail: DeliveryDetailScreen,
+    notifications: NotificationsScreen,
+    companyDetail: CompanyDetailScreen,
+    settings: SettingsScreen,
+  };
+
+  const currentScreen = screens[screen];
+
+  // ---- Bottom Sheets ----
+  const deliverSheet = showDeliverSheet && selectedJob && (
+    <div className="scrim" onClick={() => setShowDeliverSheet(false)}>
+      <div className="bottom-sheet show" onClick={e => e.stopPropagation()}>
+        <div className="w-12 h-1 bg-deep-300 rounded mx-auto mb-5"></div>
+        <h3 className="text-lg font-semibold">确认投递这份工作</h3>
+        <p className="text-xs text-deep-500 mt-1">企业将看到你的简历与证书</p>
+        <div className="bg-ocean-50 rounded-2xl p-4 mt-5">
+          <p className="font-semibold text-sm">{selectedJob.title} · {selectedJob.salary}</p>
+          <p className="text-xs text-deep-500 mt-1">{selectedJob.company}</p>
+        </div>
+        <div className="mt-5">
+          <p className="text-xs text-deep-500 mb-2">附言（选填）</p>
+          <textarea className="w-full border border-deep-300 rounded-2xl p-3 text-sm h-20 outline-none"
+                    placeholder="可附上你期望的入职时间...">本人有 8 年南海围网作业经验，证书齐全，可即时入职。</textarea>
+        </div>
+        <div className="bg-amber-50 rounded-xl p-3 mt-4 text-xs text-amber-900 flex gap-2">
+          <span>💡</span><span>同一职位 24 小时内只可投递一次</span>
+        </div>
+        <button className="w-full mt-5 bg-ocean-600 text-white font-semibold py-3.5 rounded-2xl clickable"
+                onClick={() => applyJob(selectedJob)}>确认投递</button>
+        <button className="w-full mt-2 text-deep-500 py-3 text-sm clickable"
+                onClick={() => setShowDeliverSheet(false)}>取消</button>
+      </div>
+    </div>
+  );
+
+  const interviewSheet = showInterviewSheet && (
+    <div className="scrim" onClick={() => setShowInterviewSheet(false)}>
+      <div className="bottom-sheet show" onClick={e => e.stopPropagation()}>
+        <div className="w-12 h-1 bg-deep-300 rounded mx-auto mb-5"></div>
+        <div className="bg-amber-50 border border-amber-200 rounded-2xl p-4 flex gap-3 mb-5">
+          <span className="text-2xl">📅</span>
+          <div className="flex-1">
+            <p className="font-semibold text-amber-900">面试邀请</p>
+            <p className="text-xs text-amber-800 mt-1">请在 24 小时内确认</p>
+          </div>
+        </div>
+        <div className="bg-white rounded-2xl p-4 border border-deep-200 space-y-3">
+          <div className="flex gap-3"><span className="text-deep-500 text-sm w-20">面试职位</span><span className="text-sm font-medium">轮机长</span></div>
+          <div className="flex gap-3"><span className="text-deep-500 text-sm w-20">面试企业</span><span className="text-sm">福建闽南海运</span></div>
+          <div className="flex gap-3"><span className="text-deep-500 text-sm w-20">面试方式</span><span className="text-sm">视频面试</span></div>
+          <div className="flex gap-3"><span className="text-deep-500 text-sm w-20">面试时间</span><span className="text-sm font-medium text-ocean-600">明天 14:00</span></div>
+        </div>
+        <div className="flex gap-3 mt-5">
+          <button className="flex-1 py-3 border border-deep-300 rounded-xl text-sm font-medium clickable"
+                  onClick={() => { setShowInterviewSheet(false); showToast('已拒绝面试'); }}>拒绝</button>
+          <button className="flex-1 py-3 bg-ocean-600 text-white rounded-xl text-sm font-medium clickable"
+                  onClick={() => { setShowInterviewSheet(false); showToast('已确认面试，请准时参加'); }}>确认面试</button>
+        </div>
+      </div>
+    </div>
+  );
+
+  const hireSheet = showHireSheet && (
+    <div className="scrim" onClick={() => setShowHireSheet(false)}>
+      <div className="bottom-sheet show" onClick={e => e.stopPropagation()} style={{maxHeight:'80vh',overflowY:'auto'}}>
+        <div className="w-12 h-1 bg-deep-300 rounded mx-auto mb-5"></div>
+        <div className="bg-emerald-50 border border-emerald-200 rounded-2xl p-4 flex gap-3 mb-5">
+          <span className="text-2xl">🎉</span>
+          <div className="flex-1">
+            <p className="font-semibold text-emerald-900">恭喜！企业向您发出录用通知</p>
+            <p className="text-xs text-emerald-800 mt-1">请在 48 小时内确认</p>
+          </div>
+        </div>
+        <div className="bg-white rounded-2xl p-4 border border-deep-200 space-y-3 text-sm">
+          <div className="flex gap-3"><span className="text-deep-500 w-20">录用职位</span><span className="font-medium">大副</span></div>
+          <div className="flex gap-3"><span className="text-deep-500 w-20">录用企业</span><span>青岛海洋捕捞</span></div>
+          <div className="flex gap-3"><span className="text-deep-500 w-20">约定薪资</span><span className="font-medium text-rose-600">14,000 元/月</span></div>
+          <div className="flex gap-3"><span className="text-deep-500 w-20">上船时间</span><span className="font-medium">2026-05-20</span></div>
+          <div className="flex gap-3"><span className="text-deep-500 w-20">合同周期</span><span>3 个月</span></div>
+          <div className="flex gap-3"><span className="text-deep-500 w-20">工作海域</span><span>东海</span></div>
+          <div className="flex gap-3"><span className="text-deep-500 w-20">出发港口</span><span>青岛港</span></div>
+        </div>
+        <div className="flex gap-2 flex-wrap mt-4 text-xs">
+          {['包吃住','缴纳保险','高温津贴','节日福利'].map(b => (
+            <span key={b} className="px-2 py-1 bg-emerald-50 text-emerald-700 rounded">{b}</span>
+          ))}
+        </div>
+        <div className="bg-amber-50 rounded-xl p-3 text-xs text-amber-900 mt-4">
+          <p className="font-medium mb-1">⚠️ 重要提示</p>
+          <p>• 确认录用后，请按时到岗</p>
+          <p>• 确认后 48 小时内未到岗将影响信用分</p>
+        </div>
+        <div className="flex gap-3 mt-5">
+          <button className="flex-1 py-3 border border-deep-300 rounded-xl text-sm font-medium clickable"
+                  onClick={() => { setShowHireSheet(false); showToast('已拒绝录用'); }}>拒绝录用</button>
+          <button className="flex-1 py-3 bg-ocean-600 text-white rounded-xl text-sm font-medium clickable"
+                  onClick={() => { setShowHireSheet(false); showToast('已确认录用！请按时到岗'); }}>确认录用</button>
+        </div>
+      </div>
+    </div>
+  );
+
+  const filterSheet = showFilterSheet && (
+    <div className="scrim" onClick={() => setShowFilterSheet(false)}>
+      <div className="bottom-sheet show" onClick={e => e.stopPropagation()} style={{maxHeight:'80vh',overflowY:'auto'}}>
+        <div className="w-12 h-1 bg-deep-300 rounded mx-auto mb-5"></div>
+        <div className="flex items-center gap-3 mb-5">
+          <button className="text-xl" onClick={() => setShowFilterSheet(false)}>✕</button>
+          <h3 className="text-base font-semibold flex-1">筛选条件</h3>
+          <button className="text-ocean-600 text-sm clickable" onClick={() => showToast('已重置')}>重置</button>
+        </div>
+        {[
+          { title: '工作海域', options: ['东海','南海','黄海','渤海','远洋'], selected: [0,2] },
+          { title: '船型', options: ['拖网','围网','流网','钓具','其他'], selected: [0] },
+          { title: '薪资范围', options: ['5千以下','5千-1万','1万-2万','2万以上'], selected: [2] },
+          { title: '出海周期', options: ['1个月内','1-3个月','3-6个月','6个月以上'], selected: [1] },
+        ].map(group => (
+          <div key={group.title} className="mb-5">
+            <p className="text-sm font-semibold mb-3">{group.title}</p>
+            <div className="flex gap-2 flex-wrap">
+              {group.options.map((opt, i) => (
+                <button key={opt}
+                        className={`px-3 py-1.5 border rounded-lg text-xs ${group.selected.includes(i) ? 'border-ocean-500 bg-ocean-50 text-ocean-700' : 'border-deep-200 text-deep-600'}`}>
+                  {opt}
+                </button>
+              ))}
+            </div>
+          </div>
+        ))}
+        <button className="w-full mt-3 bg-ocean-600 text-white font-semibold py-3.5 rounded-2xl clickable"
+                onClick={() => { setShowFilterSheet(false); showToast('已应用筛选条件'); }}>确认筛选</button>
+      </div>
+    </div>
+  );
+
+  return (
+    <div className="phone-shell">
+      <div className="screen-container">
+        {currentScreen}
+      </div>
+      {deliverSheet}
+      {interviewSheet}
+      {hireSheet}
+      {filterSheet}
+      <div className={`toast ${toastVisible ? 'show' : ''}`}>{toast}</div>
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+</script>
+</body>
+</html>
