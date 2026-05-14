@@ -24,13 +24,12 @@ tailwind.config = {
 <style>
   body{background:linear-gradient(135deg,#0f172a 0%,#164e63 100%);min-height:100vh;}
   .glow{box-shadow:0 0 40px rgba(6,182,212,.15);}
-  .card{transition:all .3s;}
+  .card{transition:all .3s;position:relative;}
   .card:hover{transform:translateY(-4px);box-shadow:0 20px 60px rgba(6,182,212,.3);}
 </style>
 </head>
 <body class="text-white">
   <div class="max-w-6xl mx-auto px-6 py-16">
-    <!-- Header -->
     <header class="text-center mb-16">
       <div class="inline-flex items-center gap-3 mb-6">
         <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-ocean-500 to-ocean-700 flex items-center justify-center text-2xl glow">⚓</div>
@@ -43,14 +42,23 @@ tailwind.config = {
       </div>
     </header>
 
-    <!-- Cards -->
     <div class="grid md:grid-cols-2 gap-6 mb-12">
+      <a href="app-sailor-interactive.html" class="card block bg-gradient-to-br from-emerald-700/40 to-emerald-900/40 border border-emerald-500/50 rounded-3xl p-8 backdrop-blur">
+        <div class="absolute top-4 right-4 text-[10px] bg-emerald-500 text-white px-2.5 py-1 rounded-full font-medium">可交互</div>
+        <div class="flex items-start justify-between mb-4">
+          <div class="w-12 h-12 rounded-xl bg-emerald-500/20 flex items-center justify-center text-2xl">🧑‍✈️</div>
+        </div>
+        <h2 class="text-2xl font-bold mb-2">船员端（可交互原型）</h2>
+        <p class="text-deep-500 text-sm mb-4">完整求职流程可点击体验：浏览职位 → 投递 → 聊天 → 面试 → 录用确认 · 个人中心</p>
+        <span class="text-emerald-300 text-sm">点击体验 →</span>
+      </a>
+
       <a href="app-sailor.html" class="card block bg-gradient-to-br from-ocean-700/40 to-ocean-900/40 border border-ocean-700/50 rounded-3xl p-8 backdrop-blur">
         <div class="flex items-start justify-between mb-4">
           <div class="w-12 h-12 rounded-xl bg-ocean-500/20 flex items-center justify-center text-2xl">🧑‍✈️</div>
-          <span class="text-xs text-ocean-100 bg-ocean-900/60 px-2 py-1 rounded">12 屏</span>
+          <span class="text-xs text-ocean-100 bg-ocean-900/60 px-2 py-1 rounded">33 屏</span>
         </div>
-        <h2 class="text-2xl font-bold mb-2">船员端（嵌入学院 APP）</h2>
+        <h2 class="text-2xl font-bold mb-2">船员端（静态全屏）</h2>
         <p class="text-deep-500 text-sm mb-4">实名认证 · 职位浏览 · 投递沟通 · 简历履历证书 · 个人中心 <span class="text-ocean-300">· 不含独立登录</span></p>
         <span class="text-ocean-100 text-sm">查看原型 →</span>
       </a>
@@ -86,7 +94,6 @@ tailwind.config = {
       </a>
     </div>
 
-    <!-- Design tokens -->
     <section class="bg-deep-900/40 border border-deep-700/50 rounded-3xl p-8 backdrop-blur">
       <h3 class="text-lg font-semibold mb-4 text-deep-100">视觉系统</h3>
       <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
