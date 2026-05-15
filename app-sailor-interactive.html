@@ -53,11 +53,11 @@ body { background: #0b1220; color: #cbd5e1; font-family: "PingFang SC", -apple-s
 const { useState, useCallback, useEffect } = React;
 
 const JOBS = [
-  { id: 1, title: '一级船长', company: '舟山远洋渔业有限公司', salary: '1.5-2万', tags: ['南海','围网','3个月'], urgent: true, credit: 92, grade: 'A+', desc: '负责整艘围网渔船的航行指挥与渔获生产管理，要求持有一级船长适任证书，5年以上同船型经验，南海作业经验优先。', certs: ['一级船长','健康证','海员证'], benefits: ['包吃住','缴纳保险','高温津贴'], port: '舟山港' },
-  { id: 2, title: '大副', company: '青岛海洋捕捞', salary: '1.2-1.5万', tags: ['东海','拖网','2个月'], urgent: false, credit: 88, grade: 'A', desc: '协助船长完成航行和捕捞作业，要求持有大副适任证书，3年以上经验。', certs: ['大副证','健康证'], benefits: ['包吃住','缴纳保险'], port: '青岛港' },
-  { id: 3, title: '轮机长', company: '福建闽南海运', salary: '1.3-1.8万', tags: ['南海','远洋','6个月'], urgent: true, credit: 85, grade: 'A', desc: '负责船舶轮机设备的维护和管理，要求持有轮机长证书，远洋经验优先。', certs: ['轮机长证','健康证','海员证'], benefits: ['包吃住','缴纳保险','远洋津贴'], port: '厦门港' },
-  { id: 4, title: '二级船长', company: '宁波渔业集团', salary: '1-1.3万', tags: ['东海','钓具','1个月'], urgent: false, credit: 90, grade: 'A+', desc: '负责钓具渔船的日常作业管理，2年以上钓具经验。', certs: ['二级船长','健康证'], benefits: ['包吃住','缴纳保险'], port: '宁波港' },
-  { id: 5, title: '水手长', company: '大连远洋渔业', salary: '8千-1.2万', tags: ['黄海','拖网','3个月'], urgent: false, credit: 82, grade: 'B+', desc: '协助甲板作业，负责渔具操作和日常维护，要求有1年以上海上作业经验。', certs: ['水手证','健康证'], benefits: ['包吃住'], port: '大连港' },
+  { id: 1, title: '一级船长', company: '舟山远洋渔业有限公司', salary: '1.5-2万', tags: ['南海','围网','3个月'], area: '舟山', urgent: true, credit: 92, grade: 'A+', desc: '负责整艘围网渔船的航行指挥与渔获生产管理，要求持有一级船长适任证书，5年以上同船型经验，南海作业经验优先。', certs: ['一级船长','健康证','海员证'], benefits: ['包吃住','缴纳保险','高温津贴'], port: '舟山港' },
+  { id: 2, title: '大副', company: '青岛海洋捕捞', salary: '1.2-1.5万', tags: ['东海','拖网','2个月'], area: '青岛', urgent: false, credit: 88, grade: 'A', desc: '协助船长完成航行和捕捞作业，要求持有大副适任证书，3年以上经验。', certs: ['大副证','健康证'], benefits: ['包吃住','缴纳保险'], port: '青岛港' },
+  { id: 3, title: '轮机长', company: '福建闽南海运', salary: '1.3-1.8万', tags: ['南海','远洋','6个月'], area: '福建', urgent: true, credit: 85, grade: 'A', desc: '负责船舶轮机设备的维护和管理，要求持有轮机长证书，远洋经验优先。', certs: ['轮机长证','健康证','海员证'], benefits: ['包吃住','缴纳保险','远洋津贴'], port: '厦门港' },
+  { id: 4, title: '二级船长', company: '宁波渔业集团', salary: '1-1.3万', tags: ['东海','钓具','1个月'], area: '宁波', urgent: false, credit: 90, grade: 'A+', desc: '负责钓具渔船的日常作业管理，2年以上钓具经验。', certs: ['二级船长','健康证'], benefits: ['包吃住','缴纳保险'], port: '宁波港' },
+  { id: 5, title: '水手长', company: '大连远洋渔业', salary: '8千-1.2万', tags: ['黄海','拖网','3个月'], area: '大连', urgent: false, credit: 82, grade: 'B+', desc: '协助甲板作业，负责渔具操作和日常维护，要求有1年以上海上作业经验。', certs: ['水手证','健康证'], benefits: ['包吃住'], port: '大连港' },
 ];
 
 const MESSAGES = [
@@ -231,6 +231,7 @@ function App() {
           </div>
           <div className="flex gap-3 mt-3 text-xs" onClick={() => setShowFilterSheet(true)}>
             <span className="px-3 py-1.5 bg-ocean-600 text-white rounded-full cursor-pointer">海域 ▾</span>
+            <span className="px-3 py-1.5 bg-deep-100 rounded-full cursor-pointer">地区 ▾</span>
             <span className="px-3 py-1.5 bg-deep-100 rounded-full cursor-pointer">船型 ▾</span>
             <span className="px-3 py-1.5 bg-deep-100 rounded-full cursor-pointer">薪资 ▾</span>
           </div>
@@ -251,8 +252,10 @@ function App() {
               </div>
               <div className="flex gap-1.5 mt-2 text-[11px]">
                 {job.tags.map(t => <span key={t} className="px-2 py-0.5 bg-ocean-50 rounded">{t}</span>)}
+                {job.area && <span className="px-2 py-0.5 bg-deep-100 rounded">{job.area}</span>}
               </div>
-              {appliedJobs.has(job.id) && <p className="text-[10px] text-emerald-600 mt-2">✓ 已投递</p>}
+              <p className="text-[10px] text-deep-300 mt-2">发布于 {job.id === 1 ? "2 小时前" : job.id === 2 ? "5 小时前" : job.id === 3 ? "1 天前" : job.id === 4 ? "3 天前" : "2 天前"}</p>
+              {appliedJobs.has(job.id) && <p className="text-[10px] text-emerald-600 mt-1">✓ 已投递</p>}
             </div>
           ))}
         </div>
@@ -920,8 +923,15 @@ function App() {
             </div>
           </div>
           <div className="bg-white rounded-2xl p-4 border border-deep-200">
-            <p className="text-sm font-semibold mb-4">自我评价</p>
+            <div className="flex items-center justify-between mb-4">
+              <p className="text-sm font-semibold">自我评价</p>
+              <button className="text-xs text-ocean-600 font-medium clickable" onClick={() => showToast('模板已填入')}>使用模板</button>
+            </div>
             <textarea placeholder="简单介绍您的工作经历、技能特长等（选填）" className="w-full border border-deep-300 rounded-xl px-3 py-2.5 text-sm outline-none h-24 resize-none"></textarea>
+            <div className="mt-3 p-3 bg-deep-50 rounded-xl">
+              <p className="text-[11px] text-deep-500 font-medium mb-1.5">📋 参考模板：</p>
+              <p className="text-[11px] text-deep-600 leading-relaxed">本人有__年__海域__作业经验，持有__证书，熟悉__渔场。工作认真负责，服从管理，能吃苦耐劳，可即时上船。</p>
+            </div>
             <p className="text-[10px] text-deep-400 mt-1">0/200</p>
           </div>
         </div>
@@ -1029,7 +1039,7 @@ function App() {
           <div className="bg-white rounded-2xl p-4 border border-deep-200">
             <p className="text-sm font-semibold mb-3">基本信息</p>
             <div className="space-y-2 text-sm">
-              {[['职位','大副'],['船名','浙海 12345'],['企业','青岛海洋捕捞'],['船型','拖网'],['工作海域','东海']].map(([l,v]) => (
+              {[['职位','大副'],['船名','浙海 12345'],['船号','浙海 12345'],['企业','青岛海洋捕捞'],['船型','拖网'],['工作海域','东海']].map(([l,v]) => (
                 <div key={l} className="flex gap-3"><span className="text-deep-500 w-20">{l}</span><span className="font-medium">{v}</span></div>
               ))}
             </div>
@@ -1082,6 +1092,7 @@ function App() {
             <div className="space-y-4">
               <div><p className="text-xs text-deep-500 mb-2">职位 <span className="text-rose-600">*</span></p><select className="w-full border border-deep-300 rounded-xl px-3 py-2.5 text-sm outline-none"><option>请选择</option><option>一级船长</option><option>大副</option><option>轮机长</option><option>普通船员</option></select></div>
               <div><p className="text-xs text-deep-500 mb-2">船名 <span className="text-rose-600">*</span></p><input placeholder="请输入船名" className="w-full border border-deep-300 rounded-xl px-3 py-2.5 text-sm outline-none" /></div>
+              <div><p className="text-xs text-deep-500 mb-2">船号 <span className="text-rose-600">*</span></p><input placeholder="请输入船号（如：闽渔 88888）" className="w-full border border-deep-300 rounded-xl px-3 py-2.5 text-sm outline-none" /></div>
               <div><p className="text-xs text-deep-500 mb-2">企业名称 <span className="text-rose-600">*</span></p><input placeholder="请输入企业名称" className="w-full border border-deep-300 rounded-xl px-3 py-2.5 text-sm outline-none" /></div>
               <div><p className="text-xs text-deep-500 mb-2">船型 <span className="text-rose-600">*</span></p><select className="w-full border border-deep-300 rounded-xl px-3 py-2.5 text-sm outline-none"><option>请选择</option><option>拖网</option><option>围网</option><option>流网</option><option>钓具</option></select></div>
               <div><p className="text-xs text-deep-500 mb-2">工作海域 <span className="text-rose-600">*</span></p><select className="w-full border border-deep-300 rounded-xl px-3 py-2.5 text-sm outline-none"><option>请选择</option><option>东海</option><option>南海</option><option>黄海</option><option>渤海</option><option>远洋</option></select></div>
@@ -1123,6 +1134,7 @@ function App() {
             <div className="space-y-4">
               <div><p className="text-xs text-deep-500 mb-2">职位 <span className="text-rose-600">*</span></p><select className="w-full border border-deep-300 rounded-xl px-3 py-2.5 text-sm outline-none"><option>一级船长</option><option selected>大副</option><option>轮机长</option></select></div>
               <div><p className="text-xs text-deep-500 mb-2">船名 <span className="text-rose-600">*</span></p><input value="浙海 12345" className="w-full border border-deep-300 rounded-xl px-3 py-2.5 text-sm outline-none" /></div>
+              <div><p className="text-xs text-deep-500 mb-2">船号 <span className="text-rose-600">*</span></p><input value="浙海 12345" className="w-full border border-deep-300 rounded-xl px-3 py-2.5 text-sm outline-none" /></div>
               <div><p className="text-xs text-deep-500 mb-2">企业名称 <span className="text-rose-600">*</span></p><input value="青岛海洋捕捞" className="w-full border border-deep-300 rounded-xl px-3 py-2.5 text-sm outline-none" /></div>
               <div><p className="text-xs text-deep-500 mb-2">船型 <span className="text-rose-600">*</span></p><select className="w-full border border-deep-300 rounded-xl px-3 py-2.5 text-sm outline-none"><option selected>拖网</option><option>围网</option><option>流网</option></select></div>
               <div><p className="text-xs text-deep-500 mb-2">工作海域 <span className="text-rose-600">*</span></p><select className="w-full border border-deep-300 rounded-xl px-3 py-2.5 text-sm outline-none"><option selected>东海</option><option>南海</option><option>远洋</option></select></div>
@@ -1626,6 +1638,7 @@ function App() {
         </div>
         {[
           { title: '工作海域', options: ['东海','南海','黄海','渤海','远洋'], selected: [0,2] },
+          { title: '工作地区', options: ['浙江','福建','山东','辽宁','广东','海南','江苏','其他'], selected: [0,2] },
           { title: '船型', options: ['拖网','围网','流网','钓具','其他'], selected: [0] },
           { title: '薪资范围', options: ['5千以下','5千-1万','1万-2万','2万以上'], selected: [2] },
           { title: '出海周期', options: ['1个月内','1-3个月','3-6个月','6个月以上'], selected: [1] },
