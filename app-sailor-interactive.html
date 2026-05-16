@@ -172,17 +172,10 @@ function App() {
             <span className="text-ocean-600 text-xs">搜索</span>
           </div>
         </div>
-        <div className="grid grid-cols-4 gap-2 px-5 mt-5 text-center">
+        <div className="grid grid-cols-3 gap-2 px-5 mt-5 text-center">
           <div className="clickable" onClick={() => go('certs')}><div className="w-12 h-12 mx-auto bg-ocean-100 rounded-2xl flex items-center justify-center text-xl">📜</div><p className="text-xs mt-1">我的证书</p></div>
-          <div className="clickable" onClick={() => go('resume')}><div className="w-12 h-12 mx-auto bg-amber-100 rounded-2xl flex items-center justify-center text-xl">🚢</div><p className="text-xs mt-1">我的履历</p></div>
-          <div className="clickable" onClick={() => go('deliveries')}><div className="w-12 h-12 mx-auto bg-emerald-100 rounded-2xl flex items-center justify-center text-xl">📨</div><p className="text-xs mt-1">投递记录</p></div>
+                    <div className="clickable" onClick={() => go('deliveries')}><div className="w-12 h-12 mx-auto bg-emerald-100 rounded-2xl flex items-center justify-center text-xl">📨</div><p className="text-xs mt-1">投递记录</p></div>
           <div className="clickable" onClick={() => go('jobList')}><div className="w-12 h-12 mx-auto bg-rose-100 rounded-2xl flex items-center justify-center text-xl">🔥</div><p className="text-xs mt-1">急招专区</p></div>
-        </div>
-        <div className="mx-5 mt-5 rounded-2xl bg-gradient-to-r from-ocean-700 to-ocean-500 p-4 text-white clickable"
-             onClick={() => go('profile')}>
-          <p className="text-xs opacity-80">您的信用分</p>
-          <p className="text-2xl font-bold mt-1">82 <span className="text-sm font-normal opacity-80">A 级船员</span></p>
-          <div className="h-1 bg-white/30 rounded-full mt-2 overflow-hidden"><div className="h-full bg-amber-300" style={{width:'80%'}}></div></div>
         </div>
         <div className="px-5 mt-6">
           <div className="flex justify-between items-center mb-3">
@@ -473,7 +466,6 @@ function App() {
             {[
               { icon: '📄', label: '我的简历', screen: 'resume' },
               { icon: '📜', label: '证书管理', screen: 'certs', badge: '1张即将到期' },
-              { icon: '🚢', label: '船员履历', screen: 'history' },
               { icon: '📨', label: '投递记录', screen: 'deliveries' },
             ].map((item, i, arr) => (
               <div key={item.label}
@@ -557,6 +549,33 @@ function App() {
               <div className="flex justify-between"><span className="text-deep-500">手机号</span><span>138****5678</span></div>
               <div className="flex justify-between"><span className="text-deep-500">所在地区</span><span>浙江 · 舟山</span></div>
               <div className="flex justify-between"><span className="text-deep-500">求职意向</span><span>南海 · 围网</span></div>
+            </div>
+          </div>
+          <div className="bg-white rounded-2xl p-4">
+            <div className="flex justify-between items-center mb-3">
+              <p className="text-xs text-deep-500">工作履历</p>
+              <span className="text-xs text-ocean-600 clickable" onClick={() => go('addHistory')}>+ 添加 ›</span>
+            </div>
+            <div className="bg-gradient-to-r from-ocean-700 to-ocean-500 rounded-xl p-3 text-white mb-3">
+              <p className="text-[11px] opacity-80">行业从业总时长</p>
+              <p className="text-xl font-bold mt-0.5">8.5 <span className="text-sm font-normal">年</span></p>
+              <p className="text-[10px] opacity-80 mt-0.5">共完成 5 段工作 · 远洋 2 段</p>
+            </div>
+            <div className="space-y-2">
+              {[
+                { title: '船长 · 闽渔 88888', company: '舟山远洋渔业 · 围网 · 南海', time: '上船：2026.02.15 · 进行中', badge: '进行中' },
+                { title: '大副 · 浙海 12345', company: '青岛海洋捕捞 · 拖网 · 东海', time: '2025.05 - 2025.11 · 6个月', badge: null },
+                { title: '大副 · 闽渔 66666', company: '福建闽南海运 · 围网 · 南海', time: '2024.03 - 2024.10 · 7个月', badge: null },
+              ].map(h => (
+                <div key={h.title} className="border border-deep-200 rounded-xl p-3 clickable" onClick={() => go('historyDetail')}>
+                  <div className="flex items-center gap-2">
+                    <p className="font-semibold text-sm">{h.title}</p>
+                    {h.badge && <span className="text-[10px] px-1.5 py-0.5 bg-amber-50 text-amber-700 rounded">{h.badge}</span>}
+                  </div>
+                  <p className="text-xs text-deep-500 mt-1">{h.company}</p>
+                  <p className="text-[11px] text-deep-400 mt-1">{h.time}</p>
+                </div>
+              ))}
             </div>
           </div>
           <div className="bg-white rounded-2xl p-4">
@@ -934,6 +953,16 @@ function App() {
             </div>
             <p className="text-[10px] text-deep-400 mt-1">0/200</p>
           </div>
+          <div className="bg-white rounded-2xl p-4 border border-deep-200">
+            <div className="flex items-center justify-between mb-4">
+              <p className="text-sm font-semibold">工作履历</p>
+              <button className="text-xs text-ocean-600 font-medium clickable" onClick={() => go('addHistory')}>+ 添加</button>
+            </div>
+            <p className="text-xs text-deep-500 mb-3">平台录用完成后自动生成，也可手动添加历史工作经历</p>
+            <div className="border border-deep-200 rounded-xl p-3 text-center text-sm text-deep-400">
+              暂无履历，点击 + 添加
+            </div>
+          </div>
         </div>
       </div>
       <div className="absolute bottom-0 left-0 right-0 bg-white border-t border-deep-100 px-5 py-3 z-40" style={{paddingBottom:24}}>
@@ -976,6 +1005,33 @@ function App() {
             <p className="text-sm font-semibold mb-4">自我评价</p>
             <textarea className="w-full border border-deep-300 rounded-xl px-3 py-2.5 text-sm outline-none h-24 resize-none">本人有8年南海围网作业经验，持有一级船长证书，熟悉南海渔场，能够独立指挥船队作业。</textarea>
             <p className="text-[10px] text-deep-400 mt-1">56/200</p>
+          </div>
+          <div className="bg-white rounded-2xl p-4 border border-deep-200">
+            <div className="flex items-center justify-between mb-4">
+              <p className="text-sm font-semibold">工作履历</p>
+              <button className="text-xs text-ocean-600 font-medium clickable" onClick={() => go('addHistory')}>+ 添加</button>
+            </div>
+            <div className="bg-gradient-to-r from-ocean-700 to-ocean-500 rounded-xl p-3 text-white mb-3">
+              <p className="text-[11px] opacity-80">行业从业总时长</p>
+              <p className="text-xl font-bold mt-0.5">8.5 <span className="text-sm font-normal">年</span></p>
+              <p className="text-[10px] opacity-80 mt-0.5">共完成 5 段工作 · 远洋 2 段</p>
+            </div>
+            <div className="space-y-2">
+              {[
+                { title: '船长 · 闽渔 88888', company: '舟山远洋渔业 · 围网 · 南海', time: '上船：2026.02.15 · 进行中', badge: '进行中' },
+                { title: '大副 · 浙海 12345', company: '青岛海洋捕捞 · 拖网 · 东海', time: '2025.05 - 2025.11 · 6个月', badge: null },
+                { title: '大副 · 闽渔 66666', company: '福建闽南海运 · 围网 · 南海', time: '2024.03 - 2024.10 · 7个月', badge: null },
+              ].map(h => (
+                <div key={h.title} className="border border-deep-200 rounded-xl p-3 clickable" onClick={() => go('historyDetail')}>
+                  <div className="flex items-center gap-2">
+                    <p className="font-semibold text-sm">{h.title}</p>
+                    {h.badge && <span className="text-[10px] px-1.5 py-0.5 bg-amber-50 text-amber-700 rounded">{h.badge}</span>}
+                  </div>
+                  <p className="text-xs text-deep-500 mt-1">{h.company}</p>
+                  <p className="text-[11px] text-deep-400 mt-1">{h.time}</p>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>
